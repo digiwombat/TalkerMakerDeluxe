@@ -5,7 +5,7 @@ VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeContainer", "TreeContainer\TreeContainer.csproj", "{88B86170-EC9F-4ACF-B96E-0F97C28F57BA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalkerMakerDeluxe", "VisLogTree\TalkerMakerDeluxe.csproj", "{D913CF17-3497-4489-A493-C619886D223B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalkerMakerDeluxe", "TalkerMakerDeluxe\TalkerMakerDeluxe.csproj", "{D913CF17-3497-4489-A493-C619886D223B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLayout", "GraphLayout\GraphLayout\GraphLayout.csproj", "{FB8364B6-55D2-45B0-B173-E6308C19DD61}"
 EndProject
