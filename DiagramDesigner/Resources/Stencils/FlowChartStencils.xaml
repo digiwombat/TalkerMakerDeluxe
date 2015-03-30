@@ -1,0 +1,499 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:s="clr-namespace:TalkerMakerDeluxe"
+                    xmlns:c="clr-namespace:TalkerMakerDeluxe.Controls">
+
+  <Brush x:Key="ItemStroke">#FFD69436</Brush>
+  <LinearGradientBrush x:Key="ItemBrush" StartPoint="0,0" EndPoint="0,1">
+    <LinearGradientBrush.GradientStops>
+      <GradientStop Color="#FAFBE9" Offset="0" />
+      <GradientStop Color="Orange" Offset="1" />
+    </LinearGradientBrush.GradientStops>
+  </LinearGradientBrush>
+
+  <Brush x:Key="ItemStroke1">#ACADCD</Brush>
+  <LinearGradientBrush x:Key="ItemBrush1" StartPoint="0,0" EndPoint="0,1" >
+    <GradientStop Color="#FEFEFE" Offset="0"/>
+    <GradientStop Color="#BDBEDE" Offset="1"/>
+  </LinearGradientBrush>
+
+
+  <Style x:Key="FlowChartItemStyle" TargetType="Path">
+    <Setter Property="Fill" Value="{StaticResource ItemBrush}"/>
+    <Setter Property="Stroke" Value="{StaticResource ItemStroke}"/>
+    <Setter Property="StrokeThickness" Value="1"/>
+    <Setter Property="StrokeLineJoin" Value="Round"/>
+    <Setter Property="Stretch" Value="Fill"/>
+    <Setter Property="IsHitTestVisible" Value="False"/>
+        <Setter Property="SnapsToDevicePixels" Value="True"/>
+        <!--<Setter Property="BitmapEffect">
+      <Setter.Value>
+        <DropShadowBitmapEffect Color="#AAA" Direction="315" ShadowDepth="10"
+                                Softness="0.5" Opacity="0.6"/>
+      </Setter.Value>
+    </Setter>-->
+  </Style>
+
+  <!-- Process -->
+  <Style x:Key="Process" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0,0 H 60 V40 H 0 Z"/>
+  </Style>
+
+  <Style x:Key="Process_DragThumb" TargetType="Path" BasedOn="{StaticResource Process}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- Decision -->
+  <Style x:Key="Decision" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0,20 L 30 0 L 60,20 L 30,40 Z"/>
+  </Style>
+
+  <Style x:Key="Decision_DragThumb" TargetType="Path" BasedOn="{StaticResource Decision}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- Document -->
+  <Style x:Key="Document" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0,0 H 60 V 40 C 30,30 30,50 0,40 Z"/>
+  </Style>
+
+  <Style x:Key="Document_DragThumb" TargetType="Path" BasedOn="{StaticResource Document}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- Data -->
+  <Style x:Key="Data" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 10,0 L 60 0 L 50,40 L 0,40 Z"/>
+  </Style>
+
+  <Style x:Key="Data_DragThumb" TargetType="Path" BasedOn="{StaticResource Data}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- Start -->
+  <Style x:Key="Start" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 10,20 A 20,20 0 1 1 50,20 A 20,20 0 1 1 10,20"/>
+  </Style>
+
+  <Style x:Key="Start_DragThumb" TargetType="Path" BasedOn="{StaticResource Start}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+
+  <!-- Predefined -->
+  <Style x:Key="Predefined" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 50,0 V 40 M 10,0 V 40 M 0 0 H 60 V 40 H 0 Z"/>
+  </Style>
+
+  <Style x:Key="Predefined_DragThumb" TargetType="Path" BasedOn="{StaticResource Predefined}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+
+  <!-- StoredData -->
+  <Style x:Key="StoredData" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 5,0 H 60 A 40,40 0 0 0 60,40 H 5 A 40,40 0 0 1 5,0 Z"/>
+  </Style>
+
+  <Style x:Key="StoredData_DragThumb" TargetType="Path" BasedOn="{StaticResource StoredData}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+
+  <!-- InternalStorage -->
+  <Style x:Key="InternalStorage" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0,10 H 60 M 10,0 V 40 M 0,0 H 60 V 40 H 0 Z"/>
+  </Style>
+
+  <Style x:Key="InternalStorage_DragThumb" TargetType="Path" BasedOn="{StaticResource InternalStorage}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- SequentialData -->
+  <Style x:Key="SequentialData" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 30,40 A 20,20 0 1 1 30,0 A 20,20 0 0 1 43,35 H 50 L 50,40 Z"/>
+  </Style>
+
+  <Style x:Key="SequentialData_DragThumb" TargetType="Path" BasedOn="{StaticResource SequentialData}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- DirectData -->
+  <Style x:Key="DirectData" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="F 1 M 57,40 H 3 A 4,20 0 1 1 3,0 H 57 A 4,20.1 0 1 1 56,0"/>
+  </Style>
+
+  <Style x:Key="DirectData_DragThumb" TargetType="Path" BasedOn="{StaticResource DirectData}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- ManualInput -->
+  <Style x:Key="ManualInput" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0 10 L 60,0 V 40 H 0 Z"/>
+  </Style>
+
+  <Style x:Key="ManualInput_DragThumb" TargetType="Path" BasedOn="{StaticResource ManualInput}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- Card -->
+  <Style x:Key="Card" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0 10 L 10,0 H 60 V 40 H 0 Z"/>
+  </Style>
+
+  <Style x:Key="Card_DragThumb" TargetType="Path" BasedOn="{StaticResource Card}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- PaperTape -->
+  <Style x:Key="PaperTape" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0,3 C 30,-7 30,13 60,3 V 37 C 30,47 30,27 0,37 Z"/>
+  </Style>
+
+  <Style x:Key="PaperTape_DragThumb" TargetType="Path" BasedOn="{StaticResource PaperTape}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+
+  <!-- Delay -->
+  <Style x:Key="Delay" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0,0 H 40 A 20,20 0 0 1 40,40 H 0 Z"/>
+  </Style>
+
+  <Style x:Key="Delay_DragThumb" TargetType="Path" BasedOn="{StaticResource Delay}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+
+  <!-- Terminator -->
+  <Style x:Key="Terminator" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 20,40 A 20,20 0 0 1 20,0 H 40 A 20,20 0 0 1 40,40 Z"/>
+  </Style>
+
+  <Style x:Key="Terminator_DragThumb" TargetType="Path" BasedOn="{StaticResource Terminator}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- Display -->
+  <Style x:Key="Display" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0,20 A 40,40 0 0 1 15,0 H 55 A 60,60 0 0 1 55,40 H 15 A 40,40, 0 0 1 0,20 Z"/>
+  </Style>
+
+  <Style x:Key="Display_DragThumb" TargetType="Path" BasedOn="{StaticResource Display}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- LoopLimit -->
+  <Style x:Key="LoopLimit" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0 10 L 10,0 H 50 L 60,10 V 40 H 0 Z"/>
+  </Style>
+
+  <Style x:Key="LoopLimit_DragThumb" TargetType="Path" BasedOn="{StaticResource LoopLimit}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- Preparation -->
+  <Style x:Key="Preparation" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0,20 L 10,0  H 50 L 60,20 L 50,40 H10 Z"/>
+  </Style>
+
+  <Style x:Key="Preparation_DragThumb" TargetType="Path" BasedOn="{StaticResource Preparation}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- ManualOperation -->
+  <Style x:Key="ManualOperation" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0 0 H 60 L 50 40 H 10 Z"/>
+  </Style>
+
+  <Style x:Key="ManualOperation_DragThumb" TargetType="Path" BasedOn="{StaticResource ManualOperation}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- OffPageReference -->
+  <Style x:Key="OffPageReference" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 0 0 H 60 V 20 L 30,40 L 0,20 Z"/>
+  </Style>
+
+  <Style x:Key="OffPageReference_DragThumb" TargetType="Path" BasedOn="{StaticResource OffPageReference}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <!-- Star -->
+  <Style x:Key="Star" TargetType="Path" BasedOn="{StaticResource FlowChartItemStyle}">
+    <Setter Property="Data" Value="M 9,2 11,7 17,7 12,10 14,15 9,12 4,15 6,10 1,7 7,7 Z"/>
+  </Style>
+
+  <Style x:Key="Star_DragThumb" TargetType="Path" BasedOn="{StaticResource Star}">
+    <Setter Property="IsHitTestVisible" Value="true"/>
+    <Setter Property="Fill" Value="Transparent"/>
+    <Setter Property="Stroke" Value="Transparent"/>
+  </Style>
+
+  <s:Toolbox x:Key="FlowChartStencils" ItemSize="120,120" SnapsToDevicePixels="True"
+             ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+    <ItemsControl.Items>
+
+      <Path Style="{StaticResource Process}" ToolTip="Process">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Process_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Decision}" ToolTip="Decision">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Decision_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Document}" ToolTip="Document">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Document_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+        <s:DesignerItem.ConnectorDecoratorTemplate>
+          <ControlTemplate>
+            <c:RelativePositionPanel Margin="-4">
+              <s:Connector x:Name="Top" Orientation="Top" c:RelativePositionPanel.RelativePosition="0.5,0"/>
+              <s:Connector x:Name="Left" Orientation="Left" c:RelativePositionPanel.RelativePosition="0,0.5"/>
+              <s:Connector x:Name="Right" Orientation="Right" c:RelativePositionPanel.RelativePosition="1,0.5"/>
+              <s:Connector x:Name="Bottom" Orientation="Bottom" c:RelativePositionPanel.RelativePosition="0.5,0.93"/>
+            </c:RelativePositionPanel>
+          </ControlTemplate>
+        </s:DesignerItem.ConnectorDecoratorTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Data}" ToolTip="Data">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Data_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+        <s:DesignerItem.ConnectorDecoratorTemplate>
+          <ControlTemplate>
+            <c:RelativePositionPanel Margin="-4">
+              <s:Connector x:Name="Top" Orientation="Top" c:RelativePositionPanel.RelativePosition="0.5,0"/>
+              <s:Connector x:Name="Left" Orientation="Left" c:RelativePositionPanel.RelativePosition="0.09,0.5"/>
+              <s:Connector x:Name="Right" Orientation="Right" c:RelativePositionPanel.RelativePosition="0.91,0.5"/>
+              <s:Connector x:Name="Bottom" Orientation="Bottom" c:RelativePositionPanel.RelativePosition="0.5,1"/>
+            </c:RelativePositionPanel>
+          </ControlTemplate>
+        </s:DesignerItem.ConnectorDecoratorTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Start}" ToolTip="Start">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Start_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource PaperTape}" ToolTip="Paper Tape">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource PaperTape_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+        <s:DesignerItem.ConnectorDecoratorTemplate>
+          <ControlTemplate>
+            <c:RelativePositionPanel Margin="-4">
+              <s:Connector x:Name="Top" Orientation="Top" c:RelativePositionPanel.RelativePosition="0.5,0.07"/>
+              <s:Connector x:Name="Left" Orientation="Left" c:RelativePositionPanel.RelativePosition="0,0.5"/>
+              <s:Connector x:Name="Right" Orientation="Right" c:RelativePositionPanel.RelativePosition="1,0.5"/>
+              <s:Connector x:Name="Bottom" Orientation="Bottom" c:RelativePositionPanel.RelativePosition="0.5,0.93"/>
+            </c:RelativePositionPanel>
+          </ControlTemplate>
+        </s:DesignerItem.ConnectorDecoratorTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Predefined}" ToolTip="Predefined">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Predefined_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource StoredData}" ToolTip="Stored Data">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource StoredData_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+        <s:DesignerItem.ConnectorDecoratorTemplate>
+          <ControlTemplate>
+            <c:RelativePositionPanel Margin="-4">
+              <s:Connector x:Name="Top" Orientation="Top" c:RelativePositionPanel.RelativePosition="0.5,0"/>
+              <s:Connector x:Name="Left" Orientation="Left" c:RelativePositionPanel.RelativePosition="0,0.5"/>
+              <s:Connector x:Name="Right" Orientation="Right" c:RelativePositionPanel.RelativePosition="0.9,0.5"/>
+              <s:Connector x:Name="Bottom" Orientation="Bottom" c:RelativePositionPanel.RelativePosition="0.5,1"/>
+            </c:RelativePositionPanel>
+          </ControlTemplate>
+        </s:DesignerItem.ConnectorDecoratorTemplate>
+      </Path>
+
+      <Path Style="{StaticResource InternalStorage}" ToolTip="Internal Storage">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource InternalStorage_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource SequentialData}" ToolTip="Sequential Data">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource SequentialData_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource DirectData}" ToolTip="Direct Data">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource DirectData_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource ManualInput}" ToolTip="Manual Input">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource ManualInput_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+        <s:DesignerItem.ConnectorDecoratorTemplate>
+          <ControlTemplate>
+            <c:RelativePositionPanel Margin="-4">
+              <s:Connector x:Name="Top" Orientation="Top" c:RelativePositionPanel.RelativePosition="0.5,0.12"/>
+              <s:Connector x:Name="Left" Orientation="Left" c:RelativePositionPanel.RelativePosition="0,0.5"/>
+              <s:Connector x:Name="Right" Orientation="Right" c:RelativePositionPanel.RelativePosition="1,0.5"/>
+              <s:Connector x:Name="Bottom" Orientation="Bottom" c:RelativePositionPanel.RelativePosition="0.5,1"/>
+            </c:RelativePositionPanel>
+          </ControlTemplate>
+        </s:DesignerItem.ConnectorDecoratorTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Card}" ToolTip="Card">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Card_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Delay}" ToolTip="Delay">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Delay_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Terminator}" ToolTip="Terminator">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Terminator_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Display}" ToolTip="Display">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Display_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource LoopLimit}" ToolTip="Loop Limit">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource LoopLimit_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource Preparation}" ToolTip="Preparation">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource Preparation_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+      <Path Style="{StaticResource ManualOperation}" ToolTip="Manual Operation">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource ManualOperation_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+        <s:DesignerItem.ConnectorDecoratorTemplate>
+          <ControlTemplate>
+            <c:RelativePositionPanel Margin="-4">
+              <s:Connector x:Name="Top" Orientation="Top" c:RelativePositionPanel.RelativePosition="0.5,0"/>
+              <s:Connector x:Name="Left" Orientation="Left" c:RelativePositionPanel.RelativePosition="0.1,0.5"/>
+              <s:Connector x:Name="Right" Orientation="Right" c:RelativePositionPanel.RelativePosition="0.9,0.5"/>
+              <s:Connector x:Name="Bottom" Orientation="Bottom" c:RelativePositionPanel.RelativePosition="0.5,1"/>
+            </c:RelativePositionPanel>
+          </ControlTemplate>
+        </s:DesignerItem.ConnectorDecoratorTemplate>
+      </Path>
+
+      <Path Style="{StaticResource OffPageReference}" ToolTip="Off Page Reference">
+        <s:DesignerItem.DragThumbTemplate>
+          <ControlTemplate>
+            <Path Style="{StaticResource OffPageReference_DragThumb}"/>
+          </ControlTemplate>
+        </s:DesignerItem.DragThumbTemplate>
+      </Path>
+
+    </ItemsControl.Items>
+  </s:Toolbox>
+</ResourceDictionary>
