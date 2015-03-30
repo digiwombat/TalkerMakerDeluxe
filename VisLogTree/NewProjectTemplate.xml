@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TalkerMakerProject xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" EmphasisStyle3="b--" EmphasisColor4Label="Action" EmphasisColor3Label="" EmphasisColor3="#4688E6" EmphasisColor4="#CCCCCC" EmphasisStyle4="b--" Author="The Maker" EmphasisColor1Label="Addresses" Title="Example Project" Version="1.0.0.0" EmphasisColor1="#E7955B" EmphasisColor2="#44B634" EmphasisStyle2="b--" EmphasisStyle1="b--" EmphasisColor2Label="">
+  <UserScript />
+  <Assets>
+    <Conversations>
+      <Conversation LockedMode="Unlocked" ID="1" NodeColor="Red">
+        <Fields>
+          <Field Type="Text">
+            <Title>Title</Title>
+            <Value>Default Conversation</Value>
+          </Field>
+          <Field Type="Text">
+            <Title>Description</Title>
+            <Value>A default conversation.</Value>
+          </Field>
+          <Field Type="Actor">
+            <Title>Actor</Title>
+            <Value>1</Value>
+          </Field>
+          <Field Type="Actor">
+            <Title>Conversant</Title>
+            <Value>1</Value>
+          </Field>
+        </Fields>
+        <DialogEntries>
+          <DialogEntry ConditionPriority="Normal" FalseCondtionAction="Block" IsRoot="true" ID="0" IsGroup="false" DelaySimStatus="false" NodeColor="White">
+            <Fields>
+              <Field Type="Text">
+                <Title>Title</Title>
+                <Value>START</Value>
+              </Field>
+              <Field Type="Actor">
+                <Title>Actor</Title>
+                <Value>1</Value>
+              </Field>
+              <Field Type="Actor">
+                <Title>Conversant</Title>
+                <Value>1</Value>
+              </Field>
+            </Fields>
+            <OutgoingLinks />
+            <UserScript />
+            <ConditionsString/>
+          </DialogEntry>
+        </DialogEntries>
+      </Conversation>
+    </Conversations>
+
+    <Actors>
+      <Actor ID="1">
+        <Fields>
+          <Field Type="Text">
+            <Title>Name</Title>
+            <Value>Player</Value>
+          </Field>
+          <Field Type="Files">
+            <Title>Pictures</Title>
+            <Value></Value>
+          </Field>
+          <Field Type="Boolean">
+            <Title>IsPlayer</Title>
+            <Value>True</Value>
+          </Field>
+        </Fields>
+      </Actor>
+    </Actors>
+  </Assets>
+</TalkerMakerProject>

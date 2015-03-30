@@ -31,6 +31,8 @@ using System.Reflection;
 using MahApps.Metro;
 using System.Collections;
 using Memento;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 
 
@@ -44,6 +46,33 @@ namespace TalkerMakerDeluxe
         List<DialogHolder> IDs = new List<DialogHolder>();
         string currentNode = "";
         int loadedConversation = -1;
+        private bool _needsSave = false;
+        public bool needsSave
+        {
+            get { return _needsSave; }
+            set
+            {
+                _needsSave = value;
+                if (_needsSave == false)
+                {
+                    this.Title = "TalkerMaker Deluxe - " + openedFile;
+                }
+                else
+                {
+                    this.Title = "TalkerMaker Deluxe - " + openedFile + "*";
+                }
+            }
+        }
+        private string _openedFile = "New Project";
+        public string openedFile
+        {
+            get { return _openedFile; }
+            set
+            {
+                _openedFile = value;
+                this.Title = "TalkerMaker Deluxe - " + openedFile;
+            }
+        }
         public struct DialogHolder
         {
             public int ID;
@@ -58,16 +87,12 @@ namespace TalkerMakerDeluxe
 			InitializeComponent();
 
             this.Icon = ImageAwesome.CreateImageSource(FontAwesomeIcon.CommentsO, (Brush)Application.Current.FindResource("HighlightBrush"));
+            this.Title = "TalkerMaker Deluxe - " + openedFile;
 
-            RoutedCommand saveProject = new RoutedCommand();
-            saveProject.InputGestures.Add(new KeyGesture(Key.S, ModifierKeys.Control));
-            CommandBindings.Add(new CommandBinding(saveProject, SaveHandler));
 
+
+            PrepareProject();
             
-            projie = XMLHandler.LoadXML("C:\\Users\\Randall\\Downloads\\Example_XML_Export.xml");
-            tabBlank.IsSelected = true;
-            lstCharacters.ItemsSource = AddActors(projie);
-            lstConversations.ItemsSource = AddConversations(projie);
 
             uiScaleSlider.MouseDoubleClick +=
             new MouseButtonEventHandler(RestoreScalingFactor);
@@ -84,35 +109,37 @@ namespace TalkerMakerDeluxe
 
 		}
 
+        void PrepareProject()
+        {
+            Assembly _assembly = Assembly.GetExecutingAssembly();
+            projie = XMLHandler.LoadXML(_assembly.GetManifestResourceStream("TalkerMakerDeluxe.NewProjectTemplate.xml"));
+
+            tabBlank.IsSelected = true;
+            lstCharacters.ItemsSource = AddActors(projie);
+            lstDialogueActor.ItemsSource = AddActors(projie, 0);
+            lstDialogueConversant.ItemsSource = AddActors(projie, 0);
+            lstConversations.ItemsSource = AddConversations(projie);
+            loadedConversation = 0;
+            LoadConversation(0);
+        }
+
+        void PrepareProject(string project)
+        {
+            projie = XMLHandler.LoadXML(project);
+
+            tabBlank.IsSelected = true;
+            lstCharacters.ItemsSource = AddActors(projie);
+            lstDialogueActor.ItemsSource = AddActors(projie, 0);
+            lstDialogueConversant.ItemsSource = AddActors(projie, 0);
+            lstConversations.ItemsSource = AddConversations(projie);
+            loadedConversation = 0;
+            LoadConversation(0);
+        }
+
         void RestoreScalingFactor(object sender, MouseButtonEventArgs args)
         {
             ((Slider)sender).Value = 1.0;
         }
-
-		private void tcMain_Click(object sender, RoutedEventArgs e)
-		{
-            /*string ham = e.OriginalSource.GetType().ToString();
-            if(ham == "System.Windows.Controls.Button")
-            { 
-			    Button btn = e.OriginalSource as Button;
-                Grid grid = btn.Parent as Grid;
-                Border border = grid.Parent as Border;
-                NodeControl ndctl = border.Parent as NodeControl;
-                if (btn != null)
-                {
-                    TreeNode tn = (TreeNode)(ndctl.Parent);
-                    tn.Collapsed = !tn.Collapsed;
-                    if (ndctl.faMin.Icon == FontAwesomeIcon.AngleDoubleUp)
-                    {
-                        ndctl.faMin.Icon = FontAwesomeIcon.AngleDoubleDown;
-                    }
-                    else
-                    {
-                        ndctl.faMin.Icon = FontAwesomeIcon.AngleDoubleUp;
-                    }
-                }
-            }*/
-		}
 
         public void CollapseNode(string parentNode)
         {
@@ -193,46 +220,44 @@ namespace TalkerMakerDeluxe
 
                 //Add to tree.
                 tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID);
+                needsSave = true;
             }
         }
 
         public void SelectNode(string newNode)
         {
+            TreeNode nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
+            NodeControl node = nodeTree.Content as NodeControl;
+            txtDialogueID.Text = node.lblID.Content.ToString();
+            txtDialogueTitle.Text = node.lblDialogueName.Content.ToString();
+            lstDialogueActor.SelectedItem = lstDialogueActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblActorID.Content.ToString());
+            lstDialogueConversant.SelectedItem = lstDialogueConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblConversantID.Content.ToString());
             if (currentNode != "" && newNode != currentNode)
-                {
-                    //Color newNode
-                    TreeNode nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
-                    NodeControl node = nodeTree.Content as NodeControl;
-                    node.border.BorderBrush = (Brush)Application.Current.FindResource("BlackBrush");
-                    
-
-
-
-                    //Remove color from currentNode
-                    nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
-                    node = nodeTree.Content as NodeControl;
-                    node.border.BorderBrush = (Brush)Application.Current.FindResource("HighlightBrush");
-                    currentNode = newNode;
-
-                    tabDialogue.IsSelected = true;
-                }
-                else if (newNode != currentNode)
-                {
-                    TreeNode nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
-                    NodeControl node = nodeTree.Content as NodeControl;
-
-                    tcMain.ToString();
-                    node.border.BorderBrush = (Brush)Application.Current.FindResource("BlackBrush") as Brush;
-                    currentNode = newNode;
-
-                    tabDialogue.IsSelected = true;
-                }
-            if(newNode == null)
             {
+                //Color newNode
+                node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
 
-                TreeNode nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
-                NodeControl node = nodeTree.Content as NodeControl;
-                node.border.BorderBrush = (Brush)Application.Current.FindResource("HighlightBrush");
+
+
+
+                //Remove color from currentNode
+                nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+                node = nodeTree.Content as NodeControl;
+                node.grid.Background = (Brush)Application.Current.FindResource("AccentColorBrush2");
+                currentNode = newNode;
+
+                tabDialogue.IsSelected = true;
+
+
+            }
+            else if (newNode != currentNode)
+            {
+                //Color newNode
+                tcMain.ToString();
+                node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
+                currentNode = newNode;
+
+                tabDialogue.IsSelected = true;
             }
             
         }
@@ -304,12 +329,13 @@ namespace TalkerMakerDeluxe
             {
                 ConversationItem conv = new ConversationItem();
                 conv.lblConvID.Content = conversation.ID;
+                conv.lblNodeCount.Content = conversation.DialogEntries.Count();
                 foreach(Field field in conversation.Fields)
                 {
                     switch(field.Title)
                     {
                         case "Title":
-                            conv.lblConvTitle.Content = field.Value;
+                            conv.lblConvTitle.Text = field.Value;
                             break;
                         case "Actor":
                             conv.lblConvActorID.Content = field.Value;
@@ -336,12 +362,13 @@ namespace TalkerMakerDeluxe
             return conversations;
         }
 
-        private List<CharacterItem> AddActors(TalkerMakerProject project)
+        private List<CharacterItem> AddActors(TalkerMakerProject project, int pictureWidth = 45 )
         {
             List<CharacterItem> actors = new List<CharacterItem>();
             foreach (Actor actor in project.Assets.Actors)
             {
                 CharacterItem chara = new CharacterItem();
+                chara.pictureRow.Width = new GridLength(pictureWidth);
                 chara.lblActorID.Content = actor.ID;
                 chara.lblActorDescription.Content = "";
                 chara.lblActorAge.Content = "";
@@ -383,87 +410,196 @@ namespace TalkerMakerDeluxe
         }
         #endregion
 
-        #region Custom PropertyGrid Editors
-        public class FileChooserEditor : ITypeEditor
+        #region Front-End Functions
+
+        #region Command Bindings
+        private void Save_Binding(object obSender, ExecutedRoutedEventArgs e)
         {
-            TextBox tb;
-
-            public FrameworkElement ResolveEditor(PropertyItem propertyItem)
-            {
-                DockPanel dp = new DockPanel();
-                dp.LastChildFill = true;
-                Button bt = new Button();
-                bt.Content = "...";
-                bt.Click += new RoutedEventHandler(bt_Click);
-                DockPanel.SetDock(bt, Dock.Right);
-                dp.Children.Add(bt);
-                tb = new TextBox();
-                tb.Text = "xyz";
-                dp.Children.Add(tb);
-
-                //create the binding from the bound property item to the editor
-                var _binding = new Binding("Value"); //bind to the Value property of the PropertyItem
-                _binding.Source = propertyItem;
-                _binding.ValidatesOnExceptions = true;
-                _binding.ValidatesOnDataErrors = true;
-                _binding.Mode = propertyItem.IsReadOnly ? BindingMode.OneWay : BindingMode.TwoWay;
-                BindingOperations.SetBinding(tb, TextBox.TextProperty, _binding);
-                return dp;
-            }
-
-            void bt_Click(Object sender, RoutedEventArgs e)
-            {
-                Microsoft.Win32.OpenFileDialog openFile = new Microsoft.Win32.OpenFileDialog();
-                //setOpenFileDialog(openFile);
-                if (openFile.ShowDialog() == true)
-                {
-                    tb.Text = openFile.FileName;
-                    BindingExpression be = tb.GetBindingExpression(TextBox.TextProperty);
-                    be.UpdateSource();
-                }
-            }
-
+            SaveHandler();
         }
 
-        public class MultiLineTextEditor : ITypeEditor
+        private void NewBinding_Executed(object sender, ExecutedRoutedEventArgs e)
         {
-            public FrameworkElement ResolveEditor(PropertyItem propertyItem)
+            if (needsSave)
             {
-                TextBox editor = new TextBox();
-                editor.TextWrapping = TextWrapping.Wrap;
-                editor.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-                Binding binding = new Binding("Value"); //bind to the Value property of the PropertyItem instance
-                binding.Source = propertyItem;
-                binding.Mode = propertyItem.IsReadOnly ? BindingMode.TwoWay : BindingMode.OneWay;
-                BindingOperations.SetBinding(editor, TextBox.TextProperty, binding);
-                return editor;
+                MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before starting a new file?", "Save before newing an files for happy good time?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result1)
+                {
+                    case (MessageBoxResult.Yes):
+                        SaveHandler();
+                        PrepareProject();
+                        openedFile = "New Project";
+                        break;
+                    case (MessageBoxResult.No):
+                        PrepareProject();
+                        openedFile = "New Project";
+                        break;
+                    default:
+                        break;
+
+                }
+            }
+            else
+            {
+                PrepareProject();
+                openedFile = "New Project";
+            }
+        }
+
+        private void Open_Binding(object obSender, ExecutedRoutedEventArgs e)
+        {
+            if (needsSave)
+            {
+                MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before opening this file?", "Save before opening?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result1)
+                {
+                    case (MessageBoxResult.Yes):
+                        SaveHandler();
+                        goto opener;
+                    case (MessageBoxResult.No):
+                        goto opener;
+                    default:
+                        goto quitter;
+
+                }
+            }
+            opener:
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    try
+                    {
+                        PrepareProject(openFileDialog.FileName);
+                        openedFile = openFileDialog.FileName;
+                    }
+                    catch (Exception z)
+                    {
+                        System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
+                    }
+                }
+            quitter: ;
+        }
+
+        private void Exit_Binding(object obSender, ExecutedRoutedEventArgs e)
+        {
+            if (needsSave)
+                {
+                    MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before quitting?", "Save before quitting?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                    switch (result1)
+                    {
+                        case (MessageBoxResult.Yes):
+                            SaveHandler();
+                            Application.Current.Shutdown();
+                            break;
+                        case (MessageBoxResult.No):
+                            Application.Current.Shutdown();
+                            break;
+                        default:
+                            break;
+
+                    }
+
+                }
+                else
+                {
+                    Application.Current.Shutdown();
+                }
+        }
+
+        private void MetroWindow_Drop(object sender, DragEventArgs e)
+        {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            if (needsSave)
+            {
+                MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before opening this file?", "Save before opening?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result1)
+                {
+                    case (MessageBoxResult.Yes):
+                        SaveHandler();
+                        try
+                        { 
+                            PrepareProject(files[0]);
+                            openedFile = files[0];
+                        }
+                        catch (Exception z)
+                        {
+                            System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
+                        }
+                        break;
+                    case (MessageBoxResult.No):
+                        try
+                        {
+                            PrepareProject(files[0]);
+                            openedFile = files[0];
+                        }
+                        catch (Exception z)
+                        {
+                            System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
+                        }
+                        break;
+                    default:
+                        break;
+
+                }
+
+            }
+            else
+            {
+                try
+                {
+                    PrepareProject(files[0]);
+                    openedFile = files[0];
+                }
+                catch (Exception z)
+                {
+                    System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
+                }
             }
         }
         #endregion
 
-
-        #region Front-End Functions
-        private void SaveHandler(object obSender, ExecutedRoutedEventArgs e)
+        private void SaveHandler()
         {
             // Do the Save All thing here.
-            Console.WriteLine("Saving...");
-            XMLHandler.SaveXML(projie, "C:\\Users\\Randall\\Downloads\\Example_XML_Export.xml");
-            Console.WriteLine("Save finished.");
+            if(openedFile != "New Project")
+            {
+                Console.WriteLine("Saving...");
+                XMLHandler.SaveXML(projie, openedFile);
+                Console.WriteLine("Save finished.");
+                needsSave = false;
+            }
+            else
+            {
+                SaveFileDialog saver = new SaveFileDialog();
+                saver.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
+                saver.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (saver.ShowDialog() == true)
+                {
+                    Console.WriteLine("Saving...");
+                    XMLHandler.SaveXML(projie, saver.FileName);
+                    Console.WriteLine("Save finished.");
+                    needsSave = false;
+                }
+            }
+            
         }
-
         private void lstCharacters_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            CharacterItem chara = lstCharacters.SelectedItem as CharacterItem;
-            txtActorID.Text = chara.lblActorID.Content.ToString();
-            txtActorName.Text = chara.lblActorName.Content.ToString();
-            txtActorAge.Value = chara.lblActorAge.Content != "" ? Convert.ToInt16(chara.lblActorAge.Content) : 0;
-            txtActorGender.Text = chara.lblActorGender.Content.ToString();
-            txtActorDescription.Text = chara.lblActorDescription.Content.ToString();
-            txtActorPicture.Text = chara.lblActorPicture.Content.ToString();
-            imgActorPicture.Source = chara.imgActorImage.Source;
-            chkActorPlayer.IsChecked = Convert.ToBoolean(chara.lblActorIsPlayer.Content);
-            tabCharacter.IsSelected = true;
-            
+            if(lstCharacters.SelectedItem != null)
+            {
+                CharacterItem chara = lstCharacters.SelectedItem as CharacterItem;
+                txtActorID.Text = chara.lblActorID.Content.ToString();
+                txtActorName.Text = chara.lblActorName.Content.ToString();
+                txtActorAge.Value = chara.lblActorAge.Content != "" ? Convert.ToInt16(chara.lblActorAge.Content) : 0;
+                txtActorGender.Text = chara.lblActorGender.Content.ToString();
+                txtActorDescription.Text = chara.lblActorDescription.Content.ToString();
+                txtActorPicture.Text = chara.lblActorPicture.Content.ToString();
+                imgActorPicture.Source = chara.imgActorImage.Source;
+                chkActorPlayer.IsChecked = Convert.ToBoolean(chara.lblActorIsPlayer.Content);
+                tabCharacter.IsSelected = true;
+            }
         }
 
         private void lstConversations_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -475,17 +611,26 @@ namespace TalkerMakerDeluxe
 
         private void lstConversations_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
+            
+            loadedConversation = lstConversations.SelectedIndex;
+            LoadConversation(loadedConversation);
+            
+        }
+
+        private void LoadConversation(int convotoload)
+        {
+            //Prep to draw new conversation.
             currentNode = "";
             tcMain.Clear();
-            //DrawConversationTree(projie.Assets.Conversations[lstConversations.SelectedIndex], projie.Assets.Conversations[lstConversations.SelectedIndex].DialogEntries[0]);
             IDs.Clear();
-            loadedConversation = lstConversations.SelectedIndex;
-            foreach (DialogEntry d in projie.Assets.Conversations[loadedConversation].DialogEntries)
+
+            //Draw 'em
+            foreach (DialogEntry d in projie.Assets.Conversations[convotoload].DialogEntries)
             {
                 List<int> childs = new List<int>();
-                foreach(Link link in d.OutgoingLinks)
+                foreach (Link link in d.OutgoingLinks)
                 {
-                    if(link.DestinationConvoID == link.OriginConvoID && link.IsConnector == false)
+                    if (link.DestinationConvoID == link.OriginConvoID && link.IsConnector == false)
                         childs.Add(link.DestinationDialogID);
                 }
                 DialogHolder dh = new DialogHolder();
@@ -493,32 +638,16 @@ namespace TalkerMakerDeluxe
                 dh.ChildNodes = childs;
                 IDs.Add(dh);
             }
-            foreach(DialogHolder dh in IDs)
+            foreach (DialogHolder dh in IDs)
             {
                 DrawConversationTree(dh);
             }
             tcMain.Children.OfType<TreeNode>().First(node => node.Name == "node_0").BringIntoView();
-            //scrlTree.ScrollToHorizontalOffset(scrlTree.HorizontalOffset + 200);
+            
+            //Clear the nodes for the next draw cycle since we don't use it for anything else.
             handledNodes.Clear();
         }
 
-        private void cmbZoomPercent_KeyUp(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Enter)
-            {
-                int n;
-                bool isNumeric = int.TryParse(cmbZoomPercent.Text.Replace("%", ""), out n);
-                if (isNumeric)
-                {
-                    cmbZoomPercent.Text = cmbZoomPercent.Text.Replace("%", "") + "%";
-                }
-                else
-                {
-                    cmbZoomPercent.Text = "100%";
-                }
-                uiScaleSlider.Value = Convert.ToInt16(cmbZoomPercent.Text.Replace("%", "")) / 100;
-            }
-        }
 
         private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
         {
@@ -526,27 +655,7 @@ namespace TalkerMakerDeluxe
             e.Handled = regex.IsMatch(e.Text);
         }
 
-        private void cmbZoomPercent_LostFocus(object sender, RoutedEventArgs e)
-        {
-            int n;
-            bool isNumeric = int.TryParse(cmbZoomPercent.Text.Replace("%", ""), out n);
-            if(isNumeric)
-            {
-                cmbZoomPercent.Text = cmbZoomPercent.Text.Replace("%", "") + "%";
-            }
-            else
-            {
-                cmbZoomPercent.Text = "100%";
-            }
-            uiScaleSlider.Value = Convert.ToInt16(cmbZoomPercent.Text.Replace("%", "")) / 100;
-        }
-
-        private void cmbZoomPercent_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            uiScaleSlider.Value = Convert.ToInt16(cmbZoomPercent.Text.Replace("%", "")) / 100;
-        }
         #endregion
-
 
         #region Actor Functions
         private void txtActorName_TextChanged(object sender, TextChangedEventArgs e)
@@ -565,6 +674,7 @@ namespace TalkerMakerDeluxe
                     }
                 }
                 chara.lblActorName.Content = txtActorName.Text;
+                needsSave = true;
             }
         }
 
@@ -595,6 +705,7 @@ namespace TalkerMakerDeluxe
                     actor.Fields.Add(addField);
                 }
                 chara.lblActorGender.Content = txtActorGender.Text;
+                needsSave = true;
             }
         }
 
@@ -614,6 +725,7 @@ namespace TalkerMakerDeluxe
                     }
                 }
                 chara.lblActorIsPlayer.Content = chkActorPlayer.IsChecked.ToString();
+                needsSave = true;
             }
         }
 
@@ -642,6 +754,7 @@ namespace TalkerMakerDeluxe
                     actor.Fields.Add(addField);
                 }
                 chara.lblActorAge.Content = txtActorAge.Value.ToString();
+                needsSave = true;
             }
         }
 
@@ -670,6 +783,7 @@ namespace TalkerMakerDeluxe
                     actor.Fields.Add(addField);
                 }
                 chara.lblActorDescription.Content = txtActorDescription.Text;
+                needsSave = true;
             }
         }
 
@@ -720,7 +834,7 @@ namespace TalkerMakerDeluxe
                                 }
                             }
                        }
-                
+                    needsSave = true;   
             }
         }
 
@@ -770,24 +884,16 @@ namespace TalkerMakerDeluxe
             }
             return false;
         }
-        #endregion
+        #endregion       
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void lstConversations_GotFocus(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine("Saving...");
-            XMLHandler.SaveXML(projie, "C:\\Users\\Randall\\Downloads\\Example_XML_Export.xml");
-            Console.WriteLine("Save finished.");
-        }
+            ConversationItem conv = lstConversations.SelectedItem as ConversationItem;
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            if (mementorTalker.CanUndo)
-                mementorTalker.Undo();
+            tabConversation.IsSelected = true;
         }
 
         
-
-
        
     }
 

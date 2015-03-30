@@ -16,6 +16,12 @@ namespace TalkerMakerDeluxe
             return xmlSerializer.Deserialize(new StreamReader(xml_file)) as TalkerMakerProject;
         }
 
+        public static TalkerMakerProject LoadXML(Stream stream)
+        {
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(TalkerMakerProject));
+            return xmlSerializer.Deserialize(new StreamReader(stream)) as TalkerMakerProject;
+        }
+
         public static void SaveXML(TalkerMakerProject talkerMakerProject, string xml_file)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(typeof(TalkerMakerProject));
@@ -28,9 +34,7 @@ namespace TalkerMakerDeluxe
     [Serializable]
     public class Actor
     {
-        //
-        // Fields
-        //
+
         [XmlArray("Fields"), XmlArrayItem("Field")]
         public List<Field> Fields = new List<Field>();
 
@@ -41,9 +45,7 @@ namespace TalkerMakerDeluxe
     [Serializable]
     public class Assets
     {
-        //
-        // Fields
-        //
+
         [XmlArray("Conversations"), XmlArrayItem("Conversation")]
         public List<Conversation> Conversations = new List<Conversation>();
 
@@ -60,12 +62,10 @@ namespace TalkerMakerDeluxe
         public List<Item> Items = new List<Item>();
     }
 
-    [XmlRoot("ChatMapperProject")]
+    [XmlRoot("TalkerMakerProject")]
     public class TalkerMakerProject
     {
-        //
-        // Fields
-        //
+
         [XmlAttribute("EmphasisStyle3")]
         public string EmphasisStyle3;
 
@@ -116,21 +116,11 @@ namespace TalkerMakerDeluxe
 
         [XmlAttribute("EmphasisColor2Label")]
         public string EmphasisColor2Label = string.Empty;
-
-        //
-        // Methods
-        //
-        //public DialogueDatabase ToDialogueDatabase()
-        //{
-        //    return ChatMapperToDialogueDatabase.ConvertToDialogueDatabase(this);
-        //}
     }
 
     public class Conversation
     {
-        //
-        // Fields
-        //
+
         [XmlArray("Fields"), XmlArrayItem("Field")]
         public List<Field> Fields = new List<Field>();
 
@@ -149,9 +139,7 @@ namespace TalkerMakerDeluxe
 
     public class DialogEntry
     {
-        //
-        // Fields
-        //
+
         [XmlArray("Fields"), XmlArrayItem("Field")]
         public List<Field> Fields = new List<Field>();
 
@@ -186,9 +174,7 @@ namespace TalkerMakerDeluxe
 
     public class Field
     {
-        //
-        // Fields
-        //
+
         public string Title;
 
         public string Value;
@@ -202,9 +188,7 @@ namespace TalkerMakerDeluxe
 
     public class Item
     {
-        //
-        // Fields
-        //
+
         [XmlArray("Fields"), XmlArrayItem("Field")]
         public List<Field> Fields = new List<Field>();
 
@@ -214,9 +198,7 @@ namespace TalkerMakerDeluxe
 
     public class Link
     {
-        //
-        // Fields
-        //
+
         [XmlAttribute("OriginDialogID")]
         public int OriginDialogID;
 
@@ -238,9 +220,7 @@ namespace TalkerMakerDeluxe
 
     public class Location
     {
-        //
-        // Fields
-        //
+
         [XmlArray("Fields"), XmlArrayItem("Field")]
         public List<Field> Fields = new List<Field>();
 
@@ -250,9 +230,7 @@ namespace TalkerMakerDeluxe
 
     public class UserVariable
     {
-        //
-        // Fields
-        //
+
         [XmlArray("Fields"), XmlArrayItem("Field")]
         public List<Field> Fields = new List<Field>();
     }

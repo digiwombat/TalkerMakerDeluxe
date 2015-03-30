@@ -9,7 +9,7 @@
     xmlns:s="clr-namespace:TalkerMakerDeluxe"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-    Title="TalkerMaker Deluxe" Height="810" MinHeight="450" MinWidth="600" Width="1200" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" WindowStartupLocation="CenterScreen">
+    Title="TalkerMaker Deluxe" Height="810" MinHeight="450" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" WindowStartupLocation="CenterScreen">
     <Controls:MetroWindow.Resources>
         <s:UriToBitmapConverter x:Key="UriToBitmapConverter" />
         <s:Actor x:Key="CharacterItems" />
@@ -19,6 +19,18 @@
             <Button Content="settings" />
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
+    <Window.CommandBindings>
+        <CommandBinding Command="New" Executed="NewBinding_Executed" />
+        <CommandBinding Command="Save" Executed="Save_Binding" />
+        <CommandBinding Command="Open" Executed="Open_Binding" />
+        <CommandBinding Command="Close" Executed="Exit_Binding" />
+    </Window.CommandBindings>
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="New"/>
+        <KeyBinding Key="O" Modifiers="Control" Command="Open"/>
+        <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
+        <KeyBinding Key="W" Modifiers="Control" Command="Close"/>
+    </Window.InputBindings>
     <Grid ShowGridLines="False" Width="Auto" Height="Auto">
         <Grid.RowDefinitions>
             <RowDefinition Height="100"/>
@@ -30,11 +42,6 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="235" />
         </Grid.ColumnDefinitions>
-
-        <ComboBox x:Name="cmbZoomPercent" Height="26" IsEditable="True" Margin="77,54,86,20" Text="100%" LostFocus="cmbZoomPercent_LostFocus" KeyUp="cmbZoomPercent_KeyUp" PreviewTextInput="NumberValidationTextBox" TextBoxBase.TextChanged="cmbZoomPercent_TextChanged">
-            <Label Content="25%"/>
-            <Label Content="50%"/>
-        </ComboBox>
 
 
         <TabControl Grid.Row="1">
@@ -89,7 +96,7 @@
                     <StackPanel Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
 
                         <Expander Header="Conversations" IsExpanded="True" ScrollViewer.CanContentScroll="True">
-                            <ListBox x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" SelectionChanged="lstConversations_SelectionChanged" />
+                            <ListBox x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" GotFocus="lstConversations_GotFocus" SelectionChanged="lstConversations_SelectionChanged" />
 
                         </Expander>
 
@@ -107,7 +114,7 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <ScrollViewer Name="scrlTree" Background="{StaticResource ResourceKey=GrayBrush7}" BorderBrush="{StaticResource ResourceKey=HighlightBrush}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2">
-                <TreeContainer:TreeContainer Width="Auto" Height="Auto" x:Name="tcMain" Margin="8,8,8,8" VerticalBuffer="20" ButtonBase.Click="tcMain_Click" HorizontalAlignment="Center" VerticalAlignment="Top" >
+                <TreeContainer:TreeContainer Width="Auto" Height="Auto" x:Name="tcMain" Margin="8,8,8,8" VerticalBuffer="20" HorizontalAlignment="Center" VerticalAlignment="Top" >
                     <TreeContainer:TreeContainer.LayoutTransform>
                         <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}" />
                     </TreeContainer:TreeContainer.LayoutTransform>
@@ -141,25 +148,25 @@
 
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">ID</TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Left" Name="txtActorID"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Name="txtActorID"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Name</TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="" Name="txtActorName" TextChanged="txtActorName_TextChanged"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtActorName" TextChanged="txtActorName_TextChanged"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Age</TextBlock>
-                    <Controls:NumericUpDown Minimum="0" Grid.Row="2" Grid.Column="1" Name="txtActorAge" ValueChanged="txtActorAge_ValueChanged"/>
+                    <Controls:NumericUpDown Minimum="0" Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Name="txtActorAge" ValueChanged="txtActorAge_ValueChanged"/>
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Gender</TextBlock>
-                    <TextBox Grid.Row="3" Grid.Column="1" Name="txtActorGender" TextChanged="txtActorGender_TextChanged"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Name="txtActorGender" TextChanged="txtActorGender_TextChanged"/>
 
                     <TextBlock Grid.Row="4" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Is Player?</TextBlock>
-                    <CheckBox Grid.Row="4" Grid.Column="1" Name="chkActorPlayer" Checked="chkActorPlayer_Checked" Unchecked="chkActorPlayer_Checked"></CheckBox>
+                    <CheckBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" Name="chkActorPlayer" Checked="chkActorPlayer_Checked" Unchecked="chkActorPlayer_Checked"></CheckBox>
 
                     <TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
-                    <TextBox Grid.Row="5" Grid.Column="1" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" Name="txtActorDescription" TextChanged="txtActorDescription_TextChanged" />
+                    <TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" Name="txtActorDescription" TextChanged="txtActorDescription_TextChanged" />
 
                     <TextBlock Grid.Row="6" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Picture</TextBlock>
-                    <Grid Grid.Row="6" Grid.Column="1">
+                    <Grid Grid.Row="6" Grid.Column="1" Margin="4,0,4,4">
                         <TextBlock Name="txtActorPicture" Visibility="Hidden"/>
                         <Image Name="imgActorPicture" Width="64" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality" />
                         <Button Name="btnPicturePicker" Content="..." Width="25" Height="25" HorizontalAlignment="Right" Click="btnPicturePicker_Click" VerticalAlignment="Top"/>
@@ -198,19 +205,22 @@
 
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">ID</TextBlock>
-                    <TextBlock Grid.Row="0" Grid.Column="1" TextAlignment="Left" Name="txtDialogueID"/>
+                    <TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Name="txtDialogueID"/>
 
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Title</TextBlock>
-                    <TextBox Grid.Row="1" Grid.Column="1" Text="" Name="txtDialogueTitle" TextChanged="txtActorName_TextChanged"/>
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtDialogueTitle" TextChanged="txtActorName_TextChanged"/>
 
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Actor</TextBlock>
-                    <ComboBox Grid.Row="2" Grid.Column="1" Name="lstDialogueActor" ItemsSource="{Binding ElementName=listBox1}" />
+                    <ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Name="lstDialogueActor" ItemsSource="{Binding ElementName=listBox1}" />
 
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Conversant</TextBlock>
-                    <ComboBox Grid.Row="3" Grid.Column="1" Name="lstDialogueConversant" ItemsSource="{Binding ElementName=listBox1}" />
+                    <ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Name="lstDialogueConversant" ItemsSource="{Binding ElementName=listBox1}" />
 
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
-                    <TextBox Grid.Row="4" Grid.Column="1" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" Name="txtDialogueWords" TextChanged="txtActorDescription_TextChanged" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Menu Text</TextBlock>
+                    <TextBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtMenuText" TextChanged="txtActorName_TextChanged"/>
+
+                    <TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
+                    <TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" Name="txtDialogueWords" TextChanged="txtActorDescription_TextChanged" />
 
 
 
@@ -237,36 +247,25 @@
         <Image Grid.Row="0" Grid.Column="2" Name="imgOverview" Stretch="UniformToFill" />
         <Menu VerticalAlignment="Top" Grid.ColumnSpan="1000" Panel.ZIndex="-9">
             <MenuItem Header="_File">
-                <MenuItem Header="_New" />
-                <MenuItem Header="_Open" />
-                <MenuItem Name="Save" Header="_Save" Click="Save_Click" />
+                <MenuItem Name="menuNew" Header="_New" Command="New" />
+                <MenuItem Name="menuOpen" Header="_Open" Command="Open" />
+                <MenuItem Name="menuSave" Header="_Save"  Command="Save" />
                 <Separator />
-                <MenuItem Header="_Exit" />
+                <MenuItem Name="menuExit" Header="_Exit" Command="Close" />
             </MenuItem>
         </Menu>
         <StatusBar Grid.Row="2" Grid.ColumnSpan="100">
-            <StatusBar.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="100" />
-                        </Grid.ColumnDefinitions>
-                    </Grid>
-                </ItemsPanelTemplate>
-            </StatusBar.ItemsPanel>
-            <StatusBarItem>
-                <Slider x:Name="uiScaleSlider" ToolTip="Determines the UI scale factor." Value="1" Minimum="0.75" Maximum="3" MinWidth="100" VerticalAlignment="Center">
-                    <Slider.Resources>
-                        <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Black" />
-                        <SolidColorBrush x:Key="{x:Static SystemColors.ControlDarkDarkBrushKey}" Color="Silver" />
-                    </Slider.Resources>
-                </Slider>
+            <StatusBarItem HorizontalAlignment="Left">
+                    <Slider x:Name="uiScaleSlider" ToolTip="Scales the tree view." Value="1" Minimum="0.75" Maximum="3" MinWidth="100" VerticalAlignment="Center">
+                        <Slider.Resources>
+                            <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Black" />
+                            <SolidColorBrush x:Key="{x:Static SystemColors.ControlDarkDarkBrushKey}" Color="Silver" />
+                        </Slider.Resources>
+                    </Slider>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Left">
+                <Label x:Name="Scale_Percent" Content="{Binding ElementName=uiScaleSlider,Path=Value}" ContentStringFormat="{}{0:0%}"/>
             </StatusBarItem>
         </StatusBar>
-        <Button Content="Undo" HorizontalAlignment="Left" Margin="143,26,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
     </Grid>
 </Controls:MetroWindow>
