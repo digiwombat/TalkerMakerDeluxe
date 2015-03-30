@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TreeContainer", "TreeContainer\TreeContainer.csproj", "{88B86170-EC9F-4ACF-B96E-0F97C28F57BA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TalkerMakerDeluxe", "VisLogTree\TalkerMakerDeluxe.csproj", "{D913CF17-3497-4489-A493-C619886D223B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GraphLayout", "GraphLayout\GraphLayout\GraphLayout.csproj", "{FB8364B6-55D2-45B0-B173-E6308C19DD61}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{88B86170-EC9F-4ACF-B96E-0F97C28F57BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{88B86170-EC9F-4ACF-B96E-0F97C28F57BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{88B86170-EC9F-4ACF-B96E-0F97C28F57BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{88B86170-EC9F-4ACF-B96E-0F97C28F57BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D913CF17-3497-4489-A493-C619886D223B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D913CF17-3497-4489-A493-C619886D223B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D913CF17-3497-4489-A493-C619886D223B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D913CF17-3497-4489-A493-C619886D223B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB8364B6-55D2-45B0-B173-E6308C19DD61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB8364B6-55D2-45B0-B173-E6308C19DD61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB8364B6-55D2-45B0-B173-E6308C19DD61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB8364B6-55D2-45B0-B173-E6308C19DD61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

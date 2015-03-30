@@ -1,0 +1,25 @@
+﻿<UserControl x:Class="TalkerMakerDeluxe.ConversationItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+              d:DesignHeight="50" d:DesignWidth="180">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="180"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+        <Label Content="Conversation Title" Name="lblConvTitle" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold"/>
+        <Label Content="Actor" Name="lblConvActor" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+        <Label Content="Conversant" Name="lblConvConversant" HorizontalContentAlignment="Right" HorizontalAlignment="Right" VerticalAlignment="Bottom"/>
+        
+        <Label Content="0" Name="lblConvActorID" Visibility="Hidden"/>
+        <Label Content="0" Name="lblConvID" Visibility="Hidden"/>
+        <Label Content="0" Name="lblConvConversantID" Visibility="Hidden"/>
+        <Label Content="Scene" Name="lblconvScene" Visibility="Hidden"/>
+        <Label Content="Description" Name="lblConvDescription" Visibility="Hidden"/>
+    </Grid>
+</UserControl>
