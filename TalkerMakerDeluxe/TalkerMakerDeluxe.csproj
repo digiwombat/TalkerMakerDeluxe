@@ -56,6 +56,9 @@
   <PropertyGroup>
     <StartupObject>TalkerMakerDeluxe.App</StartupObject>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="FontAwesome.WPF">
       <HintPath>..\packages\FontAwesome.WPF.4.3.0.2\lib\FontAwesome.WPF.dll</HintPath>
@@ -189,6 +192,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="NewProjectTemplate.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
