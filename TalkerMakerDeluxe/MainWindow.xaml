@@ -9,7 +9,7 @@
     xmlns:s="clr-namespace:TalkerMakerDeluxe"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-    Title="TalkerMaker Deluxe" Height="810" MinHeight="450" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" WindowStartupLocation="CenterScreen" Icon="icon.ico" ResizeMode="CanResizeWithGrip">
+    Title="TalkerMaker Deluxe" Height="810" MinHeight="450" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip">
     <Controls:MetroWindow.Resources>
         <s:UriToBitmapConverter x:Key="UriToBitmapConverter" />
         <s:Actor x:Key="CharacterItems" />
@@ -268,9 +268,21 @@
         <Image Grid.Row="0" Grid.Column="2" Name="imgOverview" Stretch="UniformToFill" />
         <Menu VerticalAlignment="Top" Grid.ColumnSpan="1000">
             <MenuItem x:Name="menuItem" Header="_File">
-                <MenuItem Name="menuNew" Header="_New Project" Command="New" />
-                <MenuItem Name="menuOpen" Header="_Open Project" Command="Open" />
-                <MenuItem Name="menuSave" Header="_Save Project"  Command="Save" />
+                <MenuItem Name="menuNew" Header="_New Project" Command="New">
+                    <MenuItem.Icon>
+                        <fa:FontAwesome Icon="CodeFileOutlined" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="menuOpen" Header="_Open Project" Command="Open">
+                    <MenuItem.Icon>
+                        <fa:FontAwesome Icon="FolderOpenOutlined" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="menuSave" Header="_Save Project"  Command="Save">
+                    <MenuItem.Icon>
+                        <fa:FontAwesome Icon="Save" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem Name="menuExit" Header="_Exit" Command="Close" />
             </MenuItem>

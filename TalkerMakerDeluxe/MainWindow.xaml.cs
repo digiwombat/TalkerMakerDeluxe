@@ -83,6 +83,7 @@ namespace TalkerMakerDeluxe
 			InitializeComponent();
 
             this.Icon = ImageAwesome.CreateImageSource(FontAwesomeIcon.CommentsO, (Brush)Application.Current.FindResource("HighlightBrush"));
+            
             this.Title = "TalkerMaker Deluxe - " + openedFile;
 
 
