@@ -56,6 +56,5 @@ namespace TalkerMakerDeluxe
             MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
             parentWindow.AddNode(this.Name);
         }
-
     }
 }
