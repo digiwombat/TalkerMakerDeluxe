@@ -272,6 +272,8 @@ namespace TalkerMakerDeluxe
                 node = nodeTree.Content as NodeControl;
                 currentNode = newNode;
 
+                lstDialogueActor.ItemsSource = AddActors(projie, 0);
+                lstDialogueConversant.ItemsSource = AddActors(projie, 0);
                 tabDialogue.IsSelected = true;
                 txtDialogueID.Text = node.lblID.Content.ToString();
                 txtDialogueTitle.Text = node.lblDialogueName.Content.ToString();
@@ -842,6 +844,8 @@ namespace TalkerMakerDeluxe
             lstConvoConversant.SelectedItem = lstConvoConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvConversantID.Content.ToString());
             txtConvoTitle.Text = conv.lblConvTitle.Text;
             txtConvoDescription.Text = conv.lblConvDescription.Content.ToString();
+            lstConvoActor.ItemsSource = AddActors(projie, 0);
+            lstConvoConversant.ItemsSource = AddActors(projie, 0);
             tabConversation.IsSelected = true;
         }
 
