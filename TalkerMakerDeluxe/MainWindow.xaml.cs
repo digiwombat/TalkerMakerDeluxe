@@ -838,15 +838,18 @@ namespace TalkerMakerDeluxe
 
         private void lstConversations_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ConversationItem conv = lstConversations.SelectedItem as ConversationItem;
-            txtConvoID.Text = conv.lblConvID.Content.ToString();
-            lstConvoActor.SelectedItem = lstConvoActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvActorID.Content.ToString());
-            lstConvoConversant.SelectedItem = lstConvoConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvConversantID.Content.ToString());
-            txtConvoTitle.Text = conv.lblConvTitle.Text;
-            txtConvoDescription.Text = conv.lblConvDescription.Content.ToString();
-            lstConvoActor.ItemsSource = AddActors(projie, 0);
-            lstConvoConversant.ItemsSource = AddActors(projie, 0);
-            tabConversation.IsSelected = true;
+            if (lstConversations.SelectedItem != null)
+            {
+                lstConvoActor.ItemsSource = AddActors(projie, 0);
+                lstConvoConversant.ItemsSource = AddActors(projie, 0);
+                ConversationItem conv = lstConversations.SelectedItem as ConversationItem;
+                txtConvoID.Text = conv.lblConvID.Content.ToString();
+                lstConvoActor.SelectedItem = lstConvoActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvActorID.Content.ToString());
+                lstConvoConversant.SelectedItem = lstConvoConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvConversantID.Content.ToString());
+                txtConvoTitle.Text = conv.lblConvTitle.Text;
+                txtConvoDescription.Text = conv.lblConvDescription.Content.ToString();
+                tabConversation.IsSelected = true;
+            }
         }
 
         private void lstConversations_MouseDoubleClick(object sender, MouseButtonEventArgs e)
@@ -859,6 +862,8 @@ namespace TalkerMakerDeluxe
 
         private void lstConversations_GotFocus(object sender, RoutedEventArgs e)
         {
+            lstConvoActor.ItemsSource = AddActors(projie, 0);
+            lstConvoConversant.ItemsSource = AddActors(projie, 0);
             tabConversation.IsSelected = true;
         }
 
