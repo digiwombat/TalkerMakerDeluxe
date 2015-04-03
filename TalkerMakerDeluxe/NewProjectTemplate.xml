@@ -64,5 +64,23 @@
         </Fields>
       </Actor>
     </Actors>
+    <UserVariables>
+      <UserVariable>
+        <Fields>
+          <Field Type="Text">
+            <Title>Name</Title>
+            <Value>TestVar</Value>
+          </Field>
+          <Field Type="Boolean">
+            <Title>Initial Value</Title>
+            <Value>false</Value>
+          </Field>
+          <Field Type="Text">
+            <Title>Description</Title>
+            <Value></Value>
+          </Field>
+        </Fields>
+      </UserVariable>
+    </UserVariables>
   </Assets>
 </TalkerMakerProject>

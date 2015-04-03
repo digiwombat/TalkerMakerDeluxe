@@ -112,6 +112,9 @@
       <DependentUpon>NodeControl.xaml</DependentUpon>
     </Compile>
     <Compile Include="UriConverter.cs" />
+    <Compile Include="VariableItem.xaml.cs">
+      <DependentUpon>VariableItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="XMLHandler.cs" />
     <Page Include="CharacterItem.xaml">
       <SubType>Designer</SubType>
@@ -136,6 +139,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="NodeControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="VariableItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

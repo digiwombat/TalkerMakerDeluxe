@@ -36,7 +36,9 @@ using System.Collections;
 namespace TalkerMakerDeluxe
 {
     public partial class MainWindow : MetroWindow
-	{
+    {
+
+        #region Variables and Structs
 
         TalkerMakerProject projie;
         List<int> handledNodes = new List<int>();
@@ -76,7 +78,9 @@ namespace TalkerMakerDeluxe
             public List<int> ChildNodes;
         }
 
+        #endregion
 
+        #region Main Functions
 
         public MainWindow()
 		{
@@ -112,6 +116,8 @@ namespace TalkerMakerDeluxe
             projie = XMLHandler.LoadXML(_assembly.GetManifestResourceStream("TalkerMakerDeluxe.NewProjectTemplate.xml"));
 
             currentNode = "";
+            editConditions.Text = "";
+            editScript.Text = "";
             tabBlank.IsSelected = true;
             txtSettingAuthor.Text = projie.Author;
             txtSettingProjectTitle.Text = projie.Title;
@@ -119,7 +125,10 @@ namespace TalkerMakerDeluxe
             lstCharacters.ItemsSource = AddActors(projie);
             lstDialogueActor.ItemsSource = AddActors(projie, 0);
             lstDialogueConversant.ItemsSource = AddActors(projie, 0);
+            lstConvoActor.ItemsSource = AddActors(projie, 0);
+            lstConvoConversant.ItemsSource = AddActors(projie, 0);
             lstConversations.ItemsSource = AddConversations(projie);
+            lstVariables.ItemsSource = AddVariables(projie);
             loadedConversation = 0;
             editConditions.Text = "";
             editScript.Text = "";
@@ -131,13 +140,18 @@ namespace TalkerMakerDeluxe
             projie = XMLHandler.LoadXML(project);
 
             currentNode = "";
+            editConditions.Text = "";
+            editScript.Text = "";
             tabBlank.IsSelected = true;
+            lstVariables.ItemsSource = AddVariables(projie);
             txtSettingAuthor.Text = projie.Author;
             txtSettingProjectTitle.Text = projie.Title;
             txtSettingVersion.Text = projie.Version;
             lstCharacters.ItemsSource = AddActors(projie);
             lstDialogueActor.ItemsSource = AddActors(projie, 0);
             lstDialogueConversant.ItemsSource = AddActors(projie, 0);
+            lstConvoActor.ItemsSource = AddActors(projie, 0);
+            lstConvoConversant.ItemsSource = AddActors(projie, 0);
             lstConversations.ItemsSource = AddConversations(projie);
             loadedConversation = 0;
             editConditions.Text = "";
@@ -145,10 +159,7 @@ namespace TalkerMakerDeluxe
             LoadConversation(0);
         }
 
-        void RestoreScalingFactor(object sender, MouseButtonEventArgs args)
-        {
-            ((Slider)sender).Value = 1.0;
-        }
+        #endregion
 
         #region Tree Functions
         public void CollapseNode(string parentNode)
@@ -494,6 +505,35 @@ namespace TalkerMakerDeluxe
 
             return actors;
         }
+
+        private List<VariableItem> AddVariables(TalkerMakerProject project)
+        {
+            List<VariableItem> variables = new List<VariableItem>();
+            foreach (UserVariable variable in project.Assets.UserVariables)
+            {
+                VariableItem var = new VariableItem();
+                foreach (Field field in variable.Fields)
+                {
+                    switch (field.Title)
+                    {
+                        case "Name":
+                            var.lblVarName.Content = field.Value;
+                            break;
+                        case "Description":
+                            var.lblVarDescription.Content = field.Value;
+                            break;
+                        case "Initial Value":
+                            var.lblVarType.Content = field.Type;
+                            var.lblVarValue.Content = field.Value;
+                            break;
+                    }
+                }
+
+                variables.Add(var);
+            }
+
+            return variables;
+        }
         #endregion
 
         #region Front-End Functions
@@ -675,6 +715,8 @@ namespace TalkerMakerDeluxe
         }
         #endregion
 
+        #region UI Related Fuctions
+
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             if (popSettings.IsOpen)
@@ -722,6 +764,8 @@ namespace TalkerMakerDeluxe
             lstCharacters.ItemsSource = AddActors(projie);
             lstDialogueActor.ItemsSource = AddActors(projie, 0);
             lstDialogueConversant.ItemsSource = AddActors(projie, 0);
+            lstConvoActor.ItemsSource = AddActors(projie, 0);
+            lstConvoConversant.ItemsSource = AddActors(projie, 0);
         }
 
         private void btnAddConversation_Click(object sender, RoutedEventArgs e)
@@ -749,6 +793,30 @@ namespace TalkerMakerDeluxe
             
         }
 
+        private void btnAddVariable_Click(object sender, RoutedEventArgs e)
+        {
+            UserVariable newVar = new UserVariable();
+            newVar.Fields.Add(new Field { Title = "Name", Value = "New Variable" });
+            newVar.Fields.Add(new Field { Title = "Initial Value", Value = "false", Type = "Boolean" });
+            newVar.Fields.Add(new Field { Title = "Description", Value = "" });
+
+            projie.Assets.UserVariables.Add(newVar);
+            lstVariables.ItemsSource = AddVariables(projie);
+        }
+
+        private void lstVariables_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstVariables.SelectedItem != null)
+            {
+                VariableItem variable = lstVariables.SelectedItem as VariableItem;
+                txtVarName.Text = variable.lblVarName.Content.ToString();
+                txtVarType.Text = variable.lblVarType.Content.ToString();
+                txtVarValue.Text = variable.lblVarValue.Content.ToString();
+                txtVarDescription.Text = variable.lblVarDescription.Content.ToString();
+                tabVariable.IsSelected = true;
+            }
+        }
+
         private void lstCharacters_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if(lstCharacters.SelectedItem != null)
@@ -769,7 +837,11 @@ namespace TalkerMakerDeluxe
         private void lstConversations_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ConversationItem conv = lstConversations.SelectedItem as ConversationItem;
-
+            txtConvoID.Text = conv.lblConvID.Content.ToString();
+            lstConvoActor.SelectedItem = lstConvoActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvActorID.Content.ToString());
+            lstConvoConversant.SelectedItem = lstConvoConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvConversantID.Content.ToString());
+            txtConvoTitle.Text = conv.lblConvTitle.Text;
+            txtConvoDescription.Text = conv.lblConvDescription.Content.ToString();
             tabConversation.IsSelected = true;
         }
 
@@ -783,9 +855,17 @@ namespace TalkerMakerDeluxe
 
         private void lstConversations_GotFocus(object sender, RoutedEventArgs e)
         {
-            ConversationItem conv = lstConversations.SelectedItem as ConversationItem;
-
             tabConversation.IsSelected = true;
+        }
+
+        private void lstCharacters_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tabCharacter.IsSelected = true;
+        }
+
+        private void lstVariables_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tabVariable.IsSelected = true;
         }
         
         private void popSettings_MouseLeave(object sender, MouseEventArgs e)
@@ -794,6 +874,12 @@ namespace TalkerMakerDeluxe
                 popSettings.IsOpen = false;
         }
 
+        void RestoreScalingFactor(object sender, MouseButtonEventArgs args)
+        {
+            ((Slider)sender).Value = 1.0;
+        }
+
+        #endregion
 
         #region Actor Edit Functions
 
@@ -1025,6 +1111,102 @@ namespace TalkerMakerDeluxe
 
         #region Conversation Edit Functions
 
+        private void txtConvoTitle_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ConversationItem convo = lstConversations.SelectedItem as ConversationItem;
+            if (txtConvoTitle.Text != "" && convo.lblConvTitle.Text != txtConvoTitle.Text)
+            {
+                Conversation conversation = projie.Assets.Conversations[lstConversations.SelectedIndex];
+                foreach (Field field in conversation.Fields)
+                {
+                    switch (field.Title)
+                    {
+                        case "Title":
+                            field.Value = txtConvoTitle.Text;
+                            break;
+                    }
+                }
+                convo.lblConvTitle.Text = txtConvoTitle.Text;
+                needsSave = true;
+            }
+        }
+
+        private void txtConvoDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            ConversationItem convo = lstConversations.SelectedItem as ConversationItem;
+            if (txtConvoDescription.Text != "" && convo.lblConvDescription.Content != txtConvoDescription.Text)
+            {
+                Conversation conversation = projie.Assets.Conversations[lstConversations.SelectedIndex];
+                foreach (Field field in conversation.Fields)
+                {
+                    switch (field.Title)
+                    {
+                        case "Description":
+                            field.Value = txtConvoDescription.Text;
+                            break;
+                    }
+                }
+                convo.lblConvDescription.Content = txtConvoDescription.Text;
+                needsSave = true;
+            }
+        }
+
+        private void lstConvoActor_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstConvoActor.SelectedItem != null && lstConversations.SelectedItem != null)
+            {
+                CharacterItem chara = lstConvoActor.SelectedItem as CharacterItem;
+                ConversationItem convo = lstConversations.SelectedItem as ConversationItem;
+
+                if (chara.lblActorID.Content != "" && convo.lblConvActorID.Content != chara.lblActorID.Content)
+                {
+                    Conversation conversation = projie.Assets.Conversations[lstConversations.SelectedIndex];
+                    foreach (Field field in conversation.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Actor":
+                                field.Value = chara.lblActorID.Content.ToString();
+                                break;
+                        }
+                    }
+                    convo.lblConvActorID.Content = chara.lblActorID.Content;
+                    convo.lblConvActor.Content = chara.lblActorName.Content;
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void lstConvoConversant_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstConvoConversant.SelectedItem != null && lstConversations.SelectedItem != null)
+            {
+                CharacterItem chara = lstConvoConversant.SelectedItem as CharacterItem;
+                ConversationItem convo = lstConversations.SelectedItem as ConversationItem;
+
+                if (chara.lblActorID.Content != "" && convo.lblConvConversantID.Content != chara.lblActorID.Content)
+                {
+                    Conversation conversation = projie.Assets.Conversations[lstConversations.SelectedIndex];
+                    foreach (Field field in conversation.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Conversant":
+                                field.Value = chara.lblActorID.Content.ToString();
+                                break;
+                        }
+                    }
+                    convo.lblConvConversantID.Content = chara.lblActorID.Content;
+                    convo.lblConvConversant.Content = chara.lblActorName.Content;
+                    needsSave = true;
+                }
+            }
+        }
+
+        #endregion
+
+        #region Dialogue Edit Functions
+
         private void txtDialogueTitle_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (currentNode != "")
@@ -1186,9 +1368,105 @@ namespace TalkerMakerDeluxe
 
         #endregion
 
-        #endregion        
+        #region Variable Edit Functions
 
+        private void txtVarName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(lstVariables.SelectedItem != null)
+            { 
+                VariableItem variable = lstVariables.SelectedItem as VariableItem;
+                if (txtVarName.Text != "" && variable.lblVarName.Content != txtVarName.Text)
+                {
+                    UserVariable var = projie.Assets.UserVariables[lstVariables.SelectedIndex];
+                    foreach (Field field in var.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Name":
+                                field.Value = txtVarName.Text;
+                                break;
+                        }
+                    }
+                    variable.lblVarName.Content = txtVarName.Text;
+                    needsSave = true;
+                }
+            }
+        }
 
+        private void txtVarType_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (lstVariables.SelectedItem != null)
+            {
+                VariableItem variable = lstVariables.SelectedItem as VariableItem;
+                if (txtVarType.Text != "" && variable.lblVarType.Content != txtVarType.Text)
+                {
+                    UserVariable var = projie.Assets.UserVariables[lstVariables.SelectedIndex];
+                    foreach (Field field in var.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Initial Value":
+                                field.Type = txtVarType.Text;
+                                break;
+                        }
+                    }
+                    variable.lblVarType.Content = txtVarType.Text;
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void txtVarValue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (lstVariables.SelectedItem != null)
+            {
+                VariableItem variable = lstVariables.SelectedItem as VariableItem;
+                if (variable.lblVarValue.Content != txtVarValue.Text)
+                {
+                    UserVariable var = projie.Assets.UserVariables[lstVariables.SelectedIndex];
+                    foreach (Field field in var.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Initial Value":
+                                field.Value = txtVarValue.Text;
+                                break;
+                        }
+                    }
+                    variable.lblVarValue.Content = txtVarValue.Text;
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void txtVarDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (lstVariables.SelectedItem != null)
+            {
+                VariableItem variable = lstVariables.SelectedItem as VariableItem;
+                if (variable.lblVarDescription.Content != txtVarDescription.Text)
+                {
+                    UserVariable var = projie.Assets.UserVariables[lstVariables.SelectedIndex];
+                    foreach (Field field in var.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Description":
+                                field.Value = txtVarDescription.Text;
+                                break;
+                        }
+                    }
+                    variable.lblVarDescription.Content = txtVarDescription.Text;
+                    needsSave = true;
+                }
+            }
+        }
+
+        #endregion
+
+        #endregion
+
+        
 
     }
 

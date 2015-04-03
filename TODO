@@ -1,5 +1,5 @@
 # TODO:
 
-* Add variable handling.
-* Add ability to rename conversations and change core participants (whoops).
+* Add dialogue system scene instruction field.
+* Add the ability to delete conversations, characters, and variables.
 * Copy paste, maybe? I don't know, maaaan. Lot of work.
