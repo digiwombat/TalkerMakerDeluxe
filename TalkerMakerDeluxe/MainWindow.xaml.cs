@@ -30,6 +30,7 @@ using ICSharpCode.AvalonEdit.Highlighting;
 using System.Reflection;
 using MahApps.Metro;
 using System.Collections;
+using Newtonsoft.Json;
 
 
 
@@ -567,6 +568,21 @@ namespace TalkerMakerDeluxe
                 }
             }
 
+        }
+
+        private void menuExport_Click(object sender, RoutedEventArgs e)
+        {
+            popSettings.IsOpen = false;
+            SaveFileDialog saver = new SaveFileDialog();
+            saver.Filter = "TalkerMaker JSON File (*.json)|*.json|All Files (*.*)|*.*";
+            saver.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (saver.ShowDialog() == true)
+            {
+                Console.WriteLine("Saving...");
+                XMLHandler.SaveXML(projie, saver.FileName, true);
+                Console.WriteLine("Save finished.");
+                needsSave = false;
+            }
         }
 
         private void Save_Binding(object obSender, ExecutedRoutedEventArgs e)

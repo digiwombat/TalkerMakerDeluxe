@@ -364,6 +364,11 @@
                         <fa:FontAwesome Icon="Save" />
                     </MenuItem.Icon>
                 </MenuItem>
+                <MenuItem Name="menuExport" Header="Export to JSON" Click="menuExport_Click" >
+                    <MenuItem.Icon>
+                        <fa:FontAwesome Icon="ShareSquareOutlined" />
+                    </MenuItem.Icon>
+                </MenuItem>
                 <Separator />
                 <MenuItem Name="menuExit" Header="_Exit" Command="Close" />
             </MenuItem>

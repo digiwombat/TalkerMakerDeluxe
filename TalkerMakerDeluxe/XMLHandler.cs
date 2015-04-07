@@ -1,8 +1,10 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -28,6 +30,33 @@ namespace TalkerMakerDeluxe
             StreamWriter streamWriter = new StreamWriter(xml_file, false, System.Text.Encoding.UTF8);
             xmlSerializer.Serialize(streamWriter, talkerMakerProject);
             streamWriter.Close();
+        }
+
+        public static void SaveXML(TalkerMakerProject talkerMakerProject, string xml_file, bool isJSON)
+        {
+
+            //This currently outputs crap made of shit and doesn't match standard.
+            XmlSerializer xmlSerializer = new XmlSerializer(typeof(TalkerMakerProject));
+            XmlDocument xmlDoc = null;
+
+            using (MemoryStream xmlStream = new MemoryStream())
+            {
+                xmlSerializer.Serialize(xmlStream, talkerMakerProject);
+
+                xmlStream.Position = 0;
+
+                XmlReaderSettings settings = new XmlReaderSettings();
+                settings.IgnoreWhitespace = true;
+
+                using (var xtr = XmlReader.Create(xmlStream, settings))
+                {
+                    xmlDoc = new XmlDocument();
+                    xmlDoc.Load(xtr);
+                }
+            }
+            string jsonText = JsonConvert.SerializeXmlNode(xmlDoc, Newtonsoft.Json.Formatting.Indented, true);
+            jsonText = Regex.Replace(jsonText, "(?<=\")(@)(?!.*\":\\s )", string.Empty, RegexOptions.IgnoreCase);
+            File.WriteAllText(xml_file, jsonText);
         }
     }
 
