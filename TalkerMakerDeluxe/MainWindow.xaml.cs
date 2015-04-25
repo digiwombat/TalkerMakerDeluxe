@@ -333,6 +333,7 @@ namespace TalkerMakerDeluxe
                 tabDialogue.IsSelected = true;
                 txtDialogueID.Text = node.lblID.Content.ToString();
                 txtDialogueTitle.Text = node.lblDialogueName.Content.ToString();
+                txtSequence.Text = node.lblSequence.Content.ToString();
                 lstDialogueActor.SelectedItem = lstDialogueActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblActorID.Content.ToString());
                 lstDialogueConversant.SelectedItem = lstDialogueConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblConversantID.Content.ToString());
                 txtMenuText.Text = node.lblMenuText.Content.ToString();
