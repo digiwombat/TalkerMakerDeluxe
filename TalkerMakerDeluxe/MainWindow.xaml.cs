@@ -433,6 +433,9 @@ namespace TalkerMakerDeluxe
                         case "Dialogue Text":
                             ndctl.txtDialogue.Text = field.Value;
                             break;
+                        case "Sequence":
+                            ndctl.lblSequence.Content = field.Value;
+                            break;
                     }
                 }
                 foreach(DialogHolder dhParent in IDs)
@@ -1394,12 +1397,36 @@ namespace TalkerMakerDeluxe
                     {
                         switch (field.Title)
                         {
-                            case "Dialogue Text":
+                            case "Menu Text":
                                 field.Value = txtMenuText.Text;
                                 break;
                         }
                     }
                     ndctl.lblMenuText.Content = txtMenuText.Text;
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void txtSequence_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (currentNode != "")
+            {
+                TreeNode tn = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+                NodeControl ndctl = tn.Content as NodeControl;
+                if (currentNode == ndctl.Name && ndctl.lblSequence.Content != txtSequence.Text)
+                {
+                    DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
+                    foreach (Field field in de.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Sequence":
+                                field.Value = txtSequence.Text;
+                                break;
+                        }
+                    }
+                    ndctl.lblSequence.Content = txtSequence.Text;
                     needsSave = true;
                 }
             }
