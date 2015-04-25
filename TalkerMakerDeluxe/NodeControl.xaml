@@ -52,7 +52,7 @@
             <Label x:Name="lblMenuText" Content="" FontStyle="Italic" Grid.Row="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" />
             <Label x:Name="lblUserScript" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Width="28" Visibility="Hidden"/>
             <Label x:Name="lblConditionsString" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Width="28" Visibility="Hidden"/>
-            <Label x:Name="lblNodeColor" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Label x:Name="lblNodeColor" Content="White" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
             <Button HorizontalAlignment="Right" Name="btnMin" VerticalAlignment="Bottom" Width="10" Height="10" Padding="0" Background="Transparent" BorderBrush="Transparent" Margin="0,0,-6,-6" Grid.Row="3" Click="btnMin_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
