@@ -6,3 +6,5 @@ This system is designed to work with Dialogue System in Unity, specifically, but
 Currently, the plan is to bring the tool to a usable state so that I can quickly create dialogue for my current game project.
 
 Fork it, fix it, do whatever. I'll gladly roll in code changes.
+
+![ScreenShot](https://i.imgur.com/UVtZUkb.png)
