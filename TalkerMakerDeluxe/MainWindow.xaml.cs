@@ -31,6 +31,9 @@ using System.Reflection;
 using MahApps.Metro;
 using System.Collections;
 using Newtonsoft.Json;
+using Xceed.Wpf.AvalonDock.Layout.Serialization;
+using Xceed.Wpf.AvalonDock.Layout;
+using Xceed.Wpf.AvalonDock.Controls;
 
 
 
@@ -91,10 +94,9 @@ namespace TalkerMakerDeluxe
             
             this.Title = "TalkerMaker Deluxe - " + openedFile;
 
-
+            LoadLayout();
 
             PrepareProject();
-            
 
             uiScaleSlider.MouseDoubleClick +=
             new MouseButtonEventHandler(RestoreScalingFactor);
@@ -108,7 +110,6 @@ namespace TalkerMakerDeluxe
                 }
             }
             editScript.SyntaxHighlighting = editConditions.SyntaxHighlighting;
-
 		}
 
         void PrepareProject()
@@ -124,10 +125,10 @@ namespace TalkerMakerDeluxe
             txtSettingProjectTitle.Text = projie.Title;
             txtSettingVersion.Text = projie.Version;
             lstCharacters.ItemsSource = AddActors(projie);
-            lstDialogueActor.ItemsSource = AddActors(projie, 0);
-            lstDialogueConversant.ItemsSource = AddActors(projie, 0);
-            lstConvoActor.ItemsSource = AddActors(projie, 0);
-            lstConvoConversant.ItemsSource = AddActors(projie, 0);
+            lstDialogueActor.ItemsSource = AddActors(projie);
+            lstDialogueConversant.ItemsSource = AddActors(projie);
+            lstConvoActor.ItemsSource = AddActors(projie);
+            lstConvoConversant.ItemsSource = AddActors(projie);
             lstConversations.ItemsSource = AddConversations(projie);
             lstVariables.ItemsSource = AddVariables(projie);
             loadedConversation = 0;
@@ -149,15 +150,56 @@ namespace TalkerMakerDeluxe
             txtSettingProjectTitle.Text = projie.Title;
             txtSettingVersion.Text = projie.Version;
             lstCharacters.ItemsSource = AddActors(projie);
-            lstDialogueActor.ItemsSource = AddActors(projie, 0);
-            lstDialogueConversant.ItemsSource = AddActors(projie, 0);
-            lstConvoActor.ItemsSource = AddActors(projie, 0);
-            lstConvoConversant.ItemsSource = AddActors(projie, 0);
+            lstDialogueActor.ItemsSource = AddActors(projie);
+            lstDialogueConversant.ItemsSource = AddActors(projie);
+            lstConvoActor.ItemsSource = AddActors(projie);
+            lstConvoConversant.ItemsSource = AddActors(projie);
             lstConversations.ItemsSource = AddConversations(projie);
             loadedConversation = 0;
             editConditions.Text = "";
             editScript.Text = "";
             LoadConversation(0);
+        }
+
+        void SaveLayout()
+        {
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "layout.config");
+            if (!File.Exists(path))
+                File.Create(path).Close();
+            var serializer = new XmlLayoutSerializer(dockUI);
+            using (var stream = new StreamWriter(path))
+                serializer.Serialize(stream);
+        }
+
+        void LoadLayout()
+        {
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "layout.config");
+            
+            if (File.Exists(path))
+            {
+                try
+                {
+                    var serializer = new XmlLayoutSerializer(dockUI);
+                    var currentContentsList = dockUI.Layout.Descendents().OfType<LayoutContent>().Where(c => c.ContentId != null).ToArray();
+
+
+                    serializer.LayoutSerializationCallback += (s, args) =>
+                    {
+                        var prevContent = currentContentsList.FirstOrDefault(c => c.ContentId == args.Model.ContentId);
+                        if (prevContent != null)
+                            args.Content = prevContent.Content;
+
+                    };
+
+                    StreamReader sr = new StreamReader(path);
+                    serializer.Deserialize(sr);
+                }
+                catch(Exception ex)
+                {
+                    Console.WriteLine("Error loading layout.");
+                }
+            }
+            
         }
 
         #endregion
@@ -250,6 +292,7 @@ namespace TalkerMakerDeluxe
         {
             TreeNode nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
             NodeControl node = nodeTree.Content as NodeControl;
+            BrushConverter bc = new BrushConverter();
             if (newNode != "_node_0")
             {
                 if (currentNode != "" && newNode != currentNode)
@@ -260,7 +303,19 @@ namespace TalkerMakerDeluxe
                     //Remove color from currentNode
                     nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
                     node = nodeTree.Content as NodeControl;
-                    node.grid.Background = (Brush)Application.Current.FindResource("AccentColorBrush2");
+                    switch (node.lblNodeColor.Content.ToString())
+                    {
+                        case "Red":
+                            node.grid.Background = (Brush)bc.ConvertFrom("#FFCC4452");
+                            break;
+                        case "Green":
+                            node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
+                            break;
+                        default:
+                            node.grid.Background = (Brush)Application.Current.FindResource("AccentColorBrush2");
+                            break;
+
+                    }
                     
                 }
                 else if (newNode != currentNode)
@@ -273,8 +328,8 @@ namespace TalkerMakerDeluxe
                 node = nodeTree.Content as NodeControl;
                 currentNode = newNode;
 
-                lstDialogueActor.ItemsSource = AddActors(projie, 0);
-                lstDialogueConversant.ItemsSource = AddActors(projie, 0);
+                lstDialogueActor.ItemsSource = AddActors(projie);
+                lstDialogueConversant.ItemsSource = AddActors(projie);
                 tabDialogue.IsSelected = true;
                 txtDialogueID.Text = node.lblID.Content.ToString();
                 txtDialogueTitle.Text = node.lblDialogueName.Content.ToString();
@@ -284,6 +339,19 @@ namespace TalkerMakerDeluxe
                 txtDialogueWords.Text = node.txtDialogue.Text;
                 editConditions.Text = node.lblConditionsString.Content.ToString();
                 editScript.Text = node.lblUserScript.Content.ToString();
+                switch(node.lblNodeColor.Content.ToString())
+                {
+                    case "Red":
+                        rdioColorRed.IsChecked = true;
+                        break;
+                    case "Green":
+                        rdioColorGreen.IsChecked = true;
+                        break;
+                    default:
+                        rdioColorWhite.IsChecked = true;
+                        break;
+
+                }
             }
             else
             {
@@ -303,6 +371,9 @@ namespace TalkerMakerDeluxe
                     tcMain.ToString();
                     node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
                 }
+                lstConversations.SelectedItem = lstConversations.Items.OfType<ConversationItem>().First(p => p.lblConvConversantID.Content.ToString() == node.lblConversantID.Content.ToString());
+                lstConvoActor.SelectedItem = lstConvoActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblActorID.Content.ToString());
+                lstConvoConversant.SelectedItem = lstConvoConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblConversantID.Content.ToString());
                 tabConversation.IsSelected = true;
                 currentNode = newNode;
             }
@@ -316,11 +387,25 @@ namespace TalkerMakerDeluxe
             
             if (!handledNodes.Contains(dh.ID))
             {
+
                 handledNodes.Add(dh.ID);
                 int parentNode = -1;
                 DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(d => d.ID == dh.ID);
                 NodeControl ndctl = new NodeControl();
+                BrushConverter bc = new BrushConverter(); 
+                switch(de.NodeColor)
+                {
+                    case "Red":
+                        ndctl.grid.Background = (Brush)bc.ConvertFrom("#CC4452");
+                        ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#723147");
+                        break;
+                    case "Green":
+                        ndctl.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
+                        ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#002F32");
+                        break;
+                }
                 ndctl.lblID.Content = de.ID;
+                ndctl.lblNodeColor.Content = de.NodeColor;
                 ndctl.Name = "_node_" + de.ID;
                 ndctl.lblUserScript.Content = de.UserScript;
                 ndctl.lblConditionsString.Content = de.ConditionsString;
@@ -462,13 +547,13 @@ namespace TalkerMakerDeluxe
             return conversations;
         }
 
-        private List<CharacterItem> AddActors(TalkerMakerProject project, int pictureWidth = 45 )
+        private List<CharacterItem> AddActors(TalkerMakerProject project)
         {
             List<CharacterItem> actors = new List<CharacterItem>();
             foreach (Actor actor in project.Assets.Actors)
             {
                 CharacterItem chara = new CharacterItem();
-                chara.pictureRow.Width = new GridLength(pictureWidth);
+                //chara.pictureRow.Width = new GridLength(pictureWidth);
                 chara.lblActorID.Content = actor.ID;
                 chara.lblActorDescription.Content = "";
                 chara.lblActorAge.Content = "";
@@ -545,6 +630,7 @@ namespace TalkerMakerDeluxe
 
         private void SaveHandler()
         {
+            SaveLayout();
             // Do the Save All thing here.
             if (openedFile != "New Project")
             {
@@ -657,28 +743,7 @@ namespace TalkerMakerDeluxe
 
         private void Exit_Binding(object obSender, ExecutedRoutedEventArgs e)
         {
-            if (needsSave)
-                {
-                    MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before quitting?", "Save before quitting?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                    switch (result1)
-                    {
-                        case (MessageBoxResult.Yes):
-                            SaveHandler();
-                            Application.Current.Shutdown();
-                            break;
-                        case (MessageBoxResult.No):
-                            Application.Current.Shutdown();
-                            break;
-                        default:
-                            break;
-
-                    }
-
-                }
-                else
-                {
-                    Application.Current.Shutdown();
-                }
+            Application.Current.MainWindow.Close();
         }
 
         private void MetroWindow_Drop(object sender, DragEventArgs e)
@@ -731,6 +796,29 @@ namespace TalkerMakerDeluxe
                 }
             }
         }
+
+        private void MetroWindow_Closing(object sender, CancelEventArgs e)
+        {
+            SaveLayout();
+            if (needsSave)
+            {
+                MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before quitting?", "Save before quitting?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result1)
+                {
+                    case (MessageBoxResult.Yes):
+                        SaveHandler();
+                        break;
+                    case (MessageBoxResult.No):
+                        break;
+                    default:
+                        e.Cancel = true;
+                        break;
+
+                }
+
+            }
+
+        }
         #endregion
 
         #region UI Related Fuctions
@@ -780,10 +868,10 @@ namespace TalkerMakerDeluxe
 
             projie.Assets.Actors.Add(newActor);
             lstCharacters.ItemsSource = AddActors(projie);
-            lstDialogueActor.ItemsSource = AddActors(projie, 0);
-            lstDialogueConversant.ItemsSource = AddActors(projie, 0);
-            lstConvoActor.ItemsSource = AddActors(projie, 0);
-            lstConvoConversant.ItemsSource = AddActors(projie, 0);
+            lstDialogueActor.ItemsSource = AddActors(projie);
+            lstDialogueConversant.ItemsSource = AddActors(projie);
+            lstConvoActor.ItemsSource = AddActors(projie);
+            lstConvoConversant.ItemsSource = AddActors(projie);
         }
 
         private void btnAddConversation_Click(object sender, RoutedEventArgs e)
@@ -856,8 +944,8 @@ namespace TalkerMakerDeluxe
         {
             if (lstConversations.SelectedItem != null)
             {
-                lstConvoActor.ItemsSource = AddActors(projie, 0);
-                lstConvoConversant.ItemsSource = AddActors(projie, 0);
+                lstConvoActor.ItemsSource = AddActors(projie);
+                lstConvoConversant.ItemsSource = AddActors(projie);
                 ConversationItem conv = lstConversations.SelectedItem as ConversationItem;
                 txtConvoID.Text = conv.lblConvID.Content.ToString();
                 lstConvoActor.SelectedItem = lstConvoActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvActorID.Content.ToString());
@@ -878,9 +966,15 @@ namespace TalkerMakerDeluxe
 
         private void lstConversations_GotFocus(object sender, RoutedEventArgs e)
         {
-            lstConvoActor.ItemsSource = AddActors(projie, 0);
-            lstConvoConversant.ItemsSource = AddActors(projie, 0);
-            tabConversation.IsSelected = true;
+            if (lstConversations.SelectedItem != null)
+            {
+                lstConvoActor.ItemsSource = AddActors(projie);
+                lstConvoConversant.ItemsSource = AddActors(projie);
+                ConversationItem conv = lstConversations.SelectedItem as ConversationItem;
+                lstConvoActor.SelectedItem = lstConvoActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvActorID.Content.ToString());
+                lstConvoConversant.SelectedItem = lstConvoConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == conv.lblConvConversantID.Content.ToString());
+                tabConversation.IsSelected = true;
+            }
         }
 
         private void lstCharacters_GotFocus(object sender, RoutedEventArgs e)
@@ -902,6 +996,12 @@ namespace TalkerMakerDeluxe
         void RestoreScalingFactor(object sender, MouseButtonEventArgs args)
         {
             ((Slider)sender).Value = 1.0;
+        }
+
+        private void PART_Highlight_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        {
+            scrlTree.ScrollToVerticalOffset(scrlTree.VerticalOffset + e.VerticalChange);
+            scrlTree.ScrollToHorizontalOffset(scrlTree.HorizontalOffset + e.HorizontalChange);
         }
 
         #endregion
@@ -1391,6 +1491,45 @@ namespace TalkerMakerDeluxe
             }
         }
 
+        private void rdioColorNormal_Checked(object sender, RoutedEventArgs e)
+        {
+            if (currentNode != "")
+            {
+                RadioButton radio = sender as RadioButton;
+                TreeNode tn = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+                NodeControl ndctl = tn.Content as NodeControl;
+                string color = radio.Name.ToString().Replace("rdioColor", "");
+                if (currentNode == ndctl.Name && ndctl.lblNodeColor.Content.ToString() != color)
+                {
+                    DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
+                    BrushConverter bc = new BrushConverter();
+                    switch(color)
+                    {
+                        case "Red":
+                            de.NodeColor = "Red";
+                            ndctl.lblNodeColor.Content = "Red";
+                            //ndctl.grid.Background = (Brush)bc.ConvertFrom("#CC4452");
+                            ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#723147");
+                            break;
+                        case "Green":
+                            de.NodeColor = "Green";
+                            ndctl.lblNodeColor.Content = "Green";
+                            //ndctl.grid.Background = (Brush)bc.ConvertFrom("#A5C77F");
+                            ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#002F32");
+                            break;
+                        default:
+                            de.NodeColor = "White";
+                            ndctl.lblNodeColor.Content = "White";
+                            //ndctl.grid.Background = (Brush)Application.Current.FindResource("AccentColorBrush2");
+                            ndctl.border.BorderBrush = (Brush)Application.Current.FindResource("HighlightBrush");
+                            break;
+                            
+                    }
+                    needsSave = true;
+                }
+            }
+        }
+
         #endregion
 
         #region Variable Edit Functions
@@ -1490,8 +1629,6 @@ namespace TalkerMakerDeluxe
         #endregion
 
         #endregion
-
-        
 
     }
 

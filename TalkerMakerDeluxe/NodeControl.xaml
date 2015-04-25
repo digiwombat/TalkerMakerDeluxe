@@ -10,8 +10,8 @@
         <Grid Name="grid" Background="{StaticResource ResourceKey=AccentColorBrush2}" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
-                <RowDefinition Height="26" />
-                <RowDefinition Height="26" />
+                <RowDefinition Height="28" />
+                <RowDefinition Height="28" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
@@ -44,14 +44,15 @@
             <Border  BorderThickness="1" BorderBrush="{StaticResource ResourceKey=WhiteBrush}" Background="{StaticResource ResourceKey=WhiteBrush}" Padding="5" CornerRadius="2" Margin="2,2,2,2" Grid.Row="3">
                 <TextBlock x:Name="txtDialogue" DataContext="{Binding RelativeSource={RelativeSource Self}}" Text="{Binding nodeText}" TextWrapping="Wrap" />
             </Border>
-            <Label x:Name="lblActor" Grid.Row="1" FontWeight="Bold" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding nodeActor}" HorizontalAlignment="Left" VerticalAlignment="Top" />
+            <Label x:Name="lblActor" Grid.Row="1" FontWeight="Bold" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding nodeActor}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
             <Label x:Name="lblActorID" Grid.Row="1" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Visibility="Hidden"/>
             <Label x:Name="lblConversantID" Grid.Row="1" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Visibility="Hidden"/>
-            <Label x:Name="lblConversant" Grid.Row="1" FontWeight="Bold" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding nodeConversant}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" />
+            <Label x:Name="lblConversant" Grid.Row="1" FontWeight="Thin" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding nodeConversant}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" FontSize="10" />
             <Label x:Name="lblID" Content="?" Grid.Row="0" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,0,24,0" VerticalAlignment="Top" Width="60" Opacity="0.25"/>
             <Label x:Name="lblMenuText" Content="" FontStyle="Italic" Grid.Row="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" />
             <Label x:Name="lblUserScript" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Width="28" Visibility="Hidden"/>
             <Label x:Name="lblConditionsString" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Width="28" Visibility="Hidden"/>
+            <Label x:Name="lblNodeColor" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
             <Button HorizontalAlignment="Right" Name="btnMin" VerticalAlignment="Bottom" Width="10" Height="10" Padding="0" Background="Transparent" BorderBrush="Transparent" Margin="0,0,-6,-6" Grid.Row="3" Click="btnMin_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
