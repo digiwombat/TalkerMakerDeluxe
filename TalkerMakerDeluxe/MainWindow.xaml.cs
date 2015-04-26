@@ -229,39 +229,20 @@ namespace TalkerMakerDeluxe
                 NodeControl ndctl = nodeTree.Content as NodeControl;
 
                 DialogEntry newDialogue = new DialogEntry();
-                Field newDialogueField_1 = new Field();
-                Field newDialogueField_2 = new Field();
-                Field newDialogueField_3 = new Field();
-                Field newDialogueField_4 = new Field();
-                Field newDialogueField_5 = new Field();
                 Link newDialogueLink = new Link();
                 NodeControl newDialogueNode = new NodeControl();
-                CharacterItem firstActor = lstCharacters.Items[0] as CharacterItem;
+
+                ConversationItem convoInfo = lstConversations.Items[loadedConversation] as ConversationItem;
                 int parentID = (int)ndctl.lblID.Content;
                 int newNodeID = projie.Assets.Conversations[loadedConversation].DialogEntries.OrderByDescending(p => p.ID).First().ID + 1;
 
                 //Create Dialogue Item in Project
                 newDialogue.ID = newNodeID;
-                newDialogueField_1.Type = "Text";
-                newDialogueField_1.Title = "Title";
-                newDialogueField_1.Value = "New Dialogue";
-                newDialogue.Fields.Add(newDialogueField_1);
-                newDialogueField_2.Type = "Actor";
-                newDialogueField_2.Title = "Actor";
-                newDialogueField_2.Value = firstActor.lblActorID.Content.ToString();
-                newDialogue.Fields.Add(newDialogueField_2);
-                newDialogueField_3.Type = "Actor";
-                newDialogueField_3.Title = "Conversant";
-                newDialogueField_3.Value = firstActor.lblActorID.Content.ToString();
-                newDialogue.Fields.Add(newDialogueField_3);
-                newDialogueField_4.Type = "Text";
-                newDialogueField_4.Title = "Menu Text";
-                newDialogueField_4.Value = "";
-                newDialogue.Fields.Add(newDialogueField_4);
-                newDialogueField_5.Type = "Text";
-                newDialogueField_5.Title = "Dialogue Text";
-                newDialogueField_5.Value = "";
-                newDialogue.Fields.Add(newDialogueField_5);
+                newDialogue.Fields.Add(new Field { Title = "Title", Value = "New Dialogue", Type = "Text" });
+                newDialogue.Fields.Add(new Field { Title = "Actor", Value = ndctl.lblConversantID.Content.ToString(), Type = "Actor" });
+                newDialogue.Fields.Add(new Field { Title = "Conversant", Value = ndctl.lblActorID.Content.ToString(), Type = "Actor" });
+                newDialogue.Fields.Add(new Field { Title = "Menu Text", Value = "", Type = "Text" });
+                newDialogue.Fields.Add(new Field { Title = "Dialogue Text", Value = "", Type = "Text" });
 
                 //Add to conversation
                 projie.Assets.Conversations[loadedConversation].DialogEntries.Add(newDialogue);
@@ -276,10 +257,11 @@ namespace TalkerMakerDeluxe
                 newDialogueNode.Name = "_node_" + newNodeID;
                 newDialogueNode.lblID.Content = newNodeID;
                 newDialogueNode.lblDialogueName.Content = "New Dialogue";
-                newDialogueNode.lblConversantID.Content = firstActor.lblActorID.Content;
-                newDialogueNode.lblActorID.Content = firstActor.lblActorID.Content;
-                newDialogueNode.lblActor.Content = firstActor.lblActorName.Content;
-                newDialogueNode.lblConversant.Content = firstActor.lblActorName.Content;
+                newDialogueNode.lblActorID.Content = ndctl.lblConversantID.Content.ToString();
+                newDialogueNode.lblActor.Content = ndctl.lblConversant.Content.ToString();
+                newDialogueNode.lblConversantID.Content = ndctl.lblActorID.Content.ToString();
+                newDialogueNode.lblConversant.Content = ndctl.lblActor.Content.ToString();
+                newDialogueNode.lblConversationID.Content = loadedConversation;
 
 
                 //Add to tree.
@@ -372,7 +354,7 @@ namespace TalkerMakerDeluxe
                     tcMain.ToString();
                     node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
                 }
-                lstConversations.SelectedItem = lstConversations.Items.OfType<ConversationItem>().First(p => p.lblConvConversantID.Content.ToString() == node.lblConversantID.Content.ToString());
+                lstConversations.SelectedIndex = loadedConversation;
                 lstConvoActor.SelectedItem = lstConvoActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblActorID.Content.ToString());
                 lstConvoConversant.SelectedItem = lstConvoConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblConversantID.Content.ToString());
                 tabConversation.IsSelected = true;
@@ -410,6 +392,7 @@ namespace TalkerMakerDeluxe
                 ndctl.Name = "_node_" + de.ID;
                 ndctl.lblUserScript.Content = de.UserScript;
                 ndctl.lblConditionsString.Content = de.ConditionsString;
+                ndctl.lblConversationID.Content = loadedConversation;
                 Console.WriteLine("Setting Bindings...");
                 foreach (Field field in de.Fields)
                 {
@@ -446,6 +429,8 @@ namespace TalkerMakerDeluxe
                 }
                 if (parentNode == -1)
                 {
+                    ndctl.txtDialogue.Visibility = Visibility.Hidden;
+                    ndctl.brdDialogue.Visibility = Visibility.Hidden;
                     tcMain.AddRoot(ndctl, "node_" + dh.ID);
                     //tcMain.RegisterName("_node_" + dial.ID, ndctl);
                     Console.WriteLine("Writing root: " + dh.ID);
@@ -1286,6 +1271,8 @@ namespace TalkerMakerDeluxe
             {
                 CharacterItem chara = lstConvoActor.SelectedItem as CharacterItem;
                 ConversationItem convo = lstConversations.SelectedItem as ConversationItem;
+                TreeNode tn = tcMain.FindName("node_0") as TreeNode;
+                NodeControl ndctl = tn.Content as NodeControl;
 
                 if (chara.lblActorID.Content != "" && convo.lblConvActorID.Content != chara.lblActorID.Content)
                 {
@@ -1299,6 +1286,8 @@ namespace TalkerMakerDeluxe
                                 break;
                         }
                     }
+                    ndctl.lblActorID.Content = chara.lblActorID.Content;
+                    ndctl.lblActor.Content = chara.lblActorName.Content;
                     convo.lblConvActorID.Content = chara.lblActorID.Content;
                     convo.lblConvActor.Content = chara.lblActorName.Content;
                     needsSave = true;
@@ -1312,6 +1301,8 @@ namespace TalkerMakerDeluxe
             {
                 CharacterItem chara = lstConvoConversant.SelectedItem as CharacterItem;
                 ConversationItem convo = lstConversations.SelectedItem as ConversationItem;
+                TreeNode tn = tcMain.FindName("node_0") as TreeNode;
+                NodeControl ndctl = tn.Content as NodeControl;
 
                 if (chara.lblActorID.Content != "" && convo.lblConvConversantID.Content != chara.lblActorID.Content)
                 {
@@ -1325,6 +1316,8 @@ namespace TalkerMakerDeluxe
                                 break;
                         }
                     }
+                    ndctl.lblConversantID.Content = chara.lblActorID.Content;
+                    ndctl.lblConversant.Content = chara.lblActorName.Content;
                     convo.lblConvConversantID.Content = chara.lblActorID.Content;
                     convo.lblConvConversant.Content = chara.lblActorName.Content;
                     needsSave = true;
