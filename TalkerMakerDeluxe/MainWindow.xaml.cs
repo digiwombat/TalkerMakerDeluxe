@@ -699,6 +699,7 @@ namespace TalkerMakerDeluxe
                     Console.WriteLine("Saving...");
                     XMLHandler.SaveXML(projie, saver.FileName);
                     Console.WriteLine("Save finished.");
+                    openedFile = saver.FileName;
                     needsSave = false;
                 }
             }

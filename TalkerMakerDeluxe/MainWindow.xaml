@@ -412,7 +412,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                 <TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Sequence</TextBlock>
                                                 <TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtSequence" TextChanged="txtSequence_TextChanged"/>
 
-                                                <TextBlock Grid.Row="6" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
+                                                <TextBlock Grid.Row="6" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Dialogue</TextBlock>
                                                 <TextBox Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" Name="txtDialogueWords" TextChanged="txtDialogueWords_TextChanged" />
 
                                                 <TextBlock Grid.Row="7" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Node Color</TextBlock>
