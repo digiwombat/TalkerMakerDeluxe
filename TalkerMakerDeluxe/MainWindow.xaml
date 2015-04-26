@@ -255,14 +255,15 @@ and change the color of the selected bullet into a darker gray for better highli
                     <xcad:LayoutPanel Orientation="Vertical" DockWidth="235">
                         <xcad:LayoutAnchorablePane DockHeight="1*">
                             <xcad:LayoutAnchorable  ContentId="OverviewAnchor" Title="OVERVIEW" CanClose="False" CanHide="False">
-                                <Viewbox Name="vbOverview" DataContext="{Binding ElementName=scrlTree}" Stretch="Uniform">
+                                <Viewbox Name="vbOverview" MouseLeftButtonDown="vbOverview_MouseLeftButtonDown" DataContext="{Binding ElementName=scrlTree}" Stretch="Uniform">
                                     <Grid>
-                                        <Rectangle Width="{Binding Content.ActualWidth}" Height="{Binding Content.ActualHeight}">
+                                        <Rectangle Name="recOverview" Width="{Binding Content.ActualWidth}" Height="{Binding Content.ActualHeight}">
                                             <Rectangle.Fill>
                                                 <VisualBrush Visual="{Binding Content}" />
                                             </Rectangle.Fill>
                                         </Rectangle>
-                                        <Thumb Name="PART_Highlight" Background="{StaticResource ResourceKey=WhiteBrush}" Width="{Binding ViewportWidth}" Height="{Binding ViewportHeight}" HorizontalAlignment="Left" VerticalAlignment="Top" DragDelta="PART_Highlight_DragDelta">
+
+                                        <Thumb Name="thmViewport" Background="{StaticResource ResourceKey=WhiteBrush}" Width="{Binding ViewportWidth}" Height="{Binding ViewportHeight}" HorizontalAlignment="Left" VerticalAlignment="Top" DragDelta="thmViewport_DragDelta">
                                             <Thumb.RenderTransform>
                                                 <TranslateTransform X="{Binding HorizontalOffset}" Y="{Binding VerticalOffset}" />
                                             </Thumb.RenderTransform>

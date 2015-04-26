@@ -987,10 +987,20 @@ namespace TalkerMakerDeluxe
             ((Slider)sender).Value = 1.0;
         }
 
-        private void PART_Highlight_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
+        private void thmViewport_DragDelta(object sender, System.Windows.Controls.Primitives.DragDeltaEventArgs e)
         {
             scrlTree.ScrollToVerticalOffset(scrlTree.VerticalOffset + e.VerticalChange);
             scrlTree.ScrollToHorizontalOffset(scrlTree.HorizontalOffset + e.HorizontalChange);
+        }
+
+        private void vbOverview_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+
+            Point clickedPoint = Mouse.GetPosition(recOverview);
+            double newX = clickedPoint.X - (thmViewport.Width / 2);
+            double newY = clickedPoint.Y - (thmViewport.Height / 2);
+            scrlTree.ScrollToHorizontalOffset(newX);
+            scrlTree.ScrollToVerticalOffset(newY);
         }
 
         #endregion
@@ -1653,6 +1663,4 @@ namespace TalkerMakerDeluxe
 
     }
 
-
-    
 }
