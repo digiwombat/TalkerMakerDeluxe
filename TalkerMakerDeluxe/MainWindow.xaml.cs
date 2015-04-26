@@ -318,7 +318,7 @@ namespace TalkerMakerDeluxe
                             node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
                             break;
                         default:
-                            node.grid.Background = (Brush)bc.ConvertFrom("#FF837AE5");
+                            node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
                             break;
 
                     }
@@ -389,7 +389,7 @@ namespace TalkerMakerDeluxe
                     //Remove color from currentNode
                     nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
                     node = nodeTree.Content as NodeControl;
-                    node.grid.Background = (Brush)bc.ConvertFrom("#FF837AE5");
+                    node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
                 }
                 else if (newNode != currentNode)
                 {

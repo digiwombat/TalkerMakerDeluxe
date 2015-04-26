@@ -520,7 +520,7 @@ and change the color of the selected bullet into a darker gray for better highli
         </StatusBar>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="225">
             <Popup Name="popSettings" HorizontalAlignment="Right" VerticalOffset="-1" HorizontalOffset="-80" VerticalAlignment="Top" Width="225" MouseLeave="popSettings_MouseLeave">
-                <Border BorderBrush="#FF49B4E8" BorderThickness="1">
+                <Border BorderBrush="#FF81a2be" BorderThickness="1">
                     <Grid Background="{StaticResource ResourceKey=WhiteBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="70" />

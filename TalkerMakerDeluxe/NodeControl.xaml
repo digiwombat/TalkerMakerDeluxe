@@ -7,7 +7,7 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" Height="Auto" Width="202">
     <Border x:Name="border" BorderBrush="{StaticResource ResourceKey=HighlightBrush}" BorderThickness="2" CornerRadius="2">
-        <Grid Name="grid" Background="#FF837AE5" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+        <Grid Name="grid" Background="#FF81a2be" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
             <Grid.RowDefinitions>
                 <RowDefinition Height="26" MaxHeight="26" />
                 <RowDefinition Height="28" MaxHeight="28" />
