@@ -7,4 +7,4 @@ Currently, the plan is to bring the tool to a usable state so that I can quickly
 
 Fork it, fix it, do whatever. I'll gladly roll in code changes.
 
-![ScreenShot](https://i.imgur.com/UVtZUkb.png)
+![ScreenShot](https://i.imgur.com/HcjLsqm.png)
