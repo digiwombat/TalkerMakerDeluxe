@@ -116,6 +116,7 @@
     <Compile Include="NodeControl.xaml.cs">
       <DependentUpon>NodeControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RecentFileList.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="UriConverter.cs" />
     <Compile Include="VariableItem.xaml.cs">

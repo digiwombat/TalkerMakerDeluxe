@@ -110,6 +110,9 @@ namespace TalkerMakerDeluxe
                 }
             }
             editScript.SyntaxHighlighting = editConditions.SyntaxHighlighting;
+
+            mnuRecent.UseXmlPersister(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "recentfiles.config"));
+            mnuRecent.MenuClick += (s, e) => OpenHandler(e.Filepath);
 		}
 
         void PrepareProject()
@@ -124,6 +127,15 @@ namespace TalkerMakerDeluxe
             txtSettingAuthor.Text = projie.Author;
             txtSettingProjectTitle.Text = projie.Title;
             txtSettingVersion.Text = projie.Version;
+
+            lstCharacters.SelectedItem = null;
+            lstConversations.SelectedItem = null;
+            lstDialogueActor.SelectedItem = null;
+            lstDialogueConversant.SelectedItem = null;
+            lstConvoActor.SelectedItem = null;
+            lstConvoConversant.SelectedItem = null;
+            lstVariables.SelectedItem = null;
+
             lstCharacters.ItemsSource = AddActors(projie);
             lstDialogueActor.ItemsSource = AddActors(projie);
             lstDialogueConversant.ItemsSource = AddActors(projie);
@@ -149,6 +161,15 @@ namespace TalkerMakerDeluxe
             txtSettingAuthor.Text = projie.Author;
             txtSettingProjectTitle.Text = projie.Title;
             txtSettingVersion.Text = projie.Version;
+
+            lstCharacters.SelectedItem = null;
+            lstConversations.SelectedItem = null;
+            lstDialogueActor.SelectedItem = null;
+            lstDialogueConversant.SelectedItem = null;
+            lstConvoActor.SelectedItem = null;
+            lstConvoConversant.SelectedItem = null;
+            lstVariables.SelectedItem = null;
+
             lstCharacters.ItemsSource = AddActors(projie);
             lstDialogueActor.ItemsSource = AddActors(projie);
             lstDialogueConversant.ItemsSource = AddActors(projie);
@@ -202,6 +223,7 @@ namespace TalkerMakerDeluxe
             
         }
 
+
         #endregion
 
         #region Tree Functions
@@ -210,13 +232,13 @@ namespace TalkerMakerDeluxe
             TreeNode tn = tcMain.FindName(parentNode.Remove(0, 1)) as TreeNode;
             NodeControl ndctl = tn.Content as NodeControl;
             tn.Collapsed = !tn.Collapsed;
-            if (ndctl.faMin.Icon == FontAwesomeIcon.AngleDoubleUp)
+            if (ndctl.faMin.Icon == FontAwesomeIcon.ChevronCircleUp)
             {
-                ndctl.faMin.Icon = FontAwesomeIcon.AngleDoubleDown;
+                ndctl.faMin.Icon = FontAwesomeIcon.ChevronCircleDown;
             }
             else
             {
-                ndctl.faMin.Icon = FontAwesomeIcon.AngleDoubleUp;
+                ndctl.faMin.Icon = FontAwesomeIcon.ChevronCircleUp;
             }
         }
 
@@ -256,15 +278,17 @@ namespace TalkerMakerDeluxe
                 //Setup for Physical Node
                 newDialogueNode.Name = "_node_" + newNodeID;
                 newDialogueNode.lblID.Content = newNodeID;
-                newDialogueNode.lblDialogueName.Content = "New Dialogue";
+                newDialogueNode.lblDialogueName.Text = "New Dialogue";
                 newDialogueNode.lblActorID.Content = ndctl.lblConversantID.Content.ToString();
-                newDialogueNode.lblActor.Content = ndctl.lblConversant.Content.ToString();
+                newDialogueNode.lblActor.Text = ndctl.lblConversant.Text;
                 newDialogueNode.lblConversantID.Content = ndctl.lblActorID.Content.ToString();
-                newDialogueNode.lblConversant.Content = ndctl.lblActor.Content.ToString();
+                newDialogueNode.lblConversant.Text = ndctl.lblActor.Text;
                 newDialogueNode.lblConversationID.Content = loadedConversation;
+                newDialogueNode.lblLinkTo.Content = "0";
 
 
                 //Add to tree.
+                rowLinkRow.Height = new GridLength(0);
                 tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID);
                 needsSave = true;
             }
@@ -294,7 +318,7 @@ namespace TalkerMakerDeluxe
                             node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
                             break;
                         default:
-                            node.grid.Background = (Brush)Application.Current.FindResource("AccentColorBrush2");
+                            node.grid.Background = (Brush)bc.ConvertFrom("#FF49B4E8");
                             break;
 
                     }
@@ -314,14 +338,33 @@ namespace TalkerMakerDeluxe
                 lstDialogueConversant.ItemsSource = AddActors(projie);
                 tabDialogue.IsSelected = true;
                 txtDialogueID.Text = node.lblID.Content.ToString();
-                txtDialogueTitle.Text = node.lblDialogueName.Content.ToString();
+                txtDialogueTitle.Text = node.lblDialogueName.Text;
                 txtSequence.Text = node.lblSequence.Content.ToString();
                 lstDialogueActor.SelectedItem = lstDialogueActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblActorID.Content.ToString());
                 lstDialogueConversant.SelectedItem = lstDialogueConversant.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblConversantID.Content.ToString());
-                txtMenuText.Text = node.lblMenuText.Content.ToString();
+                txtMenuText.Text = node.lblMenuText.Text;
                 txtDialogueWords.Text = node.txtDialogue.Text;
                 editConditions.Text = node.lblConditionsString.Content.ToString();
                 editScript.Text = node.lblUserScript.Content.ToString();
+                cmbFunction.Text = node.lblFalseCondition.Content.ToString();
+                if(nodeTree.TreeChildren.Count == 0)
+                {
+                    rowLinkRow.Height = new GridLength(1, GridUnitType.Auto);
+                    if(node.lblLinkTo.Content.ToString() == "0")
+                    {
+                        chkLinkTo.IsChecked = false;
+                        txtLinkTo.Text = "0";
+                    }
+                    else
+                    {
+                        chkLinkTo.IsChecked = true;
+                        txtLinkTo.Text = node.lblLinkTo.Content.ToString();
+                    }
+                }
+                else
+                {
+                    rowLinkRow.Height = new GridLength(0);
+                }
                 switch(node.lblNodeColor.Content.ToString())
                 {
                     case "Red":
@@ -346,7 +389,7 @@ namespace TalkerMakerDeluxe
                     //Remove color from currentNode
                     nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
                     node = nodeTree.Content as NodeControl;
-                    node.grid.Background = (Brush)Application.Current.FindResource("AccentColorBrush2");
+                    node.grid.Background = (Brush)bc.ConvertFrom("#FF49B4E8");
                 }
                 else if (newNode != currentNode)
                 {
@@ -393,26 +436,37 @@ namespace TalkerMakerDeluxe
                 ndctl.lblUserScript.Content = de.UserScript;
                 ndctl.lblConditionsString.Content = de.ConditionsString;
                 ndctl.lblConversationID.Content = loadedConversation;
+                ndctl.lblFalseCondition.Content = de.FalseCondtionAction;
                 Console.WriteLine("Setting Bindings...");
+                foreach(Link lanks in de.OutgoingLinks)
+                {
+                    if (lanks.IsConnector == true)
+                    { 
+                        ndctl.lblLinkTo.Content = lanks.DestinationDialogID;
+                        ndctl.btnAdd.Visibility = Visibility.Hidden;
+                        ndctl.faLink.Visibility = Visibility.Visible;
+                    }
+                }
                 foreach (Field field in de.Fields)
                 {
                     switch (field.Title)
                     {
                         case "Title":
-                            ndctl.lblDialogueName.Content = field.Value;
+                            ndctl.lblDialogueName.Text = field.Value;
                             break;
                         case "Actor":
                             ndctl.lblActorID.Content = field.Value;
                             CharacterItem chara = lstCharacters.Items[Convert.ToInt16(field.Value) - 1] as CharacterItem;
-                            ndctl.lblActor.Content = chara.lblActorName.Content;
+                            ndctl.imgActor.Source = chara.imgActorImage.Source;
+                            ndctl.lblActor.Text = chara.lblActorName.Content.ToString();
                             break;
                         case "Conversant":
                             ndctl.lblConversantID.Content = field.Value;
                             chara = lstCharacters.Items[Convert.ToInt16(field.Value) - 1] as CharacterItem;
-                            ndctl.lblConversant.Content = chara.lblActorName.Content;
+                            ndctl.lblConversant.Text = chara.lblActorName.Content.ToString();
                             break;
                         case "Menu Text":
-                            ndctl.lblMenuText.Content = field.Value;
+                            ndctl.lblMenuText.Text = field.Value;
                             break;
                         case "Dialogue Text":
                             ndctl.txtDialogue.Text = field.Value;
@@ -429,8 +483,10 @@ namespace TalkerMakerDeluxe
                 }
                 if (parentNode == -1)
                 {
-                    ndctl.txtDialogue.Visibility = Visibility.Hidden;
-                    ndctl.brdDialogue.Visibility = Visibility.Hidden;
+                    ConversationItem convo = lstConversations.Items[loadedConversation] as ConversationItem;
+                    ndctl.grdNodeImage.Height = new GridLength(0);
+                    ndctl.grdNodeText.Height = new GridLength(0);
+                    ndctl.lblDialogueName.Text = convo.lblConvTitle.Text;
                     tcMain.AddRoot(ndctl, "node_" + dh.ID);
                     //tcMain.RegisterName("_node_" + dial.ID, ndctl);
                     Console.WriteLine("Writing root: " + dh.ID);
@@ -645,6 +701,62 @@ namespace TalkerMakerDeluxe
 
         }
 
+        private void OpenHandler(string filename = null)
+        {
+            if (needsSave)
+            {
+                MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before opening this file?", "Save before opening?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
+                switch (result1)
+                {
+                    case (MessageBoxResult.Yes):
+                        SaveHandler();
+                        goto opener;
+                    case (MessageBoxResult.No):
+                        goto opener;
+                    default:
+                        goto quitter;
+
+                }
+            }
+        opener:
+            if(filename == null)
+            { 
+                popSettings.IsOpen = false;
+                OpenFileDialog openFileDialog = new OpenFileDialog();
+                openFileDialog.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
+                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+                if (openFileDialog.ShowDialog() == true)
+                {
+                    try
+                    {
+                        PrepareProject(openFileDialog.FileName);
+                        openedFile = openFileDialog.FileName;
+                        mnuRecent.InsertFile(openedFile);
+                    }
+                    catch (Exception z)
+                    {
+                        mnuRecent.RemoveFile(openFileDialog.FileName);
+                        System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
+                    }
+                }
+            }
+            else
+            {
+                try
+                {
+                    PrepareProject(filename);
+                    openedFile = filename;
+                    mnuRecent.InsertFile(filename);
+                }
+                catch (Exception z)
+                {
+                    mnuRecent.RemoveFile(filename);
+                    System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
+                }
+            }
+            quitter: ;
+        }
+
         private void menuExport_Click(object sender, RoutedEventArgs e)
         {
             popSettings.IsOpen = false;
@@ -695,39 +807,7 @@ namespace TalkerMakerDeluxe
 
         private void Open_Binding(object obSender, ExecutedRoutedEventArgs e)
         {
-            if (needsSave)
-            {
-                MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before opening this file?", "Save before opening?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                switch (result1)
-                {
-                    case (MessageBoxResult.Yes):
-                        SaveHandler();
-                        goto opener;
-                    case (MessageBoxResult.No):
-                        goto opener;
-                    default:
-                        goto quitter;
-
-                }
-            }
-            opener:
-                popSettings.IsOpen = false;
-                OpenFileDialog openFileDialog = new OpenFileDialog();
-                openFileDialog.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
-                openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (openFileDialog.ShowDialog() == true)
-                {
-                    try
-                    {
-                        PrepareProject(openFileDialog.FileName);
-                        openedFile = openFileDialog.FileName;
-                    }
-                    catch (Exception z)
-                    {
-                        System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
-                    }
-                }
-            quitter: ;
+            OpenHandler();
         }
 
         private void Exit_Binding(object obSender, ExecutedRoutedEventArgs e)
@@ -738,52 +818,7 @@ namespace TalkerMakerDeluxe
         private void MetroWindow_Drop(object sender, DragEventArgs e)
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            if (needsSave)
-            {
-                MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before opening this file?", "Save before opening?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
-                switch (result1)
-                {
-                    case (MessageBoxResult.Yes):
-                        SaveHandler();
-                        try
-                        { 
-                            PrepareProject(files[0]);
-                            openedFile = files[0];
-                        }
-                        catch (Exception z)
-                        {
-                            System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
-                        }
-                        break;
-                    case (MessageBoxResult.No):
-                        try
-                        {
-                            PrepareProject(files[0]);
-                            openedFile = files[0];
-                        }
-                        catch (Exception z)
-                        {
-                            System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
-                        }
-                        break;
-                    default:
-                        break;
-
-                }
-
-            }
-            else
-            {
-                try
-                {
-                    PrepareProject(files[0]);
-                    openedFile = files[0];
-                }
-                catch (Exception z)
-                {
-                    System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
-                }
-            }
+            OpenHandler(files[0]);
         }
 
         private void MetroWindow_Closing(object sender, CancelEventArgs e)
@@ -1030,7 +1065,7 @@ namespace TalkerMakerDeluxe
         private void txtActorGender_TextChanged(object sender, TextChangedEventArgs e)
         {
             CharacterItem chara = lstCharacters.SelectedItem as CharacterItem;
-            if (txtActorGender.Text != "" && chara.lblActorGender.Content != txtActorGender.Text)
+            if (chara.lblActorGender.Content != txtActorGender.Text)
             {
                 Actor actor = projie.Assets.Actors[Convert.ToInt16(chara.lblActorID.Content) - 1];
                 int containsGender = 0;
@@ -1076,7 +1111,7 @@ namespace TalkerMakerDeluxe
             }
         }
 
-        private void txtActorAge_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double?> e)
+        private void txtActorAge_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             CharacterItem chara = lstCharacters.SelectedItem as CharacterItem;
             if (txtActorAge.Value.ToString() != "" && chara.lblActorAge.Content != txtActorAge.Value.ToString())
@@ -1297,7 +1332,7 @@ namespace TalkerMakerDeluxe
                         }
                     }
                     ndctl.lblActorID.Content = chara.lblActorID.Content;
-                    ndctl.lblActor.Content = chara.lblActorName.Content;
+                    ndctl.lblActor.Text = chara.lblActorName.Content.ToString();
                     convo.lblConvActorID.Content = chara.lblActorID.Content;
                     convo.lblConvActor.Content = chara.lblActorName.Content;
                     needsSave = true;
@@ -1327,7 +1362,7 @@ namespace TalkerMakerDeluxe
                         }
                     }
                     ndctl.lblConversantID.Content = chara.lblActorID.Content;
-                    ndctl.lblConversant.Content = chara.lblActorName.Content;
+                    ndctl.lblConversant.Text = chara.lblActorName.Content.ToString();
                     convo.lblConvConversantID.Content = chara.lblActorID.Content;
                     convo.lblConvConversant.Content = chara.lblActorName.Content;
                     needsSave = true;
@@ -1345,7 +1380,7 @@ namespace TalkerMakerDeluxe
             {
                 TreeNode tn = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
                 NodeControl ndctl = tn.Content as NodeControl;
-                if (currentNode == ndctl.Name && ndctl.lblDialogueName.Content != txtDialogueTitle.Text)
+                if (currentNode == ndctl.Name && ndctl.lblDialogueName.Text != txtDialogueTitle.Text)
                 {
                     DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
                     foreach (Field field in de.Fields)
@@ -1357,7 +1392,7 @@ namespace TalkerMakerDeluxe
                                 break;
                         }
                     }
-                    ndctl.lblDialogueName.Content = txtDialogueTitle.Text;
+                    ndctl.lblDialogueName.Text = txtDialogueTitle.Text;
                     needsSave = true;
                 }
             }
@@ -1394,7 +1429,7 @@ namespace TalkerMakerDeluxe
             {
                 TreeNode tn = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
                 NodeControl ndctl = tn.Content as NodeControl;
-                if (currentNode == ndctl.Name && ndctl.lblMenuText.Content != txtMenuText.Text)
+                if (currentNode == ndctl.Name && ndctl.lblMenuText.Text != txtMenuText.Text)
                 {
                     DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
                     foreach (Field field in de.Fields)
@@ -1406,7 +1441,7 @@ namespace TalkerMakerDeluxe
                                 break;
                         }
                     }
-                    ndctl.lblMenuText.Content = txtMenuText.Text;
+                    ndctl.lblMenuText.Text = txtMenuText.Text;
                     needsSave = true;
                 }
             }
@@ -1456,8 +1491,9 @@ namespace TalkerMakerDeluxe
                                 break;
                         }
                     }
+                    ndctl.imgActor.Source = chara.imgActorImage.Source;
                     ndctl.lblActorID.Content = chara.lblActorID.Content;
-                    ndctl.lblActor.Content = chara.lblActorName.Content;
+                    ndctl.lblActor.Text = chara.lblActorName.Content.ToString();
                     needsSave = true;
                 }
             }
@@ -1484,7 +1520,7 @@ namespace TalkerMakerDeluxe
                         }
                     }
                     ndctl.lblConversantID.Content = chara.lblActorID.Content;
-                    ndctl.lblConversant.Content = chara.lblActorName.Content;
+                    ndctl.lblConversant.Text = chara.lblActorName.Content.ToString();
                     needsSave = true;
                 }
             }
@@ -1556,6 +1592,82 @@ namespace TalkerMakerDeluxe
                             break;
                             
                     }
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void txtLinkTo_ValueChanged(object sender, RoutedPropertyChangedEventArgs<object> e)
+        {
+            if (currentNode != "")
+            {
+                TreeNode tn = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+                NodeControl ndctl = tn.Content as NodeControl;
+                if (txtLinkTo.Value > 0 && ndctl.lblLinkTo.Content != txtLinkTo.Value.ToString() && chkLinkTo.IsChecked == true)
+                {
+
+                    DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
+                    try
+                    {
+                        de.OutgoingLinks.First(p => p.IsConnector == true).DestinationDialogID = (int)txtLinkTo.Value;
+                    }
+                    catch (Exception ex)
+                    {
+                        de.OutgoingLinks.Add(new Link { DestinationConvoID = loadedConversation, OriginConvoID = loadedConversation, IsConnector = true, OriginDialogID = (int)ndctl.lblID.Content, DestinationDialogID = (int)txtLinkTo.Value, ConversationID = loadedConversation });
+                    }
+                    ndctl.lblLinkTo.Content = txtLinkTo.Value;
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void chkLinkTo_Checked(object sender, RoutedEventArgs e)
+        {
+            TreeNode tn = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+            NodeControl ndctl = tn.Content as NodeControl;
+            DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
+            if (chkLinkTo.IsChecked == true)
+            {
+                ndctl.btnAdd.Visibility = Visibility.Hidden;
+                ndctl.faLink.Visibility = Visibility.Visible;
+                try
+                {
+                    de.OutgoingLinks.First(p => p.IsConnector == true).DestinationDialogID = (int)txtLinkTo.Value;
+                }
+                catch (Exception ex)
+                {
+                    de.OutgoingLinks.Add(new Link { DestinationConvoID = loadedConversation, OriginConvoID = loadedConversation, IsConnector = true, OriginDialogID = (int)ndctl.lblID.Content, DestinationDialogID = (int)txtLinkTo.Value, ConversationID = loadedConversation });
+                }
+            }
+            else
+            {
+                ndctl.btnAdd.Visibility = Visibility.Visible;
+                ndctl.faLink.Visibility = Visibility.Hidden;
+                try
+                {
+                    de.OutgoingLinks.Remove(de.OutgoingLinks.First(p => p.IsConnector == true));
+                    ndctl.lblLinkTo.Content = 0;
+                }
+                catch (Exception ex)
+                {
+
+                }
+            }
+        }
+
+        private void cmbFunction_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (currentNode != "" && cmbFunction.SelectedItem != null)
+            {
+                TreeNode tn = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+                NodeControl ndctl = tn.Content as NodeControl;
+                ComboBoxItem typeItem = (ComboBoxItem)cmbFunction.SelectedItem;
+                string value = typeItem.Content.ToString();
+                if (currentNode == ndctl.Name && value != "" && ndctl.lblFalseCondition.Content.ToString() != value)
+                {
+                    DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
+                    de.FalseCondtionAction = value;
+                    ndctl.lblFalseCondition.Content = value;
                     needsSave = true;
                 }
             }
@@ -1658,6 +1770,8 @@ namespace TalkerMakerDeluxe
         }
 
         #endregion
+
+        
 
         #endregion
 

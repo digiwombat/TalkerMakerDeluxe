@@ -133,7 +133,7 @@ and change the color of the selected bullet into a darker gray for better highli
             <xcad:LayoutRoot x:Name="_layoutRoot">
                 <xcad:LayoutPanel Orientation="Horizontal">
                     <xcad:LayoutAnchorablePane DockWidth="235">
-                        <xcad:LayoutAnchorable ContentId="AssetAnchor" Title="ASSETS" CanHide="False" CanClose="False">
+                        <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="AssetAnchor" Title="ASSETS" CanHide="False" CanClose="False">
                             <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
                                     <Expander Name="expCharacters" IsExpanded="True" ScrollViewer.CanContentScroll="True">
@@ -193,7 +193,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                 </StackPanel>
                             </ScrollViewer>
                         </xcad:LayoutAnchorable>
-                        <xcad:LayoutAnchorable  ContentId="ConvoAnchor" Title="CONVERSATIONS" CanHide="False" CanClose="False">
+                        <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ConvoAnchor" Title="CONVERSATIONS" CanHide="False" CanClose="False">
                             <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
                                 <StackPanel Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
 
@@ -241,12 +241,21 @@ and change the color of the selected bullet into a darker gray for better highli
                         <xcad:LayoutPanel Orientation="Horizontal" DockHeight="150">
                             <xcad:LayoutAnchorablePane>
                                 <xcad:LayoutAnchorable ContentId="ScriptAnchor" Title="Script" CanClose="False" CanHide="False">
-                                    <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="editScript" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" Margin="5,5,5,5" WordWrap="True" ShowLineNumbers="True" TextChanged="editScript_TextChanged"/>
+                                    <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="editScript" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" TextChanged="editScript_TextChanged"/>
                                 </xcad:LayoutAnchorable>
                             </xcad:LayoutAnchorablePane>
                             <xcad:LayoutAnchorablePane>
                                 <xcad:LayoutAnchorable ContentId="ConditionsAnchor" Title="Conditions" CanHide="False" CanClose="False">
-                                    <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="editConditions" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" Margin="5,5,5,5" WordWrap="True" ShowLineNumbers="True" TextChanged="editConditions_TextChanged"/>
+                                    <StackPanel Orientation="Vertical">
+                                        <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="editConditions" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" TextChanged="editConditions_TextChanged" MinHeight="95"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <Label>When False:</Label>
+                                            <ComboBox Name="cmbFunction" Width="100" SelectionChanged="cmbFunction_SelectionChanged">
+                                                <ComboBoxItem IsSelected="True">Block</ComboBoxItem>
+                                                <ComboBoxItem>Passthrough</ComboBoxItem>
+                                            </ComboBox>
+                                        </StackPanel>
+                                    </StackPanel>
                                 </xcad:LayoutAnchorable>
                             </xcad:LayoutAnchorablePane>
                         </xcad:LayoutPanel>
@@ -254,7 +263,7 @@ and change the color of the selected bullet into a darker gray for better highli
 
                     <xcad:LayoutPanel Orientation="Vertical" DockWidth="235">
                         <xcad:LayoutAnchorablePane DockHeight="1*">
-                            <xcad:LayoutAnchorable  ContentId="OverviewAnchor" Title="OVERVIEW" CanClose="False" CanHide="False">
+                            <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="OverviewAnchor" Title="OVERVIEW" CanClose="False" CanHide="False">
                                 <Viewbox Name="vbOverview" MouseLeftButtonDown="vbOverview_MouseLeftButtonDown" DataContext="{Binding ElementName=scrlTree}" Stretch="Uniform">
                                     <Grid>
                                         <Rectangle Name="recOverview" Width="{Binding Content.ActualWidth}" Height="{Binding Content.ActualHeight}">
@@ -278,7 +287,7 @@ and change the color of the selected bullet into a darker gray for better highli
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorablePane>
                         <xcad:LayoutAnchorablePane DockHeight="3*">
-                            <xcad:LayoutAnchorable  ContentId="PropertiesAnchor" Title="PROPERTIES" CanClose="False" CanHide="False">
+                            <xcad:LayoutAnchorable ContentId="PropertiesAnchor" Title="PROPERTIES" CanClose="False" CanAutoHide="False" CanHide="False" CanFloat="True">
                                 <StackPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Top">
                                     <TabControl Margin="0">
                                         <TabItem Header="Blank Settings" Name="tabBlank" Visibility="Collapsed">
@@ -309,7 +318,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                 <TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtActorName" TextChanged="txtActorName_TextChanged"/>
 
                                                 <TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Age</TextBlock>
-                                                <Controls:NumericUpDown Minimum="0" Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Name="txtActorAge" ValueChanged="txtActorAge_ValueChanged"/>
+                                                <xctk:IntegerUpDown Minimum="0" Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Name="txtActorAge" ValueChanged="txtActorAge_ValueChanged"/>
 
                                                 <TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Gender</TextBlock>
                                                 <TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Name="txtActorGender" TextChanged="txtActorGender_TextChanged"/>
@@ -380,6 +389,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto" Name="rowLinkRow" />
                                                 </Grid.RowDefinitions>
                                                 <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
 
@@ -412,6 +422,11 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RadioButton Name="rdioColorGreen" Checked="rdioColorNormal_Checked" Style="{StaticResource GreenRadio}" GroupName="grpNodeColor" />
                                                 </StackPanel>
                                                 
+                                                <TextBlock Grid.Row="8" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Link To:</TextBlock>
+                                                <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
+                                                    <CheckBox Name="chkLinkTo" Checked="chkLinkTo_Checked" Unchecked="chkLinkTo_Checked" HorizontalAlignment="Center" />
+                                                    <xctk:IntegerUpDown IsEnabled="{Binding ElementName=chkLinkTo, Path=IsChecked}" Minimum="1" Name="txtLinkTo" ValueChanged="txtLinkTo_ValueChanged" MinWidth="60" DefaultValue="0" />
+                                                </StackPanel>
                                             </Grid>
                                         </TabItem>
                                         <TabItem Header="Item Settings" Name="tabItem" Visibility="Collapsed">
@@ -442,7 +457,11 @@ and change the color of the selected bullet into a darker gray for better highli
                                                 <TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtVarName" TextChanged="txtVarName_TextChanged" />
 
                                                 <TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Type</TextBlock>
-                                                <TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtVarType" TextChanged="txtVarType_TextChanged" />
+                                                <ComboBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" IsEditable="True" Name="txtVarType" TextBoxBase.TextChanged="txtVarType_TextChanged">
+                                                    <ComboBoxItem>Boolean</ComboBoxItem>
+                                                    <ComboBoxItem>Text</ComboBoxItem>
+                                                    <ComboBoxItem>Number</ComboBoxItem>
+                                                </ComboBox>
 
                                                 <TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Initial Value</TextBlock>
                                                 <TextBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtVarValue" TextChanged="txtVarValue_TextChanged" />
@@ -482,7 +501,7 @@ and change the color of the selected bullet into a darker gray for better highli
                         <fa:FontAwesome Icon="ShareSquareOutlined" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <Separator />
+                <s:RecentFileList x:Name="mnuRecent" MaxNumberOfFiles="3" />
                 <MenuItem Name="menuExit" Header="_Exit" Command="Close" />
             </MenuItem>
         </Menu>

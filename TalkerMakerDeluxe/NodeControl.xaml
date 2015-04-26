@@ -7,15 +7,15 @@
              xmlns:fa="http://schemas.fontawesome.io/icons/"
              mc:Ignorable="d" Height="Auto" Width="202">
     <Border x:Name="border" BorderBrush="{StaticResource ResourceKey=HighlightBrush}" BorderThickness="2" CornerRadius="2">
-        <Grid Name="grid" Background="{StaticResource ResourceKey=AccentColorBrush2}" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
+        <Grid Name="grid" Background="#FF49B4E8" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
             <Grid.RowDefinitions>
-                <RowDefinition Height="1*" />
-                <RowDefinition Height="28" />
-                <RowDefinition Height="28" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="26" MaxHeight="26" />
+                <RowDefinition Height="28" MaxHeight="28" />
+                <RowDefinition Name="grdNodeImage" Height="28" />
+                <RowDefinition Name="grdNodeText" Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Label x:Name="lblDialogueName" Grid.Row="0" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding nodeDialogueName}" Margin="0,0,60,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="11" FontWeight="Bold"/>
+            <TextBlock TextTrimming="CharacterEllipsis" x:Name="lblDialogueName" Grid.Row="0" DataContext="{Binding RelativeSource={RelativeSource Self}}" Text="{Binding nodeDialogueName}" Margin="6,0,60,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="11" FontWeight="Bold"/>
             <Button x:Name="btnAdd" ToolTip="Add Child Dialogue" HorizontalAlignment="Right" VerticalAlignment="Top" Width="24" Height="24" Margin="0" FontFamily="FontAwesome" Background="Transparent" BorderBrush="Transparent" Click="btnAdd_Click" Grid.Row="0">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
@@ -41,21 +41,27 @@
                 </Button.Style>
                 <fa:FontAwesome Name="faAdd" Icon="PlusSquare" />
             </Button>
-            <Border Name="brdDialogue" BorderThickness="1" BorderBrush="{StaticResource ResourceKey=WhiteBrush}" Background="{StaticResource ResourceKey=WhiteBrush}" Padding="5" CornerRadius="2" Margin="2,2,2,2" Grid.Row="3">
-                <TextBlock x:Name="txtDialogue" DataContext="{Binding RelativeSource={RelativeSource Self}}" Text="{Binding nodeText}" TextWrapping="Wrap" />
+            <fa:FontAwesome Name="faLink" Icon="Chain" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,7,0" Background="Transparent" Foreground="{StaticResource ResourceKey=BlackBrush}" Opacity="0.5" Grid.Row="0" Visibility="Hidden" />
+            <Border Name="brdDialogue" BorderThickness="1" BorderBrush="{StaticResource ResourceKey=WhiteBrush}" Background="{StaticResource ResourceKey=WhiteBrush}" Padding="5" CornerRadius="2" Margin="2,2,2,2" Grid.Row="3" MinWidth="194">
+                <TextBlock x:Name="txtDialogue" Padding="4" DataContext="{Binding RelativeSource={RelativeSource Self}}" Text="{Binding nodeText}" TextWrapping="Wrap" />
             </Border>
-            <Label x:Name="lblActor" Grid.Row="1" FontWeight="Bold" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding nodeActor}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" />
+            <TextBlock TextTrimming="CharacterEllipsis" x:Name="lblActor" Grid.Row="1" FontWeight="Bold" DataContext="{Binding RelativeSource={RelativeSource Self}}" Text="{Binding nodeActor}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Margin="6,0,60,0" />
             <Label x:Name="lblActorID" Grid.Row="1" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Visibility="Hidden"/>
             <Label x:Name="lblConversantID" Grid.Row="1" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="90" Visibility="Hidden"/>
-            <Label x:Name="lblConversant" Grid.Row="1" FontWeight="Thin" DataContext="{Binding RelativeSource={RelativeSource Self}}" Content="{Binding nodeConversant}" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" FontSize="10" />
+            <TextBlock TextTrimming="CharacterEllipsis" x:Name="lblConversant" Grid.Row="1" FontWeight="Thin" DataContext="{Binding RelativeSource={RelativeSource Self}}" Text="{Binding nodeConversant}" HorizontalAlignment="Right" MaxWidth="65"  VerticalAlignment="Top" FontSize="10" Margin="0,0,6,0" />
             <Label x:Name="lblID" Content="?" Grid.Row="0" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,0,24,0" VerticalAlignment="Top" Width="60" Opacity="0.25"/>
-            <Label x:Name="lblMenuText" Content="" FontStyle="Italic" Grid.Row="2" HorizontalAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Center" />
+            <TextBlock TextTrimming="CharacterEllipsis" x:Name="lblMenuText" Text="" FontStyle="Italic" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="152" Margin="0,6" />
+            <Border BorderBrush="{StaticResource ResourceKey=HighlightBrush}" BorderThickness="1" Height="28" MaxHeight="40" MaxWidth="35" Grid.Row="2" HorizontalAlignment="Left" Margin="6,0">
+                <Image Name="imgActor" />
+            </Border>
             <Label x:Name="lblUserScript" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Width="28" Visibility="Hidden"/>
             <Label x:Name="lblConditionsString" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Width="28" Visibility="Hidden"/>
             <Label x:Name="lblNodeColor" Content="White" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
             <Label x:Name="lblSequence" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
             <Label x:Name="lblConversationID" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
-            <Button HorizontalAlignment="Right" Name="btnMin" VerticalAlignment="Bottom" Width="10" Height="10" Padding="0" Background="Transparent" BorderBrush="Transparent" Margin="0,0,-6,-6" Grid.Row="3" Click="btnMin_Click">
+            <Label x:Name="lblLinkTo" Content="0" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Label x:Name="lblFalseCondition" Content="Block" HorizontalAlignment="Left" VerticalAlignment="Top" Visibility="Hidden"/>
+            <Button HorizontalAlignment="Right" Name="btnMin" VerticalAlignment="Bottom" Width="10" Height="10" Padding="0" Background="Transparent" BorderBrush="Transparent" Margin="0,0,-6,-6" Grid.RowSpan="4" Click="btnMin_Click">
                 <Button.Style>
                     <Style TargetType="{x:Type Button}">
                         <Setter Property="Background" Value="Green"/>
@@ -78,7 +84,10 @@
                         </Style.Triggers>
                     </Style>
                 </Button.Style>
-                <fa:ImageAwesome Name="faMin" Icon="AngleDoubleUp" Foreground="{StaticResource ResourceKey=BlackBrush}"/>
+                <StackPanel Orientation="Horizontal">
+                    <fa:ImageAwesome Icon="Circle" Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalAlignment="Center" VerticalAlignment="Center" Width="8" Height="8" />
+                    <fa:ImageAwesome Panel.ZIndex="1" Name="faMin" Icon="ChevronCircleUp" Foreground="{StaticResource ResourceKey=BlackBrush}" Margin="-9,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" />
+                </StackPanel>
             </Button>
         </Grid>
     </Border>
