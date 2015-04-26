@@ -260,6 +260,10 @@ namespace TalkerMakerDeluxe
 
                 //Create Dialogue Item in Project
                 newDialogue.ID = newNodeID;
+                newDialogue.ConditionsString = "";
+                newDialogue.FalseCondtionAction = "Block";
+                newDialogue.NodeColor = "White";
+                newDialogue.UserScript = "";
                 newDialogue.Fields.Add(new Field { Title = "Title", Value = "New Dialogue", Type = "Text" });
                 newDialogue.Fields.Add(new Field { Title = "Actor", Value = ndctl.lblConversantID.Content.ToString(), Type = "Actor" });
                 newDialogue.Fields.Add(new Field { Title = "Conversant", Value = ndctl.lblActorID.Content.ToString(), Type = "Actor" });
@@ -982,7 +986,6 @@ namespace TalkerMakerDeluxe
 
         private void lstConversations_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
-            
             loadedConversation = lstConversations.SelectedIndex;
             LoadConversation(loadedConversation);
             
