@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:s="clr-namespace:TalkerMakerDeluxe"
              mc:Ignorable="d" 
-              d:DesignHeight="50" d:DesignWidth="180">
+              d:DesignHeight="56" d:DesignWidth="180">
     <Grid Name="grid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="45" Name="pictureRow"/>
@@ -15,7 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
-        <Label Content="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type s:MainWindow}}, Path=actorName}" Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Grid.Column="1" Grid.ColumnSpan="2" Height="26" Width="Auto"/>
+        <TextBlock Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type s:MainWindow}}, Path=actorName}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" MaxWidth="130" />
         <Image Source="{Binding Path=actorImage}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.RowSpan="1" Grid.Row="0" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality"/>
         <Label Content="{Binding Path=actorID}" Name="lblActorID" HorizontalAlignment="Left" Height="35" Margin="-224,-69,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
         <Label Content="{Binding Path=actorAge}" Name="lblActorAge" HorizontalAlignment="Left" Height="26" Margin="0,24,0,0" VerticalAlignment="Bottom" Grid.Column="1"/>

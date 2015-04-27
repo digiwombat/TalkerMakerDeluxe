@@ -462,12 +462,12 @@ namespace TalkerMakerDeluxe
                             ndctl.lblActorID.Content = field.Value;
                             CharacterItem chara = lstCharacters.Items[Convert.ToInt16(field.Value) - 1] as CharacterItem;
                             ndctl.imgActor.Source = chara.imgActorImage.Source;
-                            ndctl.lblActor.Text = chara.lblActorName.Content.ToString();
+                            ndctl.lblActor.Text = chara.lblActorName.Text;
                             break;
                         case "Conversant":
                             ndctl.lblConversantID.Content = field.Value;
                             chara = lstCharacters.Items[Convert.ToInt16(field.Value) - 1] as CharacterItem;
-                            ndctl.lblConversant.Text = chara.lblActorName.Content.ToString();
+                            ndctl.lblConversant.Text = chara.lblActorName.Text;
                             break;
                         case "Menu Text":
                             ndctl.lblMenuText.Text = field.Value;
@@ -574,12 +574,12 @@ namespace TalkerMakerDeluxe
                         case "Actor":
                             conv.lblConvActorID.Content = field.Value;
                             CharacterItem chara = lstCharacters.Items[Convert.ToInt16(field.Value)-1] as CharacterItem;
-                            conv.lblConvActor.Content = chara.lblActorName.Content;
+                            conv.lblConvActor.Text = chara.lblActorName.Text;
                             break;
                         case "Conversant":
                             conv.lblConvConversantID.Content = field.Value;
                             chara = lstCharacters.Items[Convert.ToInt16(field.Value)-1] as CharacterItem;
-                            conv.lblConvConversant.Content = chara.lblActorName.Content;
+                            conv.lblConvConversant.Text = chara.lblActorName.Text;
                             break;
                         case "Description":
                             conv.lblConvDescription.Content = field.Value;
@@ -614,7 +614,7 @@ namespace TalkerMakerDeluxe
                     switch (field.Title)
                     {
                         case "Name":
-                            chara.lblActorName.Content = field.Value;
+                            chara.lblActorName.Text = field.Value;
                             break;
                         case "Age":
                             chara.lblActorAge.Content = field.Value;
@@ -699,6 +699,7 @@ namespace TalkerMakerDeluxe
                     Console.WriteLine("Saving...");
                     XMLHandler.SaveXML(projie, saver.FileName);
                     Console.WriteLine("Save finished.");
+                    mnuRecent.InsertFile(saver.FileName);
                     openedFile = saver.FileName;
                     needsSave = false;
                 }
@@ -958,7 +959,7 @@ namespace TalkerMakerDeluxe
             {
                 CharacterItem chara = lstCharacters.SelectedItem as CharacterItem;
                 txtActorID.Text = chara.lblActorID.Content.ToString();
-                txtActorName.Text = chara.lblActorName.Content.ToString();
+                txtActorName.Text = chara.lblActorName.Text;
                 txtActorAge.Value = chara.lblActorAge.Content != "" ? Convert.ToInt16(chara.lblActorAge.Content) : 0;
                 txtActorGender.Text = chara.lblActorGender.Content.ToString();
                 txtActorDescription.Text = chara.lblActorDescription.Content.ToString();
@@ -1049,7 +1050,7 @@ namespace TalkerMakerDeluxe
         private void txtActorName_TextChanged(object sender, TextChangedEventArgs e)
         {
             CharacterItem chara = lstCharacters.SelectedItem as CharacterItem;
-            if (txtActorName.Text != "" && chara.lblActorName.Content != txtActorName.Text)
+            if (txtActorName.Text != "" && chara.lblActorName.Text != txtActorName.Text)
             {
                 Actor actor = projie.Assets.Actors[Convert.ToInt16(chara.lblActorID.Content) - 1];
                 foreach (Field field in actor.Fields)
@@ -1061,7 +1062,7 @@ namespace TalkerMakerDeluxe
                             break;
                     }
                 }
-                chara.lblActorName.Content = txtActorName.Text;
+                chara.lblActorName.Text = txtActorName.Text;
                 needsSave = true;
             }
         }
@@ -1336,9 +1337,9 @@ namespace TalkerMakerDeluxe
                         }
                     }
                     ndctl.lblActorID.Content = chara.lblActorID.Content;
-                    ndctl.lblActor.Text = chara.lblActorName.Content.ToString();
+                    ndctl.lblActor.Text = chara.lblActorName.Text;
                     convo.lblConvActorID.Content = chara.lblActorID.Content;
-                    convo.lblConvActor.Content = chara.lblActorName.Content;
+                    convo.lblConvActor.Text = chara.lblActorName.Text;
                     needsSave = true;
                 }
             }
@@ -1366,9 +1367,9 @@ namespace TalkerMakerDeluxe
                         }
                     }
                     ndctl.lblConversantID.Content = chara.lblActorID.Content;
-                    ndctl.lblConversant.Text = chara.lblActorName.Content.ToString();
+                    ndctl.lblConversant.Text = chara.lblActorName.Text;
                     convo.lblConvConversantID.Content = chara.lblActorID.Content;
-                    convo.lblConvConversant.Content = chara.lblActorName.Content;
+                    convo.lblConvConversant.Text = chara.lblActorName.Text;
                     needsSave = true;
                 }
             }
@@ -1497,7 +1498,7 @@ namespace TalkerMakerDeluxe
                     }
                     ndctl.imgActor.Source = chara.imgActorImage.Source;
                     ndctl.lblActorID.Content = chara.lblActorID.Content;
-                    ndctl.lblActor.Text = chara.lblActorName.Content.ToString();
+                    ndctl.lblActor.Text = chara.lblActorName.Text;
                     needsSave = true;
                 }
             }
@@ -1524,7 +1525,7 @@ namespace TalkerMakerDeluxe
                         }
                     }
                     ndctl.lblConversantID.Content = chara.lblActorID.Content;
-                    ndctl.lblConversant.Text = chara.lblActorName.Content.ToString();
+                    ndctl.lblConversant.Text = chara.lblActorName.Text;
                     needsSave = true;
                 }
             }
