@@ -1,5 +1,7 @@
 # TODO:
 
-* Add dialogue system scene instruction field.
+* Undo/Redo
 * Add the ability to delete conversations, characters, and variables.
-* Copy paste, maybe? I don't know, maaaan. Lot of work.
+* Cut/Copy/Paste, maybe? I don't know, maaaan. Lot of work.
+* Autosave
+* One day move to a proper MVVM model.
