@@ -230,7 +230,7 @@ and change the color of the selected bullet into a darker gray for better highli
                         <xcad:LayoutDocumentPane DockHeight="1*">
                             <xcad:LayoutDocument Title="CONVERSATION" CanClose="False" CanFloat="False">
                                 <ScrollViewer Name="scrlTree" KeyUp="Delete_Node" Background="{StaticResource ResourceKey=GrayBrush7}" BorderBrush="{StaticResource ResourceKey=HighlightBrush}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
-                                    <TreeContainer:TreeContainer Width="Auto" Height="Auto" x:Name="tcMain" Margin="40" VerticalBuffer="20" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="100" MinHeight="20" >
+                                    <TreeContainer:TreeContainer Width="Auto" Height="Auto" x:Name="tcMain" Margin="40" VerticalBuffer="40" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="100" MinHeight="20" HorizontalBuffer="20" HorizontalBufferSubtree="20" >
                                         <TreeContainer:TreeContainer.LayoutTransform>
                                             <ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}" />
                                         </TreeContainer:TreeContainer.LayoutTransform>
