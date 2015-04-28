@@ -9,7 +9,7 @@
     xmlns:s="clr-namespace:TalkerMakerDeluxe"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-    Title="TalkerMaker Deluxe" Height="810" MinHeight="450" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Closing="MetroWindow_Closing">
+    Title="TalkerMaker Deluxe" Height="810" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Closing="MetroWindow_Closing">
     <Controls:MetroWindow.Resources>
         <s:UriToBitmapConverter x:Key="UriToBitmapConverter" />
         <s:Actor x:Key="CharacterItems" />
@@ -286,13 +286,14 @@ and change the color of the selected bullet into a darker gray for better highli
                                 </Viewbox>
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorablePane>
-                        <xcad:LayoutAnchorablePane DockHeight="3*">
+                        <xcad:LayoutAnchorablePane x:Name="layoutAnchorablePane" DockHeight="3*">
                             <xcad:LayoutAnchorable ContentId="PropertiesAnchor" Title="PROPERTIES" CanClose="False" CanAutoHide="False" CanHide="False" CanFloat="True">
-                                <StackPanel Grid.Column="2" Grid.Row="1" VerticalAlignment="Top">
+                                <StackPanel Grid.Column="2" Grid.Row="1">
                                     <TabControl Margin="0">
                                         <TabItem Header="Blank Settings" Name="tabBlank" Visibility="Collapsed">
                                         </TabItem>
                                         <TabItem Header="Character Settings" Name="tabCharacter" Visibility="Collapsed">
+
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition  Width="Auto"/>
@@ -327,7 +328,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                 <CheckBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" Name="chkActorPlayer" Checked="chkActorPlayer_Checked" Unchecked="chkActorPlayer_Checked"></CheckBox>
 
                                                 <TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
-                                                <TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" Name="txtActorDescription" TextChanged="txtActorDescription_TextChanged" />
+                                                <TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtActorDescription" TextChanged="txtActorDescription_TextChanged" />
 
                                                 <TextBlock Grid.Row="6" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Picture</TextBlock>
                                                 <Grid Grid.Row="6" Grid.Column="1" Margin="4,0,4,4">
@@ -370,7 +371,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                 <ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Name="lstConvoConversant" SelectionChanged="lstConvoConversant_SelectionChanged" />
 
                                                 <TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
-                                                <TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" Name="txtConvoDescription" TextChanged="txtConvoDescription_TextChanged" />
+                                                <TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtConvoDescription" TextChanged="txtConvoDescription_TextChanged" />
                                             </Grid>
                                         </TabItem>
                                         <TabItem Header="Dialogue Settings" Name="tabDialogue" Visibility="Collapsed">
@@ -415,7 +416,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                 <TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtSequence" TextChanged="txtSequence_TextChanged"/>
 
                                                 <TextBlock Grid.Row="6" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Dialogue</TextBlock>
-                                                <TextBox Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="50" Name="txtDialogueWords" TextChanged="txtDialogueWords_TextChanged" />
+                                                <TextBox Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtDialogueWords" TextChanged="txtDialogueWords_TextChanged" />
 
                                                 <TextBlock Grid.Row="7" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Node Color</TextBlock>
                                                 <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" Margin="4,0,4,4">
@@ -423,7 +424,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RadioButton Name="rdioColorRed" Checked="rdioColorNormal_Checked" Style="{StaticResource RedRadio}" GroupName="grpNodeColor" />
                                                     <RadioButton Name="rdioColorGreen" Checked="rdioColorNormal_Checked" Style="{StaticResource GreenRadio}" GroupName="grpNodeColor" />
                                                 </StackPanel>
-                                                
+
                                                 <TextBlock Grid.Row="8" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Link To:</TextBlock>
                                                 <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
                                                     <CheckBox Name="chkLinkTo" Checked="chkLinkTo_Checked" Unchecked="chkLinkTo_Checked" HorizontalAlignment="Center" />
@@ -469,7 +470,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                 <TextBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtVarValue" TextChanged="txtVarValue_TextChanged" />
 
                                                 <TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold">Description</TextBlock>
-                                                <TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" Name="txtVarDescription" TextChanged="txtVarDescription_TextChanged" />
+                                                <TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtVarDescription" TextChanged="txtVarDescription_TextChanged" />
                                             </Grid>
                                         </TabItem>
                                     </TabControl>
