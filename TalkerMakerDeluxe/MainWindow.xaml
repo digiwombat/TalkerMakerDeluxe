@@ -9,7 +9,7 @@
     xmlns:s="clr-namespace:TalkerMakerDeluxe"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-    Title="TalkerMaker Deluxe" Height="810" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" WindowStartupLocation="CenterScreen" ResizeMode="CanResizeWithGrip" Closing="MetroWindow_Closing">
+    Title="TalkerMaker Deluxe" Height="810" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" ResizeMode="CanResizeWithGrip" Closing="MetroWindow_Closing">
     <Controls:MetroWindow.Resources>
         <s:UriToBitmapConverter x:Key="UriToBitmapConverter" />
         <s:Actor x:Key="CharacterItems" />
