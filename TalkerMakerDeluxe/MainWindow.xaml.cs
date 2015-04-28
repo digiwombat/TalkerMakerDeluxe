@@ -778,6 +778,27 @@ namespace TalkerMakerDeluxe
             }
         }
 
+        private void menuExpand_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem m = sender as MenuItem;
+            foreach (TreeNode tn in tcMain.Children.OfType<TreeNode>())
+            {
+                NodeControl ndctl = tn.Content as NodeControl;
+                if (m.Name == "menuExpand")
+                {
+                    tn.Collapsed = false;
+                    ndctl.faMin.Icon = FontAwesomeIcon.ChevronCircleUp;
+                }
+                else
+                {
+                    tn.Collapsed = true;
+                    ndctl.faMin.Icon = FontAwesomeIcon.ChevronCircleDown;
+                }
+            }
+
+
+        }
+
         private void Save_Binding(object obSender, ExecutedRoutedEventArgs e)
         {
             SaveHandler();
@@ -1777,7 +1798,6 @@ namespace TalkerMakerDeluxe
         #endregion
 
         
-
         #endregion
 
     }

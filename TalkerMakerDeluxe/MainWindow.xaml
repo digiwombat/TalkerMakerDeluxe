@@ -507,6 +507,10 @@ and change the color of the selected bullet into a darker gray for better highli
                 <s:RecentFileList x:Name="mnuRecent" MaxNumberOfFiles="3" />
                 <MenuItem Name="menuExit" Header="_Exit" Command="Close" />
             </MenuItem>
+            <MenuItem Header="_View">
+                <MenuItem Name="menuExpand" Header="Expand All" Click="menuExpand_Click" />
+                <MenuItem Name="menuCollapse" Header="Collapse All" Click="menuExpand_Click" />
+            </MenuItem>
         </Menu>
         <StatusBar Grid.Row="2" Grid.ColumnSpan="100">
             <StatusBarItem HorizontalAlignment="Left">
