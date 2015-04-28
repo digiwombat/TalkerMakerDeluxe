@@ -293,7 +293,7 @@ namespace TalkerMakerDeluxe
 
                 //Add to tree.
                 rowLinkRow.Height = new GridLength(0);
-                tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID);
+                tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID).BringIntoView();
                 needsSave = true;
             }
         }
@@ -309,6 +309,7 @@ namespace TalkerMakerDeluxe
                 {
                     //Color newNode
                     node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
+                    node.BringIntoView();
 
                     //Remove color from currentNode
                     nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
@@ -333,6 +334,7 @@ namespace TalkerMakerDeluxe
                     //Color newNode
                     tcMain.ToString();
                     node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
+                    node.BringIntoView();
                 }
                 nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
                 node = nodeTree.Content as NodeControl;
@@ -389,6 +391,7 @@ namespace TalkerMakerDeluxe
                 {
                     //Color newNode
                     node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
+                    node.BringIntoView();
 
                     //Remove color from currentNode
                     nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
