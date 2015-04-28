@@ -654,7 +654,7 @@ namespace TalkerMakerDeluxe
                     switch (field.Title)
                     {
                         case "Name":
-                            var.lblVarName.Content = field.Value;
+                            var.lblVarName.Text = field.Value;
                             break;
                         case "Description":
                             var.lblVarDescription.Content = field.Value;
@@ -945,7 +945,7 @@ namespace TalkerMakerDeluxe
             if (lstVariables.SelectedItem != null)
             {
                 VariableItem variable = lstVariables.SelectedItem as VariableItem;
-                txtVarName.Text = variable.lblVarName.Content.ToString();
+                txtVarName.Text = variable.lblVarName.Text;
                 txtVarType.Text = variable.lblVarType.Content.ToString();
                 txtVarValue.Text = variable.lblVarValue.Content.ToString();
                 txtVarDescription.Text = variable.lblVarDescription.Content.ToString();
@@ -1687,7 +1687,7 @@ namespace TalkerMakerDeluxe
             if(lstVariables.SelectedItem != null)
             { 
                 VariableItem variable = lstVariables.SelectedItem as VariableItem;
-                if (txtVarName.Text != "" && variable.lblVarName.Content != txtVarName.Text)
+                if (txtVarName.Text != "" && variable.lblVarName.Text != txtVarName.Text)
                 {
                     UserVariable var = projie.Assets.UserVariables[lstVariables.SelectedIndex];
                     foreach (Field field in var.Fields)
@@ -1699,7 +1699,7 @@ namespace TalkerMakerDeluxe
                                 break;
                         }
                     }
-                    variable.lblVarName.Content = txtVarName.Text;
+                    variable.lblVarName.Text = txtVarName.Text;
                     needsSave = true;
                 }
             }

@@ -10,11 +10,13 @@
             <RowDefinition Height="25"/>
             <RowDefinition Height="25"/>
         </Grid.RowDefinitions>
-        <Label Content="Variable Name" Name="lblVarName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
-        <Label Content="Type" Name="lblVarType" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+        <TextBlock TextTrimming="CharacterEllipsis" Text="Variable Name" Name="lblVarName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
+        <DockPanel Grid.Row="1" >
+            <Label Content="Type" Name="lblVarType" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <Label Content="boolean" Name="lblVarValue" HorizontalAlignment="Right"/>
+        </DockPanel>
 
         <Label Content="" Name="lblVarDescription" Visibility="Hidden"/>
-        <Label Content="boolean" Name="lblVarValue" Visibility="Hidden"/>
 
     </Grid>
 </UserControl>
