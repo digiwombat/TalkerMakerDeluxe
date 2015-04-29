@@ -21,7 +21,6 @@ using Xceed.Wpf.Toolkit.PropertyGrid.Editors;
 using Xceed.Wpf.Toolkit.PropertyGrid;
 using Microsoft.Win32;
 using System.Text.RegularExpressions;
-using System.Threading;
 using FontAwesome.WPF;
 using MahApps.Metro.Controls;
 using System.Xml;
@@ -45,6 +44,7 @@ namespace TalkerMakerDeluxe
         #region Variables and Structs
 
         TalkerMakerProject projie;
+        TreeUndoRedo history = new TreeUndoRedo();
         List<int> handledNodes = new List<int>();
         List<DialogHolder> IDs = new List<DialogHolder>();
         public string currentNode = "";
@@ -304,6 +304,7 @@ namespace TalkerMakerDeluxe
                 //Add to tree.
                 rowLinkRow.Height = new GridLength(0);
                 tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID).BringIntoView();
+                history.Do(new List<TreeNode> {tcMain.Children.OfType<TreeNode>().First(p => p.Name == "node_" + newNodeID)}, "add");
                 needsSave = true;
             }
         }
@@ -505,13 +506,11 @@ namespace TalkerMakerDeluxe
                     ndctl.grdNodeText.Height = new GridLength(0);
                     ndctl.lblDialogueName.Text = convo.lblConvTitle.Text;
                     tcMain.AddRoot(ndctl, "node_" + dh.ID);
-                    //tcMain.RegisterName("_node_" + dial.ID, ndctl);
                     Console.WriteLine("Writing root: " + dh.ID);
                 }
                 else
                 {
                     tcMain.AddNode(ndctl, "node_" + dh.ID, "node_" + parentNode);
-                    //tcMain.RegisterName("_node_" + dial.ID, ndctl);
                     Console.WriteLine("Writing node: " + dh.ID);
                 }
             }
@@ -548,22 +547,33 @@ namespace TalkerMakerDeluxe
             handledNodes.Clear();
         }
 
+        private void Delete_Node(TreeNode node = null)
+        {
+            List<TreeNode> nodesToRemove = new List<TreeNode>();
+            TreeNode mainNode = node;
+            if(node == null)
+                mainNode = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+
+            nodesToRemove.Add(mainNode);
+            foreach (TreeNode subnode in tcMain.Children.OfType<TreeNode>().Where(p => p.TreeParent == currentNode.Remove(0, 1)))
+            {
+                nodesToRemove.Add(subnode);
+            }
+            if (node == null)
+                history.Do(nodesToRemove, "remove");
+            foreach (TreeNode subnode in nodesToRemove)
+            {
+                tcMain.Children.Remove(subnode);
+                tcMain.UnregisterName(subnode.Name);
+            }
+        }
+
         private void Delete_Node(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Delete && currentNode != "" && currentNode != "_node_0")
             {
-
-                List<TreeNode> nodesToRemove = new List<TreeNode>();
-                TreeNode nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
-                nodesToRemove.Add(nodeTree);
-                foreach (TreeNode node in tcMain.Children.OfType<TreeNode>().Where(p => p.TreeParent == currentNode.Remove(0, 1)))
-                {
-                    nodesToRemove.Add(node);
-                }
-                foreach (TreeNode node in nodesToRemove)
-                {
-                    tcMain.Children.Remove(node);
-                }
+                Delete_Node();
+                history.Reset();
             }
         }
         #endregion
@@ -690,6 +700,8 @@ namespace TalkerMakerDeluxe
 
         #region Command Bindings
 
+        #region File Functions
+
         private void SaveHandler()
         {
             SaveLayout();
@@ -717,7 +729,7 @@ namespace TalkerMakerDeluxe
                     needsSave = false;
                 }
             }
-
+            history.Reset(true);
         }
 
         private void OpenHandler(string filename = null)
@@ -901,6 +913,35 @@ namespace TalkerMakerDeluxe
 
             Properties.Settings.Default.Save();
         }
+
+        #endregion
+
+        #region Undo Functions
+
+        private void Undo_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            history.Undo();
+            needsSave = true;
+        }
+
+        private void Undo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = history.CanUndo;
+        }
+
+        private void Redo_Executed(object sender, ExecutedRoutedEventArgs e)
+        {
+            history.Redo();
+            needsSave = true;
+        }
+
+        private void Redo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+            e.CanExecute = history.CanRedo;
+        }
+
+        #endregion
+
         #endregion
 
         #region UI Related Fuctions
@@ -1828,7 +1869,6 @@ namespace TalkerMakerDeluxe
 
         #endregion
 
-        
         #endregion
 
     }

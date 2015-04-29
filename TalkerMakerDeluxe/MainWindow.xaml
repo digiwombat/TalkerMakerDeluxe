@@ -113,6 +113,8 @@ and change the color of the selected bullet into a darker gray for better highli
         <CommandBinding Command="Save" Executed="Save_Binding" />
         <CommandBinding Command="Open" Executed="Open_Binding" />
         <CommandBinding Command="Close" Executed="Exit_Binding" />
+        <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
+        <CommandBinding Command="Redo" Executed="Redo_Executed" CanExecute="Redo_CanExecute" />
     </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="New"/>
@@ -506,6 +508,10 @@ and change the color of the selected bullet into a darker gray for better highli
                 </MenuItem>
                 <s:RecentFileList x:Name="mnuRecent" MaxNumberOfFiles="3" />
                 <MenuItem Name="menuExit" Header="_Exit" Command="Close" />
+            </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Name="menuUndo" Header="Undo" Command="Undo" />
+                <MenuItem Name="menuRedo" Header="Redo" Command="Redo" />
             </MenuItem>
             <MenuItem Header="_View">
                 <MenuItem Name="menuExpand" Header="Expand All" Click="menuExpand_Click" />
