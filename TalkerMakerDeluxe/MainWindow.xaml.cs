@@ -43,12 +43,12 @@ namespace TalkerMakerDeluxe
 
         #region Variables and Structs
 
-        TalkerMakerProject projie;
+        public TalkerMakerProject projie;
         TreeUndoRedo history = new TreeUndoRedo();
         List<int> handledNodes = new List<int>();
         List<DialogHolder> IDs = new List<DialogHolder>();
         public string currentNode = "";
-        int loadedConversation = -1;
+        public int loadedConversation = -1;
         private bool _needsSave = false;
         public bool needsSave
         {
@@ -304,7 +304,7 @@ namespace TalkerMakerDeluxe
                 //Add to tree.
                 rowLinkRow.Height = new GridLength(0);
                 tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID).BringIntoView();
-                history.Do(new List<TreeNode> {tcMain.Children.OfType<TreeNode>().First(p => p.Name == "node_" + newNodeID)}, "add");
+                history.Do("add", new List<TreeNode> { tcMain.Children.OfType<TreeNode>().First(p => p.Name == "node_" + newNodeID) }, new List<DialogEntry> { newDialogue });
                 needsSave = true;
             }
         }
@@ -547,22 +547,27 @@ namespace TalkerMakerDeluxe
             handledNodes.Clear();
         }
 
-        private void Delete_Node(TreeNode node = null)
+        private void Delete_Node(TreeNode node)
         {
             List<TreeNode> nodesToRemove = new List<TreeNode>();
+            List<DialogEntry> dialogToRemove = new List<DialogEntry>();
             TreeNode mainNode = node;
-            if(node == null)
-                mainNode = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+            NodeControl nodeControl = mainNode.Content as NodeControl;
+            mainNode = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
 
             nodesToRemove.Add(mainNode);
+            dialogToRemove.Add(projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == (int)nodeControl.lblID.Content));
             foreach (TreeNode subnode in tcMain.Children.OfType<TreeNode>().Where(p => p.TreeParent == currentNode.Remove(0, 1)))
             {
+                nodeControl = subnode.Content as NodeControl;
                 nodesToRemove.Add(subnode);
+                dialogToRemove.Add(projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == (int)nodeControl.lblID.Content));
             }
-            if (node == null)
-                history.Do(nodesToRemove, "remove");
+            history.Do("remove", nodesToRemove, dialogToRemove);
             foreach (TreeNode subnode in nodesToRemove)
             {
+                nodeControl = subnode.Content as NodeControl;
+                projie.Assets.Conversations[loadedConversation].DialogEntries.Remove(projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == (int)nodeControl.lblID.Content));
                 tcMain.Children.Remove(subnode);
                 tcMain.UnregisterName(subnode.Name);
             }
@@ -572,7 +577,8 @@ namespace TalkerMakerDeluxe
         {
             if (e.Key == Key.Delete && currentNode != "" && currentNode != "_node_0")
             {
-                Delete_Node();
+                TreeNode nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+                Delete_Node(nodeTree);
                 history.Reset();
             }
         }
@@ -785,6 +791,7 @@ namespace TalkerMakerDeluxe
                     System.Windows.MessageBox.Show("Not a valid TalkerMaker Deluxe project. " + Environment.NewLine + Environment.NewLine + z.Message, "You screwed it up.");
                 }
             }
+            history.Reset(true);
             quitter: ;
         }
 
@@ -855,6 +862,7 @@ namespace TalkerMakerDeluxe
                 PrepareProject();
                 openedFile = "New Project";
             }
+            history.Reset(true);
         }
 
         private void Open_Binding(object obSender, ExecutedRoutedEventArgs e)

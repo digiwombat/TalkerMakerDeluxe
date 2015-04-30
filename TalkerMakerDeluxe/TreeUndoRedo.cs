@@ -9,64 +9,88 @@ namespace TalkerMakerDeluxe
 {
     class TreeUndoRedo
     {
-        Dictionary<string[], List<TreeNode>> UndoStack = new Dictionary<string[], List<TreeNode>>();
-        Dictionary<string[], List<TreeNode>> RedoStack = new Dictionary<string[], List<TreeNode>>();
+        List<Tuple<object[], List<TreeNode>, List<DialogEntry>>> UndoStack = new List<Tuple<object[], List<TreeNode>, List<DialogEntry>>>();
+        List<Tuple<object[], List<TreeNode>, List<DialogEntry>>> RedoStack = new List<Tuple<object[], List<TreeNode>, List<DialogEntry>>>();
 
-        public void Do(List<TreeNode> node, string action)
+        public void Do(string action, List<TreeNode> node, List<DialogEntry> de)
         {
-            UndoStack.Add(new string[] {action, node[0].Name}, node);
+            UndoStack.Add(Tuple.Create(new object[] {action, node[0].Name}, node, de));
         }
 
         public void Undo()
         {
             MainWindow parentWindow = Application.Current.MainWindow as MainWindow;
             List<TreeNode> trees = new List<TreeNode>();
-            if (UndoStack.Last().Key[0] == "add")
+            if (UndoStack.Last().Item1[0] == "add")
             {
-                foreach (TreeNode tree in UndoStack.Last().Value)
+                // Undo adding a node
+                // Which means remove the nodes
+                foreach (TreeNode tree in UndoStack.Last().Item2)
                 {
                     parentWindow.tcMain.Children.Remove(tree);
                     parentWindow.tcMain.UnregisterName(tree.Name);
                 }
-                RedoStack.Add(UndoStack.Last().Key, UndoStack.Last().Value);
+                foreach (DialogEntry subde in UndoStack.Last().Item3)
+                {
+                    parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Remove(subde);
+                }
+                RedoStack.Add(Tuple.Create(UndoStack.Last().Item1, UndoStack.Last().Item2, UndoStack.Last().Item3));
             }
-            else if (UndoStack.Last().Key[0] == "remove")
+            else if (UndoStack.Last().Item1[0] == "remove")
             {
-                foreach (TreeNode tree in UndoStack.Last().Value)
+                // Undo removing a node
+                // Which means Re-add the nodes
+                foreach (TreeNode tree in UndoStack.Last().Item2)
                 {
                     parentWindow.tcMain.AddNode(tree.Content, tree.Name, parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.TreeParent));
                     trees.Add(parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.Name));
                 }
-                RedoStack.Add(UndoStack.Last().Key, trees);
+                foreach(DialogEntry subde in UndoStack.Last().Item3)
+                {
+                    parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Add(subde);
+                }
+                RedoStack.Add(Tuple.Create(UndoStack.Last().Item1, trees, UndoStack.Last().Item3));
             }
             
-            UndoStack.Remove(UndoStack.Last().Key);
+            UndoStack.Remove(UndoStack.Last());
         }
 
         public void Redo()
         {
             MainWindow parentWindow = Application.Current.MainWindow as MainWindow;
             List<TreeNode> trees = new List<TreeNode>();
-            if (RedoStack.Last().Key[0] == "remove")
+            if (RedoStack.Last().Item1[0] == "remove")
             {
-                foreach (TreeNode tree in RedoStack.Last().Value)
+                // Redo removing a node
+                // Which means remove the nodes
+                foreach (TreeNode tree in RedoStack.Last().Item2)
                 {
                     parentWindow.tcMain.Children.Remove(tree);
                     parentWindow.UnregisterName(tree.Name);
                 }
-                UndoStack.Add(RedoStack.Last().Key, RedoStack.Last().Value);
+                foreach (DialogEntry subde in UndoStack.Last().Item3)
+                {
+                    parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Remove(subde);
+                }
+                UndoStack.Add(Tuple.Create(RedoStack.Last().Item1, RedoStack.Last().Item2, RedoStack.Last().Item3));
             }
-            else if (RedoStack.Last().Key[0] == "add")
+            else if (RedoStack.Last().Item1[0] == "add")
             {
-                foreach (TreeNode tree in RedoStack.Last().Value)
+                // Redo adding a node
+                // Which means add the nodes
+                foreach (TreeNode tree in RedoStack.Last().Item2)
                 {
                     parentWindow.tcMain.AddNode(tree.Content, tree.Name, parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.TreeParent));
                     trees.Add(parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.Name));
                 }
-                UndoStack.Add(RedoStack.Last().Key, trees);
+                foreach (DialogEntry subde in UndoStack.Last().Item3)
+                {
+                    parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Add(subde);
+                }
+                UndoStack.Add(Tuple.Create(RedoStack.Last().Item1, trees, RedoStack.Last().Item3));
             }
             
-            RedoStack.Remove(RedoStack.Last().Key);
+            RedoStack.Remove(RedoStack.Last());
         }
 
         public void Reset(bool full = false)
