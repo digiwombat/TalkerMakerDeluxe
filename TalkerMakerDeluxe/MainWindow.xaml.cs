@@ -33,6 +33,7 @@ using Newtonsoft.Json;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 using Xceed.Wpf.AvalonDock.Layout;
 using Xceed.Wpf.AvalonDock.Controls;
+using System.Windows.Threading;
 
 
 
@@ -47,6 +48,7 @@ namespace TalkerMakerDeluxe
         TreeUndoRedo history = new TreeUndoRedo();
         List<int> handledNodes = new List<int>();
         List<DialogHolder> IDs = new List<DialogHolder>();
+        DispatcherTimer timer;
         public string currentNode = "";
         public int loadedConversation = -1;
         private bool _needsSave = false;
@@ -123,6 +125,9 @@ namespace TalkerMakerDeluxe
 
             mnuRecent.UseXmlPersister(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "recentfiles.config"));
             mnuRecent.MenuClick += (s, e) => OpenHandler(e.Filepath);
+
+            //Autosave
+            timer = new DispatcherTimer(TimeSpan.FromMilliseconds(300000), DispatcherPriority.Background, new EventHandler(DoAutoSave), this.Dispatcher);
 		}
 
         void PrepareProject()
@@ -233,6 +238,31 @@ namespace TalkerMakerDeluxe
             
         }
 
+        private void DoAutoSave(object sender, EventArgs e)
+        {
+            if (needsSave)
+            {
+                string autosave1 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_1.xml");
+                string autosave2 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_2.xml");
+                string autosave3 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_3.xml");
+                if (File.Exists(autosave2))
+                {
+                    if(File.Exists(autosave3))
+                        File.Delete(autosave3);
+                    File.Move(autosave2, autosave3);
+                }
+                if (File.Exists(autosave1))
+                    File.Move(autosave1, autosave2);
+                XMLHandler.SaveXML(projie, autosave1);
+                if (openedFile != "New Project")
+                {
+                    Console.WriteLine("Saving...");
+                    XMLHandler.SaveXML(projie, openedFile);
+                    Console.WriteLine("Save finished.");
+                    needsSave = false;
+                }
+            }
+        }
 
         #endregion
 
@@ -324,19 +354,22 @@ namespace TalkerMakerDeluxe
 
                     //Remove color from currentNode
                     nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
-                    node = nodeTree.Content as NodeControl;
-                    switch (node.lblNodeColor.Content.ToString())
+                    if (nodeTree != null)
                     {
-                        case "Red":
-                            node.grid.Background = (Brush)bc.ConvertFrom("#FFCC4452");
-                            break;
-                        case "Green":
-                            node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
-                            break;
-                        default:
-                            node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
-                            break;
+                        node = nodeTree.Content as NodeControl;
+                        switch (node.lblNodeColor.Content.ToString())
+                        {
+                            case "Red":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#FFCC4452");
+                                break;
+                            case "Green":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
+                                break;
+                            default:
+                                node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
+                                break;
 
+                        }
                     }
                     
                 }
@@ -406,8 +439,11 @@ namespace TalkerMakerDeluxe
 
                     //Remove color from currentNode
                     nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
-                    node = nodeTree.Content as NodeControl;
-                    node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
+                    if (nodeTree != null)
+                    {
+                        node = nodeTree.Content as NodeControl;
+                        node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
+                    }
                 }
                 else if (newNode != currentNode)
                 {
