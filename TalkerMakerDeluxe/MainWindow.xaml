@@ -530,6 +530,9 @@ and change the color of the selected bullet into a darker gray for better highli
             <StatusBarItem HorizontalAlignment="Left">
                 <Label x:Name="Scale_Percent" Content="{Binding ElementName=uiScaleSlider,Path=Value}" ContentStringFormat="{}{0:0%}"/>
             </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
+                <TextBlock Text="v1.1.1 Beta" />
+            </StatusBarItem>
         </StatusBar>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="225">
             <Popup Name="popSettings" HorizontalAlignment="Right" VerticalOffset="-1" HorizontalOffset="-80" VerticalAlignment="Top" Width="225" MouseLeave="popSettings_MouseLeave">

@@ -51,7 +51,6 @@ namespace TalkerMakerDeluxe
                 }
                 RedoStack.Add(Tuple.Create(UndoStack.Last().Item1, trees, UndoStack.Last().Item3));
             }
-            
             UndoStack.Remove(UndoStack.Last());
         }
 
@@ -68,7 +67,7 @@ namespace TalkerMakerDeluxe
                     parentWindow.tcMain.Children.Remove(tree);
                     parentWindow.UnregisterName(tree.Name);
                 }
-                foreach (DialogEntry subde in UndoStack.Last().Item3)
+                foreach (DialogEntry subde in RedoStack.Last().Item3)
                 {
                     parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Remove(subde);
                 }
@@ -83,7 +82,7 @@ namespace TalkerMakerDeluxe
                     parentWindow.tcMain.AddNode(tree.Content, tree.Name, parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.TreeParent));
                     trees.Add(parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.Name));
                 }
-                foreach (DialogEntry subde in UndoStack.Last().Item3)
+                foreach (DialogEntry subde in RedoStack.Last().Item3)
                 {
                     parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Add(subde);
                 }
