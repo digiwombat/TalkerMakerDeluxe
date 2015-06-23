@@ -7,6 +7,7 @@ Currently, the plan is to bring the tool to a usable state so that I can quickly
 
 Fork it, fix it, do whatever. I'll gladly roll in code changes.
 
-There is no ideological or political stance requirement to contribute to this project.
+There is no ideological or political stance requirement to contribute to this project.  
+There is [no Code of Conduct](https://github.com/domgetter/NCoC) for this project.
 
 ![ScreenShot](https://i.imgur.com/HcjLsqm.png)
