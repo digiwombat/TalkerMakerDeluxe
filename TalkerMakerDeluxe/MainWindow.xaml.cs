@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -365,6 +365,21 @@ namespace TalkerMakerDeluxe
                             case "Green":
                                 node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
                                 break;
+                            case "Yellow":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#FFED51");
+                                break;
+                            case "Violet":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#BE69FF");
+                                break;
+                            case "Blue":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#99F3FF");
+                                break;
+                            case "Orange":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#F0A102");
+                                break;
+                            case "Grey":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#9D9D9D");
+                                break;
                             default:
                                 node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
                                 break;
@@ -422,6 +437,21 @@ namespace TalkerMakerDeluxe
                         break;
                     case "Green":
                         rdioColorGreen.IsChecked = true;
+                        break;
+                    case "Yellow":
+                        rdioColorYellow.IsChecked = true;
+                        break;
+                    case "Violet":
+                        rdioColorViolet.IsChecked = true;
+                        break;
+                    case "Blue":
+                        rdioColorBlue.IsChecked = true;
+                        break;
+                    case "Orange":
+                        rdioColorOrange.IsChecked = true;
+                        break;
+                    case "Grey":
+                        rdioColorGrey.IsChecked = true;
                         break;
                     default:
                         rdioColorWhite.IsChecked = true;
@@ -482,6 +512,26 @@ namespace TalkerMakerDeluxe
                     case "Green":
                         ndctl.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
                         ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#002F32");
+                        break;
+                    case "Yellow":
+                        ndctl.grid.Background = (Brush)bc.ConvertFrom("#FFED51");
+                        ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#CCBD41");
+                        break;
+                    case "Violet":
+                        ndctl.grid.Background = (Brush)bc.ConvertFrom("#BE69FF");
+                        ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#7742A0");
+                        break;
+                    case "Light Blue":
+                        ndctl.grid.Background = (Brush)bc.ConvertFrom("#99F3FF");
+                        ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#4EA8B1");
+                        break;
+                    case "Orange":
+                        ndctl.grid.Background = (Brush)bc.ConvertFrom("#F0A102");
+                        ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#B4993B");
+                        break;
+                    case "Grey":
+                        ndctl.grid.Background = (Brush)bc.ConvertFrom("#9D9D9D");
+                        ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#505050");
                         break;
                 }
                 ndctl.lblID.Content = de.ID;
@@ -1725,6 +1775,36 @@ namespace TalkerMakerDeluxe
                             ndctl.lblNodeColor.Content = "Green";
                             //ndctl.grid.Background = (Brush)bc.ConvertFrom("#A5C77F");
                             ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#002F32");
+                            break;
+                        case "Yellow":
+                            de.NodeColor = "Yellow";
+                            ndctl.lblNodeColor.Content = "Yellow";
+                            //ndctl.grid.Background = (Brush)bc.ConvertFrom("#A5C77F");
+                            ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#CCBD41");
+                            break;
+                        case "Violet":
+                            de.NodeColor = "Violet";
+                            ndctl.lblNodeColor.Content = "Violet";
+                            //ndctl.grid.Background = (Brush)bc.ConvertFrom("#A5C77F");
+                            ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#7742A0");
+                            break;
+                        case "Blue":
+                            de.NodeColor = "Blue";
+                            ndctl.lblNodeColor.Content = "Blue";
+                            //ndctl.grid.Background = (Brush)bc.ConvertFrom("#A5C77F");
+                            ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#4EA8B1");
+                            break;
+                        case "Orange":
+                            de.NodeColor = "Orange";
+                            ndctl.lblNodeColor.Content = "Orange";
+                            //ndctl.grid.Background = (Brush)bc.ConvertFrom("#A5C77F");
+                            ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#B4993B");
+                            break;
+                        case "Grey":
+                            de.NodeColor = "Grey";
+                            ndctl.lblNodeColor.Content = "Grey";
+                            //ndctl.grid.Background = (Brush)bc.ConvertFrom("#A5C77F");
+                            ndctl.border.BorderBrush = (Brush)bc.ConvertFrom("#505050");
                             break;
                         default:
                             de.NodeColor = "White";
