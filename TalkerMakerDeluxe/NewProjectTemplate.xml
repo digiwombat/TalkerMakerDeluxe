@@ -86,11 +86,11 @@
         <Fields>
           <Field Type="Text">
             <Title>Name</Title>
-            <Value>888 Brannen Street</Value>
+            <Value>New Location</Value>
           </Field>
           <Field Type="Text">
             <Title>Description</Title>
-            <Value>Tommy's Office Building</Value>
+            <Value></Value>
           </Field>
           <Field Type="Boolean">
             <Title>Learned</Title>
@@ -108,11 +108,11 @@
         <Fields>
           <Field Type="Text">
             <Title>Name</Title>
-            <Value>USB Memory Stick</Value>
+            <Value>New Item</Value>
           </Field>
           <Field Type="Boolean">
             <Title>In Inventory</Title>
-            <Value>True</Value>
+            <Value>False</Value>
           </Field>
         </Fields>
       </Item>

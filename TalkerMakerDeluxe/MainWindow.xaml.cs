@@ -2102,7 +2102,7 @@ namespace TalkerMakerDeluxe
                     {
                         switch (field.Title)
                         {
-                            case "Learned":
+                            case "Visited":
                                 field.Value = chkLocVisited.IsChecked.ToString();
                                 break;
                         }
