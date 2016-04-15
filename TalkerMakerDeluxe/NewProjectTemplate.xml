@@ -86,15 +86,19 @@
         <Fields>
           <Field Type="Text">
             <Title>Name</Title>
-            <Value>Location 1</Value>
-          </Field>
-          <Field Type="Text">
-            <Title>Region</Title>
-            <Value>Region name</Value>
+            <Value>888 Brannen Street</Value>
           </Field>
           <Field Type="Text">
             <Title>Description</Title>
-            <Value></Value>
+            <Value>Tommy's Office Building</Value>
+          </Field>
+          <Field Type="Boolean">
+            <Title>Learned</Title>
+            <Value>False</Value>
+          </Field>
+          <Field Type="Boolean">
+            <Title>Visited</Title>
+            <Value>False</Value>
           </Field>
         </Fields>
       </Location>
@@ -104,15 +108,11 @@
         <Fields>
           <Field Type="Text">
             <Title>Name</Title>
-            <Value>New Item 1</Value>
+            <Value>USB Memory Stick</Value>
           </Field>
-          <Field Type="Text">
-            <Title>Type</Title>
-            <Value>Item type</Value>
-          </Field>
-          <Field Type="Text">
-            <Title>Description</Title>
-            <Value></Value>
+          <Field Type="Boolean">
+            <Title>In Inventory</Title>
+            <Value>True</Value>
           </Field>
         </Fields>
       </Item>

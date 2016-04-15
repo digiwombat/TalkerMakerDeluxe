@@ -756,25 +756,27 @@ namespace TalkerMakerDeluxe
             List<LocationItem> locations = new List<LocationItem>();
             foreach (Location location in project.Assets.Locations)
             {
-                LocationItem var = new LocationItem();
+                LocationItem loc = new LocationItem();
                 foreach (Field field in location.Fields)
                 {
                     switch (field.Title)
                     {
                         case "Name":
-                            var.lblLocName.Text = field.Value;
+                            loc.lblLocName.Text = field.Value;
                             break;
                         case "Description":
-                            var.lblLocDescription.Content = field.Value;
+                            loc.lblLocDescription.Content = field.Value;
                             break;
-                        case "Region":
-                            var.lblRegionName.Content = field.Value;
-
+                        case "Learned":
+                            loc.lblLocLearned.Content = field.Value;
+                            break;
+                        case "Visited":
+                            loc.lblLocVisited.Content = field.Value;
                             break;
                     }
                 }
 
-                locations.Add(var);
+                locations.Add(loc);
             }
 
             return locations;
@@ -793,12 +795,8 @@ namespace TalkerMakerDeluxe
                         case "Name":
                             var.lblItemName.Text = field.Value;
                             break;
-                        case "Description":
-                            var.lblItemDescription.Content = field.Value;
-                            break;
-                        case "Type":
-                            var.lblItemType.Content = field.Value;
-
+                        case "In Inventory":
+                            var.lblItemInventory.Content = field.Value;
                             break;
                     }
                 }
@@ -1154,10 +1152,9 @@ namespace TalkerMakerDeluxe
         {
             Item newItem = new Item();
             newItem.ID = projie.Assets.Items.Count + 1;
-            newItem.Fields.Add(new Field { Title = "Name", Value = "New Item Name" });
-            newItem.Fields.Add(new Field { Title = "Type", Value = "Generic" });
-            newItem.Fields.Add(new Field { Title = "Description", Value = "" });
-
+            newItem.Fields.Add(new Field { Title = "Name", Type="Text", Value = "New Item Name" });
+            newItem.Fields.Add(new Field { Title = "In Inventory", Type="Boolean", Value = "false" });
+            
             projie.Assets.Items.Add(newItem);
             lstItems.ItemsSource = AddItems(projie);
         }
@@ -1167,7 +1164,8 @@ namespace TalkerMakerDeluxe
             Location newLoc = new Location();
             newLoc.ID = projie.Assets.Locations.Count + 1;
             newLoc.Fields.Add(new Field { Title = "Name", Value = "New Location Name" });
-            newLoc.Fields.Add(new Field { Title = "Region", Value = "" });
+            newLoc.Fields.Add(new Field { Title = "Learned", Type = "Boolean", Value = "false" });
+            newLoc.Fields.Add(new Field { Title = "Visited", Type = "Boolean", Value = "false" });
             newLoc.Fields.Add(new Field { Title = "Description", Value = "" });
 
             projie.Assets.Locations.Add(newLoc);
@@ -1226,9 +1224,7 @@ namespace TalkerMakerDeluxe
             {
                 ItemItem item = lstItems.SelectedItem as ItemItem;
                 txtItemName.Text = item.lblItemName.Text;
-
-                txtItemType.Text = item.lblItemType.Content.ToString();
-                txtItemDescription.Text = item.lblItemDescription.Content.ToString();
+                chkItemInventory.IsChecked = Convert.ToBoolean(item.lblItemInventory.Content);
                 tabItem.IsSelected = true;
             }
         }
@@ -1239,8 +1235,8 @@ namespace TalkerMakerDeluxe
             {
                 LocationItem location = lstLocations.SelectedItem as LocationItem;
                 txtLocName.Text = location.lblLocName.Text;
-
-                txtRegionName.Text = location.lblRegionName.Content.ToString();
+                chkLocLearned.IsChecked = Convert.ToBoolean(location.lblLocLearned.Content);
+                chkLocVisited.IsChecked = Convert.ToBoolean(location.lblLocVisited.Content);
                 txtLocDescription.Text = location.lblLocDescription.Content.ToString();
                 tabLocation.IsSelected = true;
             }
@@ -2071,28 +2067,52 @@ namespace TalkerMakerDeluxe
             }
         }
 
-        private void txtRegionName_TextChanged(object sender, TextChangedEventArgs e)
+        private void chkLocLearned_Checked(object sender, RoutedEventArgs e)
         {
             if (lstLocations.SelectedItem != null)
             {
-                LocationItem location = lstLocations.SelectedItem as LocationItem;
-                if (txtRegionName.Text != "" && location.lblRegionName.Content.ToString() != txtRegionName.Text)
+                LocationItem locationIt = lstLocations.SelectedItem as LocationItem;
+                if (Convert.ToBoolean(locationIt.lblLocLearned.Content) != chkLocLearned.IsChecked)
                 {
                     Location loc = projie.Assets.Locations[lstLocations.SelectedIndex];
                     foreach (Field field in loc.Fields)
                     {
                         switch (field.Title)
                         {
-                            case "Region":
-                                field.Value = txtRegionName.Text;
+                            case "Learned":
+                                field.Value = chkLocLearned.IsChecked.ToString();
                                 break;
                         }
                     }
-                    location.lblRegionName.Content = txtRegionName.Text;
+                    locationIt.lblLocLearned.Content = chkLocLearned.IsChecked.ToString();
                     needsSave = true;
                 }
             }
         }
+
+        private void chkLocVisited_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lstLocations.SelectedItem != null)
+            {
+                LocationItem locationIt = lstLocations.SelectedItem as LocationItem;
+                if (Convert.ToBoolean(locationIt.lblLocVisited.Content) != chkLocVisited.IsChecked)
+                {
+                    Location loc = projie.Assets.Locations[lstLocations.SelectedIndex];
+                    foreach (Field field in loc.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Learned":
+                                field.Value = chkLocVisited.IsChecked.ToString();
+                                break;
+                        }
+                    }
+                    locationIt.lblLocVisited.Content = chkLocVisited.IsChecked.ToString();
+                    needsSave = true;
+                }
+            }
+        }
+
 
         private void txtLocDescription_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -2144,51 +2164,26 @@ namespace TalkerMakerDeluxe
             }
         }
 
-        private void txtItemType_TextChanged(object sender, TextChangedEventArgs e)
+        private void chkItemInventory_Checked(object sender, RoutedEventArgs e)
         {
-            if (lstItems.SelectedItem != null)
+            ItemItem itemIt = lstItems.SelectedItem as ItemItem;
+            if (Convert.ToBoolean(itemIt.lblItemInventory.Content) != chkItemInventory.IsChecked)
             {
-                ItemItem item = lstItems.SelectedItem as ItemItem;
-                if (txtRegionName.Text != "" && item.lblItemType.Content.ToString() != txtItemType.Text)
+                Item item = projie.Assets.Items[lstItems.SelectedIndex];
+                foreach (Field field in item.Fields)
                 {
-                    Item loc = projie.Assets.Items[lstItems.SelectedIndex];
-                    foreach (Field field in loc.Fields)
+                    switch (field.Title)
                     {
-                        switch (field.Title)
-                        {
-                            case "Region":
-                                field.Value = txtItemType.Text;
-                                break;
-                        }
+                        case "In Inventory":
+                            field.Value = chkItemInventory.IsChecked.ToString();
+                            break;
                     }
-                    item.lblItemType.Content = txtItemType.Text;
-                    needsSave = true;
                 }
+                itemIt.lblItemInventory.Content = chkItemInventory.IsChecked.ToString();
+                needsSave = true;
             }
         }
-
-        private void txtItemDescription_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (lstItems.SelectedItem != null)
-            {
-                ItemItem item = lstItems.SelectedItem as ItemItem;
-                if (txtItemDescription.Text != "" && item.lblItemDescription.Content.ToString() != txtItemDescription.Text)
-                {
-                    Item itm = projie.Assets.Items[lstItems.SelectedIndex];
-                    foreach (Field field in itm.Fields)
-                    {
-                        switch (field.Title)
-                        {
-                            case "Description":
-                                field.Value = txtItemDescription.Text;
-                                break;
-                        }
-                    }
-                    item.lblItemDescription.Content = txtItemDescription.Text;
-                    needsSave = true;
-                }
-            }
-        }
+        
 
         #endregion
 

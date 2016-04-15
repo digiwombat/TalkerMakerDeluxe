@@ -12,8 +12,11 @@
         </Grid.RowDefinitions>
         <TextBlock TextTrimming="CharacterEllipsis" Text="Location Name" Name="lblLocName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
         <DockPanel Grid.Row="1" >
-            <Label Content="Type" Name="lblRegionName" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-            <Label Content="" Name="lblLocDescription" Visibility="Hidden" Width="50"/>
+            <Label Content="Learned: " HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <Label Content="false" Name="lblLocLearned" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <Label Content="Visited:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <Label Content="false" Name="lblLocVisited" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <Label Content="" Name="lblLocDescription" Visibility="Hidden" Width="5"/>
         </DockPanel>
 
 

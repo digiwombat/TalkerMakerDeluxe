@@ -12,10 +12,10 @@
         </Grid.RowDefinitions>
         <TextBlock TextTrimming="CharacterEllipsis" Text="Item Name" Name="lblItemName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
         <DockPanel Grid.Row="1" >
-            <Label Content="Type" Name="lblItemType" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-            <Label Content="" Name="lblItemDescription" Visibility="Hidden" Width="50"/>
+            <Label Content="In Inventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <Label Content="Inventory" Name="lblItemInventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
         </DockPanel>
-
+        
 
 
     </Grid>
