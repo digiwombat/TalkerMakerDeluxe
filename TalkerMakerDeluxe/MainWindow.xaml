@@ -236,6 +236,7 @@ and change the color of the selected bullet into a darker gray for better highli
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="NewBinding_Executed" />
         <CommandBinding Command="Save" Executed="Save_Binding" />
+        <CommandBinding Command="SaveAs" Executed="SaveAs_Binding" />
         <CommandBinding Command="Open" Executed="Open_Binding" />
         <CommandBinding Command="Close" Executed="Exit_Binding" />
         <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
@@ -245,6 +246,7 @@ and change the color of the selected bullet into a darker gray for better highli
         <KeyBinding Key="N" Modifiers="Control" Command="New"/>
         <KeyBinding Key="O" Modifiers="Control" Command="Open"/>
         <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
+        <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs"/>
         <KeyBinding Key="W" Modifiers="Control" Command="Close"/>
     </Window.InputBindings>
     <Grid ShowGridLines="False" Width="Auto" Height="Auto">
@@ -713,6 +715,11 @@ and change the color of the selected bullet into a darker gray for better highli
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Name="menuSave" Header="_Save Project"  Command="Save">
+                    <MenuItem.Icon>
+                        <fa:FontAwesome Icon="Save" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="menuSaveAs" Header="S_ave Project As..."  Command="SaveAs">
                     <MenuItem.Icon>
                         <fa:FontAwesome Icon="Save" />
                     </MenuItem.Icon>

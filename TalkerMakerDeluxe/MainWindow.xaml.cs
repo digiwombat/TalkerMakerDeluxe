@@ -815,6 +815,22 @@ namespace TalkerMakerDeluxe
 
         #region File Functions
 
+        private void SaveAsDialog()
+        {
+            SaveFileDialog saver = new SaveFileDialog();
+            saver.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
+            saver.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (saver.ShowDialog() == true)
+            {
+                Console.WriteLine("Saving...");
+                XMLHandler.SaveXML(projie, saver.FileName);
+                Console.WriteLine("Save finished.");
+                mnuRecent.InsertFile(saver.FileName);
+                openedFile = saver.FileName;
+                needsSave = false;
+            }
+        }
+
         private void SaveHandler()
         {
             SaveLayout();
@@ -829,18 +845,7 @@ namespace TalkerMakerDeluxe
             else
             {
                 popSettings.IsOpen = false;
-                SaveFileDialog saver = new SaveFileDialog();
-                saver.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
-                saver.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (saver.ShowDialog() == true)
-                {
-                    Console.WriteLine("Saving...");
-                    XMLHandler.SaveXML(projie, saver.FileName);
-                    Console.WriteLine("Save finished.");
-                    mnuRecent.InsertFile(saver.FileName);
-                    openedFile = saver.FileName;
-                    needsSave = false;
-                }
+                SaveAsDialog();
             }
             history.Reset(true);
         }
@@ -941,6 +946,11 @@ namespace TalkerMakerDeluxe
         private void Save_Binding(object obSender, ExecutedRoutedEventArgs e)
         {
             SaveHandler();
+        }
+
+        private void SaveAs_Binding(object obSender, ExecutedRoutedEventArgs e)
+        {
+            SaveAsDialog();
         }
 
         private void NewBinding_Executed(object sender, ExecutedRoutedEventArgs e)
