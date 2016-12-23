@@ -236,6 +236,7 @@ and change the color of the selected bullet into a darker gray for better highli
     <Window.CommandBindings>
         <CommandBinding Command="New" Executed="NewBinding_Executed" />
         <CommandBinding Command="Save" Executed="Save_Binding" />
+        <CommandBinding Command="SaveAs" Executed="SaveAs_Binding" />
         <CommandBinding Command="Open" Executed="Open_Binding" />
         <CommandBinding Command="Close" Executed="Exit_Binding" />
         <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
@@ -245,6 +246,7 @@ and change the color of the selected bullet into a darker gray for better highli
         <KeyBinding Key="N" Modifiers="Control" Command="New"/>
         <KeyBinding Key="O" Modifiers="Control" Command="Open"/>
         <KeyBinding Key="S" Modifiers="Control" Command="Save"/>
+        <KeyBinding Key="S" Modifiers="Control+Shift" Command="SaveAs"/>
         <KeyBinding Key="W" Modifiers="Control" Command="Close"/>
     </Window.InputBindings>
     <Grid ShowGridLines="False" Width="Auto" Height="Auto">
@@ -287,11 +289,53 @@ and change the color of the selected bullet into a darker gray for better highli
                                         </Expander.Header>
                                         <ListBox x:Name="lstCharacters" SelectionChanged="lstCharacters_SelectionChanged" GotFocus="lstCharacters_GotFocus" />
                                     </Expander>
-                                    <Expander Header="Items" IsExpanded="True" ScrollViewer.CanContentScroll="True" Visibility="Collapsed">
-
+                                    <Expander Name="expItems" IsExpanded="True" ScrollViewer.CanContentScroll="True" Visibility="Visible">
+                                        <Expander.Header>
+                                            <Grid>
+                                                <TextBlock Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalAlignment="Left" VerticalAlignment="Center">ITEMS</TextBlock>
+                                                <Button x:Name="btnAddItem" ToolTip="Add New Item" HorizontalAlignment="Right" Width="24" Margin="0" FontFamily="FontAwesome" Foreground="{StaticResource ResourceKey=WhiteBrush}" Background="Transparent" BorderBrush="Transparent" Click="btnAddItem_Click">
+                                                    <Button.Style>
+                                                        <Style TargetType="{x:Type Button}">
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                                        <Border Background="{TemplateBinding Background}">
+                                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                        </Border>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <fa:FontAwesome Name="faAddItem" Icon="PlusSquare" />
+                                                </Button>
+                                            </Grid>
+                                        </Expander.Header>
+                                        <ListBox x:Name="lstItems" SelectionChanged="lstItems_SelectionChanged" GotFocus="lstItems_GotFocus" />
                                     </Expander>
-                                    <Expander Header="Locations" IsExpanded="True" ScrollViewer.CanContentScroll="True" Visibility="Collapsed">
-
+                                    <Expander Name="expLocations" IsExpanded="true" ScrollViewer.CanContentScroll="True" Visibility="Visible">
+                                        <Expander.Header>
+                                            <Grid>
+                                                <TextBlock Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalAlignment="Left" VerticalAlignment="Center">LOCATIONS</TextBlock>
+                                                <Button x:Name="btnAddLocation" ToolTip="Add New Location" HorizontalAlignment="Right" Width="24" Margin="0" FontFamily="FontAwesome" Foreground="{StaticResource ResourceKey=WhiteBrush}" Background="Transparent" BorderBrush="Transparent" Click="btnAddLocation_Click">
+                                                    <Button.Style>
+                                                        <Style TargetType="{x:Type Button}">
+                                                            <Setter Property="Template">
+                                                                <Setter.Value>
+                                                                    <ControlTemplate TargetType="{x:Type Button}">
+                                                                        <Border Background="{TemplateBinding Background}">
+                                                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                                                        </Border>
+                                                                    </ControlTemplate>
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Style>
+                                                    </Button.Style>
+                                                    <fa:FontAwesome Name="faAddLoc" Icon="PlusSquare" />
+                                                </Button>
+                                            </Grid>
+                                        </Expander.Header>
+                                        <ListBox x:Name="lstLocations" SelectionChanged="lstLocations_SelectionChanged" GotFocus="lstLocations_GotFocus" />
                                     </Expander>
                                     <Expander Name="expVariables" IsExpanded="True" ScrollViewer.CanContentScroll="True">
                                         <Expander.Header>
@@ -565,12 +609,56 @@ and change the color of the selected bullet into a darker gray for better highli
                                             </Grid>
                                         </TabItem>
                                         <TabItem Header="Item Settings" Name="tabItem" Visibility="Collapsed">
-                                            <Grid />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition  Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Name</TextBlock>
+                                                <TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtItemName" TextChanged="txtItemName_TextChanged" />
+                                                <TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">In Inventory</TextBlock>
+                                                <CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Name="chkItemInventory" Checked="chkItemInventory_Checked" Unchecked="chkItemInventory_Checked"></CheckBox>
+                                            </Grid>
                                         </TabItem>
                                         <TabItem Header="Location Settings" Name="tabLocation" Visibility="Collapsed">
-                                            <Grid />
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition  Width="Auto"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                                                <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Location</TextBlock>
+                                                <TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtLocName" TextChanged="txtLocationName_TextChanged" />
+
+                                                <TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Learned</TextBlock>
+                                                <CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Name="chkLocLearned" Checked="chkLocLearned_Checked" Unchecked="chkLocLearned_Checked"></CheckBox>
+                                                
+                                                <TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Visited</TextBlock>
+                                                <CheckBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Name="chkLocVisited" Checked="chkLocVisited_Checked" Unchecked="chkLocVisited_Checked"></CheckBox>
+
+                                                <TextBlock Grid.Row="3" Grid.Column="0" Margin="4,4,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold">Description</TextBlock>
+                                                <TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtLocDescription" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" TextChanged="txtLocDescription_TextChanged" />
+                                            </Grid>
                                         </TabItem>
-                                        <TabItem Header="Variable Settings" Name="tabVariable" Visibility="Collapsed">
+                                        <TabItem Header="Variable Settings" Name="tabVariable" Visibility="Hidden">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition  Width="Auto"/>
@@ -627,6 +715,11 @@ and change the color of the selected bullet into a darker gray for better highli
                     </MenuItem.Icon>
                 </MenuItem>
                 <MenuItem Name="menuSave" Header="_Save Project"  Command="Save">
+                    <MenuItem.Icon>
+                        <fa:FontAwesome Icon="Save" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Name="menuSaveAs" Header="S_ave Project As..."  Command="SaveAs">
                     <MenuItem.Icon>
                         <fa:FontAwesome Icon="Save" />
                     </MenuItem.Icon>

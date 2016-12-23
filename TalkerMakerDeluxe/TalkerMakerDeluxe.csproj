@@ -110,6 +110,12 @@
     <Compile Include="CharacterItem.xaml.cs">
       <DependentUpon>CharacterItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="LocationItem.xaml.cs">
+      <DependentUpon>LocationItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ItemItem.xaml.cs">
+      <DependentUpon>ItemItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ConversationItem.xaml.cs">
       <DependentUpon>ConversationItem.xaml</DependentUpon>
     </Compile>
@@ -127,6 +133,14 @@
     <Page Include="CharacterItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LocationItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="ItemItem.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="ConversationItem.xaml">
       <SubType>Designer</SubType>

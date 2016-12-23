@@ -45,7 +45,6 @@
         </DialogEntries>
       </Conversation>
     </Conversations>
-
     <Actors>
       <Actor ID="1">
         <Fields>
@@ -82,5 +81,41 @@
         </Fields>
       </UserVariable>
     </UserVariables>
+    <Locations>
+      <Location ID="1">
+        <Fields>
+          <Field Type="Text">
+            <Title>Name</Title>
+            <Value>New Location</Value>
+          </Field>
+          <Field Type="Text">
+            <Title>Description</Title>
+            <Value></Value>
+          </Field>
+          <Field Type="Boolean">
+            <Title>Learned</Title>
+            <Value>False</Value>
+          </Field>
+          <Field Type="Boolean">
+            <Title>Visited</Title>
+            <Value>False</Value>
+          </Field>
+        </Fields>
+      </Location>
+    </Locations>
+    <Items>
+      <Item ID="1">
+        <Fields>
+          <Field Type="Text">
+            <Title>Name</Title>
+            <Value>New Item</Value>
+          </Field>
+          <Field Type="Boolean">
+            <Title>In Inventory</Title>
+            <Value>False</Value>
+          </Field>
+        </Fields>
+      </Item>
+    </Items>
   </Assets>
 </TalkerMakerProject>

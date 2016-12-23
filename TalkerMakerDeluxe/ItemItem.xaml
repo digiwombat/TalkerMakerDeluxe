@@ -1,0 +1,22 @@
+﻿<UserControl x:Class="TalkerMakerDeluxe.ItemItem"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="50" d:DesignWidth="180" MinWidth="140">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="25"/>
+        </Grid.RowDefinitions>
+        <TextBlock TextTrimming="CharacterEllipsis" Text="Item Name" Name="lblItemName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
+        <DockPanel Grid.Row="1" >
+            <Label Content="In Inventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+            <Label Content="Inventory" Name="lblItemInventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+        </DockPanel>
+        
+
+
+    </Grid>
+</UserControl>

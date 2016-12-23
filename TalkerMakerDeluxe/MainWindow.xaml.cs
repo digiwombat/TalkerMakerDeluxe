@@ -89,8 +89,8 @@ namespace TalkerMakerDeluxe
         #region Main Functions
 
         public MainWindow()
-		{
-			InitializeComponent();
+        {
+            InitializeComponent();
 
             this.Top = Properties.Settings.Default.Top;
             this.Left = Properties.Settings.Default.Left;
@@ -103,7 +103,7 @@ namespace TalkerMakerDeluxe
             }
 
             this.Icon = ImageAwesome.CreateImageSource(FontAwesomeIcon.CommentsO, (Brush)Application.Current.FindResource("HighlightBrush"));
-            
+
             this.Title = "TalkerMaker Deluxe - " + openedFile;
 
             LoadLayout();
@@ -128,7 +128,7 @@ namespace TalkerMakerDeluxe
 
             //Autosave
             timer = new DispatcherTimer(TimeSpan.FromMilliseconds(300000), DispatcherPriority.Background, new EventHandler(DoAutoSave), this.Dispatcher);
-		}
+        }
 
         void PrepareProject()
         {
@@ -150,6 +150,9 @@ namespace TalkerMakerDeluxe
             lstConvoActor.SelectedItem = null;
             lstConvoConversant.SelectedItem = null;
             lstVariables.SelectedItem = null;
+            // adding stuff
+            lstLocations.SelectedItem = null;
+            lstItems.SelectedItem = null;
 
             lstCharacters.ItemsSource = AddActors(projie);
             lstDialogueActor.ItemsSource = AddActors(projie);
@@ -158,6 +161,10 @@ namespace TalkerMakerDeluxe
             lstConvoConversant.ItemsSource = AddActors(projie);
             lstConversations.ItemsSource = AddConversations(projie);
             lstVariables.ItemsSource = AddVariables(projie);
+            //adding stuff
+            lstLocations.ItemsSource = AddLocations(projie);
+            lstItems.ItemsSource = AddItems(projie);
+
             loadedConversation = 0;
             editConditions.Text = "";
             editScript.Text = "";
@@ -184,6 +191,9 @@ namespace TalkerMakerDeluxe
             lstConvoActor.SelectedItem = null;
             lstConvoConversant.SelectedItem = null;
             lstVariables.SelectedItem = null;
+            // adding stuff
+            lstLocations.SelectedItem = null;
+            lstItems.SelectedItem = null;
 
             lstCharacters.ItemsSource = AddActors(projie);
             lstDialogueActor.ItemsSource = AddActors(projie);
@@ -191,6 +201,10 @@ namespace TalkerMakerDeluxe
             lstConvoActor.ItemsSource = AddActors(projie);
             lstConvoConversant.ItemsSource = AddActors(projie);
             lstConversations.ItemsSource = AddConversations(projie);
+            //adding stuff
+            lstLocations.ItemsSource = AddLocations(projie);
+            lstItems.ItemsSource = AddItems(projie);
+
             loadedConversation = 0;
             editConditions.Text = "";
             editScript.Text = "";
@@ -210,7 +224,7 @@ namespace TalkerMakerDeluxe
         void LoadLayout()
         {
             string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "layout.config");
-            
+
             if (File.Exists(path))
             {
                 try
@@ -230,12 +244,12 @@ namespace TalkerMakerDeluxe
                     StreamReader sr = new StreamReader(path);
                     serializer.Deserialize(sr);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine("Error loading layout.");
                 }
             }
-            
+
         }
 
         private void DoAutoSave(object sender, EventArgs e)
@@ -247,7 +261,7 @@ namespace TalkerMakerDeluxe
                 string autosave3 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_3.xml");
                 if (File.Exists(autosave2))
                 {
-                    if(File.Exists(autosave3))
+                    if (File.Exists(autosave3))
                         File.Delete(autosave3);
                     File.Move(autosave2, autosave3);
                 }
@@ -286,7 +300,7 @@ namespace TalkerMakerDeluxe
         {
             if (loadedConversation != -1)
             {
-                
+
                 TreeNode nodeTree = tcMain.FindName(parentNode.Remove(0, 1)) as TreeNode;
                 NodeControl ndctl = nodeTree.Content as NodeControl;
 
@@ -371,7 +385,7 @@ namespace TalkerMakerDeluxe
 
                         }
                     }
-                    
+
                 }
                 else if (newNode != currentNode)
                 {
@@ -397,10 +411,10 @@ namespace TalkerMakerDeluxe
                 editConditions.Text = node.lblConditionsString.Content.ToString();
                 editScript.Text = node.lblUserScript.Content.ToString();
                 cmbFunction.Text = node.lblFalseCondition.Content.ToString();
-                if(nodeTree.TreeChildren.Count == 0)
+                if (nodeTree.TreeChildren.Count == 0)
                 {
                     rowLinkRow.Height = new GridLength(1, GridUnitType.Auto);
-                    if(node.lblLinkTo.Content.ToString() == "0")
+                    if (node.lblLinkTo.Content.ToString() == "0")
                     {
                         chkLinkTo.IsChecked = false;
                         txtLinkTo.Text = "0";
@@ -415,7 +429,7 @@ namespace TalkerMakerDeluxe
                 {
                     rowLinkRow.Height = new GridLength(0);
                 }
-                switch(node.lblNodeColor.Content.ToString())
+                switch (node.lblNodeColor.Content.ToString())
                 {
                     case "Red":
                         rdioColorRed.IsChecked = true;
@@ -457,14 +471,14 @@ namespace TalkerMakerDeluxe
                 tabConversation.IsSelected = true;
                 currentNode = newNode;
             }
-            
-            
-            
+
+
+
         }
 
         private void DrawConversationTree(DialogHolder dh)
         {
-            
+
             if (!handledNodes.Contains(dh.ID))
             {
 
@@ -472,8 +486,8 @@ namespace TalkerMakerDeluxe
                 int parentNode = -1;
                 DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(d => d.ID == dh.ID);
                 NodeControl ndctl = new NodeControl();
-                BrushConverter bc = new BrushConverter(); 
-                switch(de.NodeColor)
+                BrushConverter bc = new BrushConverter();
+                switch (de.NodeColor)
                 {
                     case "Red":
                         ndctl.grid.Background = (Brush)bc.ConvertFrom("#CC4452");
@@ -492,10 +506,10 @@ namespace TalkerMakerDeluxe
                 ndctl.lblConversationID.Content = loadedConversation;
                 ndctl.lblFalseCondition.Content = de.FalseCondtionAction;
                 Console.WriteLine("Setting Bindings...");
-                foreach(Link lanks in de.OutgoingLinks)
+                foreach (Link lanks in de.OutgoingLinks)
                 {
                     if (lanks.IsConnector == true)
-                    { 
+                    {
                         ndctl.lblLinkTo.Content = lanks.DestinationDialogID;
                         ndctl.btnAdd.Visibility = Visibility.Hidden;
                         ndctl.faLink.Visibility = Visibility.Visible;
@@ -530,7 +544,7 @@ namespace TalkerMakerDeluxe
                             break;
                     }
                 }
-                foreach(DialogHolder dhParent in IDs)
+                foreach (DialogHolder dhParent in IDs)
                 {
                     if (dhParent.ChildNodes.Contains(dh.ID))
                         parentNode = dhParent.ID;
@@ -624,26 +638,26 @@ namespace TalkerMakerDeluxe
         private List<ConversationItem> AddConversations(TalkerMakerProject project)
         {
             List<ConversationItem> conversations = new List<ConversationItem>();
-            foreach(Conversation conversation in project.Assets.Conversations)
+            foreach (Conversation conversation in project.Assets.Conversations)
             {
                 ConversationItem conv = new ConversationItem();
                 conv.lblConvID.Content = conversation.ID;
                 conv.lblNodeCount.Content = conversation.DialogEntries.Count();
-                foreach(Field field in conversation.Fields)
+                foreach (Field field in conversation.Fields)
                 {
-                    switch(field.Title)
+                    switch (field.Title)
                     {
                         case "Title":
                             conv.lblConvTitle.Text = field.Value;
                             break;
                         case "Actor":
                             conv.lblConvActorID.Content = field.Value;
-                            CharacterItem chara = lstCharacters.Items[Convert.ToInt16(field.Value)-1] as CharacterItem;
+                            CharacterItem chara = lstCharacters.Items[Convert.ToInt16(field.Value) - 1] as CharacterItem;
                             conv.lblConvActor.Text = chara.lblActorName.Text;
                             break;
                         case "Conversant":
                             conv.lblConvConversantID.Content = field.Value;
-                            chara = lstCharacters.Items[Convert.ToInt16(field.Value)-1] as CharacterItem;
+                            chara = lstCharacters.Items[Convert.ToInt16(field.Value) - 1] as CharacterItem;
                             conv.lblConvConversant.Text = chara.lblActorName.Text;
                             break;
                         case "Description":
@@ -694,7 +708,7 @@ namespace TalkerMakerDeluxe
                             chara.lblActorDescription.Content = field.Value;
                             break;
                         case "Pictures":
-                            if(IsBase64(field.Value))
+                            if (IsBase64(field.Value))
                             {
                                 chara.imgActorImage.Source = Base64ToImage(field.Value);
                                 chara.lblActorPicture.Content = field.Value;
@@ -736,6 +750,63 @@ namespace TalkerMakerDeluxe
 
             return variables;
         }
+
+        private List<LocationItem> AddLocations(TalkerMakerProject project)
+        {
+            List<LocationItem> locations = new List<LocationItem>();
+            foreach (Location location in project.Assets.Locations)
+            {
+                LocationItem loc = new LocationItem();
+                foreach (Field field in location.Fields)
+                {
+                    switch (field.Title)
+                    {
+                        case "Name":
+                            loc.lblLocName.Text = field.Value;
+                            break;
+                        case "Description":
+                            loc.lblLocDescription.Content = field.Value;
+                            break;
+                        case "Learned":
+                            loc.lblLocLearned.Content = field.Value;
+                            break;
+                        case "Visited":
+                            loc.lblLocVisited.Content = field.Value;
+                            break;
+                    }
+                }
+
+                locations.Add(loc);
+            }
+
+            return locations;
+        }
+
+        private List<ItemItem> AddItems(TalkerMakerProject project)
+        {
+            List<ItemItem> items = new List<ItemItem>();
+            foreach (Item item in project.Assets.Items)
+            {
+                ItemItem var = new ItemItem();
+                foreach (Field field in item.Fields)
+                {
+                    switch (field.Title)
+                    {
+                        case "Name":
+                            var.lblItemName.Text = field.Value;
+                            break;
+                        case "In Inventory":
+                            var.lblItemInventory.Content = field.Value;
+                            break;
+                    }
+                }
+
+                items.Add(var);
+            }
+
+            return items;
+        }
+
         #endregion
 
         #region Front-End Functions
@@ -743,6 +814,22 @@ namespace TalkerMakerDeluxe
         #region Command Bindings
 
         #region File Functions
+
+        private void SaveAsDialog()
+        {
+            SaveFileDialog saver = new SaveFileDialog();
+            saver.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
+            saver.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+            if (saver.ShowDialog() == true)
+            {
+                Console.WriteLine("Saving...");
+                XMLHandler.SaveXML(projie, saver.FileName);
+                Console.WriteLine("Save finished.");
+                mnuRecent.InsertFile(saver.FileName);
+                openedFile = saver.FileName;
+                needsSave = false;
+            }
+        }
 
         private void SaveHandler()
         {
@@ -758,18 +845,7 @@ namespace TalkerMakerDeluxe
             else
             {
                 popSettings.IsOpen = false;
-                SaveFileDialog saver = new SaveFileDialog();
-                saver.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
-                saver.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
-                if (saver.ShowDialog() == true)
-                {
-                    Console.WriteLine("Saving...");
-                    XMLHandler.SaveXML(projie, saver.FileName);
-                    Console.WriteLine("Save finished.");
-                    mnuRecent.InsertFile(saver.FileName);
-                    openedFile = saver.FileName;
-                    needsSave = false;
-                }
+                SaveAsDialog();
             }
             history.Reset(true);
         }
@@ -792,8 +868,8 @@ namespace TalkerMakerDeluxe
                 }
             }
         opener:
-            if(filename == null)
-            { 
+            if (filename == null)
+            {
                 popSettings.IsOpen = false;
                 OpenFileDialog openFileDialog = new OpenFileDialog();
                 openFileDialog.Filter = "TalkerMaker Project Files (*.xml)|*.xml|All Files (*.*)|*.*";
@@ -828,7 +904,7 @@ namespace TalkerMakerDeluxe
                 }
             }
             history.Reset(true);
-            quitter: ;
+        quitter:;
         }
 
         private void menuExport_Click(object sender, RoutedEventArgs e)
@@ -870,6 +946,11 @@ namespace TalkerMakerDeluxe
         private void Save_Binding(object obSender, ExecutedRoutedEventArgs e)
         {
             SaveHandler();
+        }
+
+        private void SaveAs_Binding(object obSender, ExecutedRoutedEventArgs e)
+        {
+            SaveAsDialog();
         }
 
         private void NewBinding_Executed(object sender, ExecutedRoutedEventArgs e)
@@ -1001,8 +1082,8 @@ namespace TalkerMakerDeluxe
 
         private void txtSettingAuthor_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(txtSettingAuthor.Text != projie.Author)
-            { 
+            if (txtSettingAuthor.Text != projie.Author)
+            {
                 projie.Author = txtSettingAuthor.Text;
                 needsSave = true;
             }
@@ -1050,7 +1131,7 @@ namespace TalkerMakerDeluxe
             newConvo.Fields.Add(new Field { Title = "Description", Value = "A new conversation." });
             newConvo.Fields.Add(new Field { Title = "Actor", Value = "1" });
             newConvo.Fields.Add(new Field { Title = "Conversant", Value = "1" });
-            
+
             DialogEntry convoStart = new DialogEntry();
             convoStart.ID = 0;
             convoStart.IsRoot = true;
@@ -1062,8 +1143,8 @@ namespace TalkerMakerDeluxe
             projie.Assets.Conversations.Add(newConvo);
 
             lstConversations.ItemsSource = AddConversations(projie);
-            
-            
+
+
         }
 
         private void btnAddVariable_Click(object sender, RoutedEventArgs e)
@@ -1075,6 +1156,30 @@ namespace TalkerMakerDeluxe
 
             projie.Assets.UserVariables.Add(newVar);
             lstVariables.ItemsSource = AddVariables(projie);
+        }
+
+        private void btnAddItem_Click(object sender, RoutedEventArgs e)
+        {
+            Item newItem = new Item();
+            newItem.ID = projie.Assets.Items.Count + 1;
+            newItem.Fields.Add(new Field { Title = "Name", Type="Text", Value = "New Item Name" });
+            newItem.Fields.Add(new Field { Title = "In Inventory", Type="Boolean", Value = "false" });
+            
+            projie.Assets.Items.Add(newItem);
+            lstItems.ItemsSource = AddItems(projie);
+        }
+
+        private void btnAddLocation_Click(object sender, RoutedEventArgs e)
+        {
+            Location newLoc = new Location();
+            newLoc.ID = projie.Assets.Locations.Count + 1;
+            newLoc.Fields.Add(new Field { Title = "Name", Value = "New Location Name" });
+            newLoc.Fields.Add(new Field { Title = "Learned", Type = "Boolean", Value = "false" });
+            newLoc.Fields.Add(new Field { Title = "Visited", Type = "Boolean", Value = "false" });
+            newLoc.Fields.Add(new Field { Title = "Description", Value = "" });
+
+            projie.Assets.Locations.Add(newLoc);
+            lstLocations.ItemsSource = AddLocations(projie);
         }
 
         private void lstVariables_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -1092,12 +1197,12 @@ namespace TalkerMakerDeluxe
 
         private void lstCharacters_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(lstCharacters.SelectedItem != null)
+            if (lstCharacters.SelectedItem != null)
             {
                 CharacterItem chara = lstCharacters.SelectedItem as CharacterItem;
                 txtActorID.Text = chara.lblActorID.Content.ToString();
                 txtActorName.Text = chara.lblActorName.Text;
-                txtActorAge.Value = chara.lblActorAge.Content != "" ? Convert.ToInt16(chara.lblActorAge.Content) : 0;
+                txtActorAge.Value = chara.lblActorAge.Content.ToString() != "" ? Convert.ToInt16(chara.lblActorAge.Content) : 0;
                 txtActorGender.Text = chara.lblActorGender.Content.ToString();
                 txtActorDescription.Text = chara.lblActorDescription.Content.ToString();
                 txtActorPicture.Text = chara.lblActorPicture.Content.ToString();
@@ -1123,11 +1228,35 @@ namespace TalkerMakerDeluxe
             }
         }
 
+        private void lstItems_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstItems.SelectedItem != null)
+            {
+                ItemItem item = lstItems.SelectedItem as ItemItem;
+                txtItemName.Text = item.lblItemName.Text;
+                chkItemInventory.IsChecked = Convert.ToBoolean(item.lblItemInventory.Content);
+                tabItem.IsSelected = true;
+            }
+        }
+
+        private void lstLocations_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (lstLocations.SelectedItem != null)
+            {
+                LocationItem location = lstLocations.SelectedItem as LocationItem;
+                txtLocName.Text = location.lblLocName.Text;
+                chkLocLearned.IsChecked = Convert.ToBoolean(location.lblLocLearned.Content);
+                chkLocVisited.IsChecked = Convert.ToBoolean(location.lblLocVisited.Content);
+                txtLocDescription.Text = location.lblLocDescription.Content.ToString();
+                tabLocation.IsSelected = true;
+            }
+        }
+
         private void lstConversations_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             loadedConversation = lstConversations.SelectedIndex;
             LoadConversation(loadedConversation);
-            
+
         }
 
         private void lstConversations_GotFocus(object sender, RoutedEventArgs e)
@@ -1152,7 +1281,17 @@ namespace TalkerMakerDeluxe
         {
             tabVariable.IsSelected = true;
         }
-        
+
+        private void lstItems_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tabItem.IsSelected = true;
+        }
+
+        private void lstLocations_GotFocus(object sender, RoutedEventArgs e)
+        {
+            tabLocation.IsSelected = true;
+        }
+
         private void popSettings_MouseLeave(object sender, MouseEventArgs e)
         {
             if (popSettings.IsOpen == true)
@@ -1712,7 +1851,7 @@ namespace TalkerMakerDeluxe
                 {
                     DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
                     BrushConverter bc = new BrushConverter();
-                    switch(color)
+                    switch (color)
                     {
                         case "Red":
                             de.NodeColor = "Red";
@@ -1732,7 +1871,7 @@ namespace TalkerMakerDeluxe
                             //ndctl.grid.Background = (Brush)Application.Current.FindResource("AccentColorBrush2");
                             ndctl.border.BorderBrush = (Brush)Application.Current.FindResource("HighlightBrush");
                             break;
-                            
+
                     }
                     needsSave = true;
                 }
@@ -1821,8 +1960,8 @@ namespace TalkerMakerDeluxe
 
         private void txtVarName_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(lstVariables.SelectedItem != null)
-            { 
+            if (lstVariables.SelectedItem != null)
+            {
                 VariableItem variable = lstVariables.SelectedItem as VariableItem;
                 if (txtVarName.Text != "" && variable.lblVarName.Text != txtVarName.Text)
                 {
@@ -1847,7 +1986,7 @@ namespace TalkerMakerDeluxe
             if (lstVariables.SelectedItem != null)
             {
                 VariableItem variable = lstVariables.SelectedItem as VariableItem;
-                if (txtVarType.Text != "" && variable.lblVarType.Content != txtVarType.Text)
+                if (txtVarType.Text != "" && variable.lblVarType.Content.ToString() != txtVarType.Text)
                 {
                     UserVariable var = projie.Assets.UserVariables[lstVariables.SelectedIndex];
                     foreach (Field field in var.Fields)
@@ -1870,7 +2009,7 @@ namespace TalkerMakerDeluxe
             if (lstVariables.SelectedItem != null)
             {
                 VariableItem variable = lstVariables.SelectedItem as VariableItem;
-                if (variable.lblVarValue.Content != txtVarValue.Text)
+                if (variable.lblVarValue.Content.ToString() != txtVarValue.Text)
                 {
                     UserVariable var = projie.Assets.UserVariables[lstVariables.SelectedIndex];
                     foreach (Field field in var.Fields)
@@ -1893,7 +2032,7 @@ namespace TalkerMakerDeluxe
             if (lstVariables.SelectedItem != null)
             {
                 VariableItem variable = lstVariables.SelectedItem as VariableItem;
-                if (variable.lblVarDescription.Content != txtVarDescription.Text)
+                if (variable.lblVarDescription.Content.ToString() != txtVarDescription.Text)
                 {
                     UserVariable var = projie.Assets.UserVariables[lstVariables.SelectedIndex];
                     foreach (Field field in var.Fields)
@@ -1913,7 +2052,155 @@ namespace TalkerMakerDeluxe
 
         #endregion
 
+        #region Location Edit Functions
+
+        private void txtLocationName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (lstLocations.SelectedItem != null)
+            {
+                LocationItem location = lstLocations.SelectedItem as LocationItem;
+                if (txtLocName.Text != "" && location.lblLocName.Text != txtLocName.Text)
+                {
+                    Location loc = projie.Assets.Locations[lstLocations.SelectedIndex];
+                    foreach (Field field in loc.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Name":
+                                field.Value = txtLocName.Text;
+                                break;
+                        }
+                    }
+                    location.lblLocName.Text = txtLocName.Text;
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void chkLocLearned_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lstLocations.SelectedItem != null)
+            {
+                LocationItem locationIt = lstLocations.SelectedItem as LocationItem;
+                if (Convert.ToBoolean(locationIt.lblLocLearned.Content) != chkLocLearned.IsChecked)
+                {
+                    Location loc = projie.Assets.Locations[lstLocations.SelectedIndex];
+                    foreach (Field field in loc.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Learned":
+                                field.Value = chkLocLearned.IsChecked.ToString();
+                                break;
+                        }
+                    }
+                    locationIt.lblLocLearned.Content = chkLocLearned.IsChecked.ToString();
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void chkLocVisited_Checked(object sender, RoutedEventArgs e)
+        {
+            if (lstLocations.SelectedItem != null)
+            {
+                LocationItem locationIt = lstLocations.SelectedItem as LocationItem;
+                if (Convert.ToBoolean(locationIt.lblLocVisited.Content) != chkLocVisited.IsChecked)
+                {
+                    Location loc = projie.Assets.Locations[lstLocations.SelectedIndex];
+                    foreach (Field field in loc.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Visited":
+                                field.Value = chkLocVisited.IsChecked.ToString();
+                                break;
+                        }
+                    }
+                    locationIt.lblLocVisited.Content = chkLocVisited.IsChecked.ToString();
+                    needsSave = true;
+                }
+            }
+        }
+
+
+        private void txtLocDescription_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (lstLocations.SelectedItem != null)
+            {
+                LocationItem location = lstLocations.SelectedItem as LocationItem;
+                if (txtLocDescription.Text != "" && location.lblLocDescription.Content.ToString() != txtLocDescription.Text)
+                {
+                    Location loc = projie.Assets.Locations[lstLocations.SelectedIndex];
+                    foreach (Field field in loc.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Description":
+                                field.Value = txtLocDescription.Text;
+                                break;
+                        }
+                    }
+                    location.lblLocDescription.Content = txtLocDescription.Text;
+                    needsSave = true;
+                }
+            }
+        }
+
         #endregion
+
+        #region Item Edit Functions
+
+        private void txtItemName_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (lstItems.SelectedItem != null)
+            {
+                ItemItem item = lstItems.SelectedItem as ItemItem;
+                if (txtItemName.Text != "" && item.lblItemName.Text != txtItemName.Text)
+                {
+                    Item itm = projie.Assets.Items[lstItems.SelectedIndex];
+                    foreach (Field field in itm.Fields)
+                    {
+                        switch (field.Title)
+                        {
+                            case "Name":
+                                field.Value = txtItemName.Text;
+                                break;
+                        }
+                    }
+                    item.lblItemName.Text = txtItemName.Text;
+                    needsSave = true;
+                }
+            }
+        }
+
+        private void chkItemInventory_Checked(object sender, RoutedEventArgs e)
+        {
+            ItemItem itemIt = lstItems.SelectedItem as ItemItem;
+            if (Convert.ToBoolean(itemIt.lblItemInventory.Content) != chkItemInventory.IsChecked)
+            {
+                Item item = projie.Assets.Items[lstItems.SelectedIndex];
+                foreach (Field field in item.Fields)
+                {
+                    switch (field.Title)
+                    {
+                        case "In Inventory":
+                            field.Value = chkItemInventory.IsChecked.ToString();
+                            break;
+                    }
+                }
+                itemIt.lblItemInventory.Content = chkItemInventory.IsChecked.ToString();
+                needsSave = true;
+            }
+        }
+        
+
+        #endregion
+
+        #endregion
+
+
+
 
     }
 
