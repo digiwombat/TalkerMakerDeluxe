@@ -14,7 +14,6 @@
                 <RowDefinition Name="grdNodeImage" Height="28" />
                 <RowDefinition Name="grdNodeText" Height="Auto" />
             </Grid.RowDefinitions>
-
             <TextBlock TextTrimming="CharacterEllipsis" x:Name="lblDialogueName" Grid.Row="0" DataContext="{Binding RelativeSource={RelativeSource Self}}" Text="{Binding nodeDialogueName}" Margin="6,0,60,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="11" FontWeight="Bold"/>
             <Button x:Name="btnAdd" ToolTip="Add Child Dialogue" HorizontalAlignment="Right" VerticalAlignment="Top" Width="24" Height="24" Margin="0" FontFamily="FontAwesome" Background="Transparent" BorderBrush="Transparent" Click="btnAdd_Click" Grid.Row="0">
                 <Button.Style>
@@ -51,7 +50,7 @@
             <TextBlock TextTrimming="CharacterEllipsis" x:Name="lblConversant" Grid.Row="1" FontWeight="Thin" DataContext="{Binding RelativeSource={RelativeSource Self}}" Text="{Binding nodeConversant}" HorizontalAlignment="Right" MaxWidth="65"  VerticalAlignment="Top" FontSize="10" Margin="0,0,6,0" />
             <Label x:Name="lblID" Content="?" Grid.Row="0" HorizontalAlignment="Right" HorizontalContentAlignment="Right" Margin="0,0,24,0" VerticalAlignment="Top" Width="60" Opacity="0.25"/>
             <TextBlock TextTrimming="CharacterEllipsis" x:Name="lblMenuText" Text="" FontStyle="Italic" Grid.Row="2" HorizontalAlignment="Right" VerticalAlignment="Center" Width="152" Margin="0,6" />
-            <Border BorderBrush="{StaticResource ResourceKey=HighlightBrush}" BorderThickness="1" Height="28" MaxHeight="40" MaxWidth="35" Grid.Row="2" HorizontalAlignment="Left" Margin="6,0">
+            <Border BorderBrush="{StaticResource ResourceKey=HighlightBrush}" Background="SlateGray" BorderThickness="1" Height="28" Width="28" MaxHeight="40" MaxWidth="35" Grid.Row="2" HorizontalAlignment="Left" Margin="8,0">
                 <Image Name="imgActor" />
             </Border>
             <Label x:Name="lblUserScript" Content="" HorizontalAlignment="Right" HorizontalContentAlignment="Right" VerticalAlignment="Top" Width="28" Visibility="Hidden"/>
@@ -89,6 +88,11 @@
                     <fa:ImageAwesome Panel.ZIndex="1" Name="faMin" Icon="ChevronCircleUp" Foreground="{StaticResource ResourceKey=BlackBrush}" Margin="-9,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" />
                 </StackPanel>
             </Button>
+            <Label x:Name="lblCode" Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalAlignment="Right"  Margin="0,0,8,-16" Grid.RowSpan="4" Visibility="Hidden" Height="27" VerticalAlignment="Bottom">
+                <Border BorderBrush="Black" BorderThickness="0" CornerRadius="1" Background="{StaticResource ResourceKey=BlackBrush}">
+                    <fa:FontAwesome Name="faCode" Icon="FileCodeOutline" />
+                </Border>
+            </Label>
         </Grid>
     </Border>
 </UserControl>

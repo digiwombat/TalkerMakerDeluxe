@@ -32,10 +32,10 @@ using System.Collections;
 using Newtonsoft.Json;
 using Xceed.Wpf.AvalonDock.Layout.Serialization;
 using Xceed.Wpf.AvalonDock.Layout;
+using Xceed.Wpf.AvalonDock;
 using Xceed.Wpf.AvalonDock.Controls;
 using System.Windows.Threading;
-
-
+using System.Diagnostics;
 
 namespace TalkerMakerDeluxe
 {
@@ -60,11 +60,11 @@ namespace TalkerMakerDeluxe
                 _needsSave = value;
                 if (_needsSave == false)
                 {
-                    this.Title = "TalkerMaker Deluxe - " + openedFile;
+                    MainWin.Title = "TalkerMaker Deluxe - " + openedFile;
                 }
                 else
                 {
-                    this.Title = "TalkerMaker Deluxe - " + openedFile + "*";
+                    MainWin.Title = "TalkerMaker Deluxe - " + openedFile + "*";
                 }
             }
         }
@@ -75,7 +75,7 @@ namespace TalkerMakerDeluxe
             set
             {
                 _openedFile = value;
-                this.Title = "TalkerMaker Deluxe - " + openedFile;
+                MainWin.Title = "TalkerMaker Deluxe - " + openedFile;
             }
         }
         public struct DialogHolder
@@ -92,19 +92,20 @@ namespace TalkerMakerDeluxe
         {
             InitializeComponent();
 
-            this.Top = Properties.Settings.Default.Top;
-            this.Left = Properties.Settings.Default.Left;
-            this.Height = Properties.Settings.Default.Height;
-            this.Width = Properties.Settings.Default.Width;
+            MainWin.Top = Properties.Settings.Default.Top;
+            MainWin.Left = Properties.Settings.Default.Left;
+            MainWin.Height = Properties.Settings.Default.Height;
+            MainWin.Width = Properties.Settings.Default.Width;
             // Very quick and dirty - but it does the job
             if (Properties.Settings.Default.Maximized)
             {
-                WindowState = System.Windows.WindowState.Maximized;
+                MainWin.WindowState = System.Windows.WindowState.Maximized;
             }
 
-            this.Icon = ImageAwesome.CreateImageSource(FontAwesomeIcon.CommentsO, (Brush)Application.Current.FindResource("HighlightBrush"));
 
-            this.Title = "TalkerMaker Deluxe - " + openedFile;
+            MainWin.Icon = ImageAwesome.CreateImageSource(FontAwesomeIcon.CommentsOutline, (Brush)Application.Current.FindResource("HighlightBrush"));
+
+            MainWin.Title = "TalkerMaker Deluxe - " + openedFile;
 
             LoadLayout();
 
@@ -393,6 +394,7 @@ namespace TalkerMakerDeluxe
                     tcMain.ToString();
                     node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
                     node.BringIntoView();
+
                 }
                 nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
                 node = nodeTree.Content as NodeControl;
@@ -456,7 +458,19 @@ namespace TalkerMakerDeluxe
                     if (nodeTree != null)
                     {
                         node = nodeTree.Content as NodeControl;
-                        node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
+                        switch (node.lblNodeColor.Content.ToString())
+                        {
+                            case "Red":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#FFCC4452");
+                                break;
+                            case "Green":
+                                node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
+                                break;
+                            default:
+                                node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
+                                break;
+
+                        }
                     }
                 }
                 else if (newNode != currentNode)
@@ -505,6 +519,14 @@ namespace TalkerMakerDeluxe
                 ndctl.lblConditionsString.Content = de.ConditionsString;
                 ndctl.lblConversationID.Content = loadedConversation;
                 ndctl.lblFalseCondition.Content = de.FalseCondtionAction;
+                if(de.UserScript != "" || de.ConditionsString != "")
+                {
+                    ndctl.lblCode.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    ndctl.lblCode.Visibility = Visibility.Hidden;
+                }
                 Console.WriteLine("Setting Bindings...");
                 foreach (Link lanks in de.OutgoingLinks)
                 {
@@ -1818,6 +1840,14 @@ namespace TalkerMakerDeluxe
                     DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
                     de.UserScript = editScript.Text;
                     ndctl.lblUserScript.Content = editScript.Text;
+                    if(ndctl.lblUserScript.Content != "")
+                    {
+                        ndctl.lblCode.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        ndctl.lblCode.Visibility = Visibility.Hidden;
+                    }
                     needsSave = true;
                 }
             }
@@ -1834,6 +1864,14 @@ namespace TalkerMakerDeluxe
                     DialogEntry de = projie.Assets.Conversations[loadedConversation].DialogEntries.First(p => p.ID == Convert.ToInt16(ndctl.lblID.Content));
                     de.ConditionsString = editConditions.Text;
                     ndctl.lblConditionsString.Content = editConditions.Text;
+                    if (ndctl.lblConditionsString.Content != "")
+                    {
+                        ndctl.lblCode.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        ndctl.lblCode.Visibility = Visibility.Hidden;
+                    }
                     needsSave = true;
                 }
             }
@@ -2193,15 +2231,41 @@ namespace TalkerMakerDeluxe
                 needsSave = true;
             }
         }
-        
+
+
+
+
 
         #endregion
 
         #endregion
 
+        private void Zoom_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            bool handle = (Keyboard.Modifiers & ModifierKeys.Control) > 0;
+            if (!handle)
+                return;
 
+            if (e.Delta > 0)
+                uiScaleSlider.Value += 0.1;
+            else
+                uiScaleSlider.Value -= 0.1;
+        }
 
-
+        private void btnAddGeneric(object sender, RoutedEventArgs e)
+        {
+            Button btnClicked = (Button)e.Source;
+            string sectionClicked = btnClicked.ToolTip.ToString();
+            switch (sectionClicked)
+            {
+                case "Conversations":
+                    btnAddConversation_Click(sender, e);
+                    break;
+                case "Characters":
+                    btnAddCharacter_Click(sender, e);
+                    break;
+            }
+        }
     }
 
 }
