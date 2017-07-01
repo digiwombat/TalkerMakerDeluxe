@@ -5,18 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="180" MinWidth="140">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="25"/>
-            <RowDefinition Height="25"/>
-        </Grid.RowDefinitions>
-        <TextBlock TextTrimming="CharacterEllipsis" Text="Item Name" Name="lblItemName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
-        <DockPanel Grid.Row="1" >
-            <Label Content="In Inventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-            <Label Content="Inventory" Name="lblItemInventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-        </DockPanel>
-        
+
+	<Grid Background="{DynamicResource GrayBrush3}" Margin="0,0,0,2">
+		<Grid.RowDefinitions>
+			<RowDefinition Height="25"/>
+			<RowDefinition Height="25"/>
+		</Grid.RowDefinitions>
+		<TextBlock TextTrimming="CharacterEllipsis" Text="Item Name" Name="lblItemName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
+		<DockPanel Grid.Row="1" >
+			<Label Content="In Inventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+			<Label Content="Inventory" Name="lblItemInventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+		</DockPanel>
 
 
-    </Grid>
+
+	</Grid>
 </UserControl>

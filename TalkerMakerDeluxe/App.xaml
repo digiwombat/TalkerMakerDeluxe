@@ -7,17 +7,18 @@
 
             <ResourceDictionary.MergedDictionaries>
 
-                <!-- MahApps -->
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+				<!-- MahApps
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
-                
-                <ResourceDictionary Source="Colors.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
-                <ResourceDictionary Source="Tomorrow_Theme.xaml" />
+                -->
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseDark.xaml" />
+				<ResourceDictionary Source="Colors.xaml" />
+				<ResourceDictionary Source="Tomorrow_Theme.xaml" />
 
-                <!-- Material Design: MahApps Compatibility -->
+                <!-- Material Design: MahApps Compatibility
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.MahApps;component/Themes/MaterialDesignTheme.MahApps.Flyout.xaml" />
+				  -->
 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

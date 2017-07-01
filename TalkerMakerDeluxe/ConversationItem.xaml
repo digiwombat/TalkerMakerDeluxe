@@ -4,31 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d"
-             MinWidth="140" MaxWidth="180" HorizontalAlignment="Left">
-    <Grid x:Name="grid">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Name="grdActor" />
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="28"/>
-            <RowDefinition Height="28"/>
-        </Grid.RowDefinitions>
-        <DockPanel Grid.Row="0"  Grid.Column="0">
-            <TextBlock Text="Conversation Title" Grid.ColumnSpan="2" MaxWidth="155" Name="lblConvTitle" HorizontalAlignment="Left" Margin="5,5,38,5" VerticalAlignment="Top" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
-            <Label Content="0000" Grid.Column="1" Name="lblNodeCount" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Opacity="0.25"/>
-        </DockPanel>
-        <DockPanel Grid.Row="1"  Grid.Column="0">
-            <TextBlock Text="Actor" Grid.Row="1"  Grid.Column="0" Name="lblConvActor" TextTrimming="CharacterEllipsis" Margin="4" MaxWidth="120" MinWidth="20" />
-            <TextBlock Text="Conversant" Grid.Row="1" Grid.Column="1" Name="lblConvConversant" Margin="4" TextTrimming="CharacterEllipsis" MaxWidth="120" TextAlignment="Right" MinWidth="20" />
-        </DockPanel>
-        
+             MinWidth="140">
+	<Grid x:Name="grid" Background="{DynamicResource GrayBrush3}" Margin="0,0,0,2">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Name="grdActor" />
+		</Grid.ColumnDefinitions>
+		<Grid.RowDefinitions>
+			<RowDefinition Height="28"/>
+			<RowDefinition Height="28"/>
+		</Grid.RowDefinitions>
+		<DockPanel Grid.Row="0"  Grid.Column="0">
+			<TextBlock Text="Conversation Title" Grid.ColumnSpan="2" MaxWidth="155" Name="lblConvTitle" HorizontalAlignment="Left" Margin="5,5,38,5" VerticalAlignment="Top" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+			<Label Content="0000" Grid.Column="1" Name="lblNodeCount" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Opacity="0.25"/>
+		</DockPanel>
+		<DockPanel Grid.Row="1"  Grid.Column="0">
+			<TextBlock Text="Actor" Grid.Row="1"  Grid.Column="0" Name="lblConvActor" TextTrimming="CharacterEllipsis" Margin="4" MaxWidth="120" MinWidth="20" />
+			<TextBlock Text="Conversant" Grid.Row="1" Grid.Column="1" Name="lblConvConversant" Margin="4" TextTrimming="CharacterEllipsis" MaxWidth="120" TextAlignment="Right" MinWidth="20" />
+		</DockPanel>
 
-        <Label Content="0" Name="lblConvActorID" Visibility="Hidden"/>
-        <Label Content="0" Name="lblConvID" Visibility="Hidden"/>
-        <Label Content="0" Name="lblConvConversantID" Visibility="Hidden"/>
-        <Label Content="Scene" Name="lblconvScene" Visibility="Hidden"/>
-        <Label Content="Description" Name="lblConvDescription" Visibility="Hidden"/>
-    </Grid>
+
+		<Label Content="0" Name="lblConvActorID" Visibility="Hidden"/>
+		<Label Content="0" Name="lblConvID" Visibility="Hidden"/>
+		<Label Content="0" Name="lblConvConversantID" Visibility="Hidden"/>
+		<Label Content="Scene" Name="lblconvScene" Visibility="Hidden"/>
+		<Label Content="Description" Name="lblConvDescription" Visibility="Hidden"/>
+	</Grid>
 </UserControl>
 
     

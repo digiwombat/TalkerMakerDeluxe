@@ -39,7 +39,7 @@ using System.Diagnostics;
 
 namespace TalkerMakerDeluxe
 {
-    public partial class MainWindow : MetroWindow
+    public partial class MainWindow : Window
     {
 
         #region Variables and Structs
@@ -103,7 +103,7 @@ namespace TalkerMakerDeluxe
             }
 
 
-            MainWin.Icon = ImageAwesome.CreateImageSource(FontAwesomeIcon.CommentsOutline, (Brush)Application.Current.FindResource("HighlightBrush"));
+            MainWin.Icon = ImageAwesome.CreateImageSource(FontAwesomeIcon.CommentsOutline, new SolidColorBrush(Color.FromRgb(59,92,145)));
 
             MainWin.Title = "TalkerMaker Deluxe - " + openedFile;
 
@@ -247,7 +247,7 @@ namespace TalkerMakerDeluxe
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error loading layout.");
+                    Debug.WriteLine("Error loading layout. | " + ex);
                 }
             }
 
@@ -364,8 +364,8 @@ namespace TalkerMakerDeluxe
                 if (currentNode != "" && newNode != currentNode)
                 {
                     //Color newNode
-                    node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
-                    node.BringIntoView();
+                    node.grid.Background = (Brush)Application.Current.FindResource("GrayBrush3");
+					node.BringIntoView();
 
                     //Remove color from currentNode
                     nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
@@ -381,8 +381,8 @@ namespace TalkerMakerDeluxe
                                 node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
                                 break;
                             default:
-                                node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
-                                break;
+                                node.grid.Background = (Brush)Application.Current.FindResource("GrayBrush1");
+								break;
 
                         }
                     }
@@ -392,8 +392,8 @@ namespace TalkerMakerDeluxe
                 {
                     //Color newNode
                     tcMain.ToString();
-                    node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
-                    node.BringIntoView();
+                    node.grid.Background = (Brush)Application.Current.FindResource("GrayBrush3");
+					node.BringIntoView();
 
                 }
                 nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
@@ -450,7 +450,7 @@ namespace TalkerMakerDeluxe
                 if (currentNode != "" && newNode != currentNode)
                 {
                     //Color newNode
-                    node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
+                    node.grid.Background = (Brush)Application.Current.FindResource("GrayBrush3");
                     node.BringIntoView();
 
                     //Remove color from currentNode
@@ -467,7 +467,7 @@ namespace TalkerMakerDeluxe
                                 node.grid.Background = (Brush)bc.ConvertFrom("#FFA5C77F");
                                 break;
                             default:
-                                node.grid.Background = (Brush)bc.ConvertFrom("#FF81a2be");
+                                node.grid.Background = (Brush)Application.Current.FindResource("GrayBrush1");
                                 break;
 
                         }
@@ -477,7 +477,7 @@ namespace TalkerMakerDeluxe
                 {
                     //Color newNode
                     tcMain.ToString();
-                    node.grid.Background = (Brush)Application.Current.FindResource("GrayNormalBrush");
+                    node.grid.Background = (Brush)Application.Current.FindResource("GrayBrush3");
                 }
                 lstConversations.SelectedIndex = loadedConversation;
                 lstConvoActor.SelectedItem = lstConvoActor.Items.OfType<CharacterItem>().First(p => p.lblActorID.Content.ToString() == node.lblActorID.Content.ToString());
@@ -1132,7 +1132,7 @@ namespace TalkerMakerDeluxe
         private void btnAddCharacter_Click(object sender, RoutedEventArgs e)
         {
             Actor newActor = new Actor();
-            newActor.ID = projie.Assets.Actors.Count + 1;
+            newActor.ID = projie.Assets.Actors.OrderByDescending(item => item.ID).First().ID + 1;
             newActor.Fields.Add(new Field { Title = "Name", Value = "New Character" });
             newActor.Fields.Add(new Field { Title = "IsPlayer", Value = "false", Type = "Boolean" });
 
@@ -1147,7 +1147,7 @@ namespace TalkerMakerDeluxe
         private void btnAddConversation_Click(object sender, RoutedEventArgs e)
         {
             Conversation newConvo = new Conversation();
-            newConvo.ID = projie.Assets.Conversations.Count();
+            newConvo.ID = projie.Assets.Conversations.OrderByDescending(item => item.ID).First().ID + 1;
 
             newConvo.Fields.Add(new Field { Title = "Title", Value = "New Conversation" });
             newConvo.Fields.Add(new Field { Title = "Description", Value = "A new conversation." });
@@ -1183,7 +1183,7 @@ namespace TalkerMakerDeluxe
         private void btnAddItem_Click(object sender, RoutedEventArgs e)
         {
             Item newItem = new Item();
-            newItem.ID = projie.Assets.Items.Count + 1;
+            newItem.ID = projie.Assets.Items.OrderByDescending(item => item.ID).First().ID + 1;
             newItem.Fields.Add(new Field { Title = "Name", Type="Text", Value = "New Item Name" });
             newItem.Fields.Add(new Field { Title = "In Inventory", Type="Boolean", Value = "false" });
             
@@ -1194,7 +1194,7 @@ namespace TalkerMakerDeluxe
         private void btnAddLocation_Click(object sender, RoutedEventArgs e)
         {
             Location newLoc = new Location();
-            newLoc.ID = projie.Assets.Locations.Count + 1;
+            newLoc.ID = projie.Assets.Locations.OrderByDescending(item => item.ID).First().ID + 1;
             newLoc.Fields.Add(new Field { Title = "Name", Value = "New Location Name" });
             newLoc.Fields.Add(new Field { Title = "Learned", Type = "Boolean", Value = "false" });
             newLoc.Fields.Add(new Field { Title = "Visited", Type = "Boolean", Value = "false" });
@@ -1563,9 +1563,9 @@ namespace TalkerMakerDeluxe
                 Convert.FromBase64String(base64String);
                 return true;
             }
-            catch (Exception exception)
+            catch (Exception ex)
             {
-
+				Debug.WriteLine("Base64 Decode Failed | " + ex);
             }
             return false;
         }
@@ -1969,7 +1969,7 @@ namespace TalkerMakerDeluxe
                 }
                 catch (Exception ex)
                 {
-
+					Debug.WriteLine("Delete Link Failed. | " + ex);
                 }
             }
         }
@@ -2264,6 +2264,16 @@ namespace TalkerMakerDeluxe
                 case "Characters":
                     btnAddCharacter_Click(sender, e);
                     break;
+				case "Variables":
+					btnAddVariable_Click(sender, e);
+					break;
+				case "Items":
+					btnAddItem_Click(sender, e);
+					break;
+				case "Locations":
+					btnAddLocation_Click(sender, e);
+					break;
+					
             }
         }
     }

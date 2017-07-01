@@ -1,4 +1,4 @@
-<Controls:MetroWindow x:Name="MainWin" x:Class="TalkerMakerDeluxe.MainWindow"
+<Window x:Name="MainWin" x:Class="TalkerMakerDeluxe.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
     xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
@@ -10,14 +10,14 @@
     xmlns:fa="http://schemas.fontawesome.io/icons/"
     xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"       
     Title="TalkerMaker Deluxe" Height="810" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" ResizeMode="CanResizeWithGrip" Closing="MetroWindow_Closing" FontFamily="Roboto">
-    <Controls:MetroWindow.Resources>
+    <Window.Resources>
         <s:UriToBitmapConverter x:Key="UriToBitmapConverter" />
         <s:Actor x:Key="CharacterItems" />
-        <Style TargetType="{x:Type RadioButton}" x:Key="NormalRadio" >
-            <Setter Property="Template">
+		<Style TargetType="{x:Type RadioButton}" x:Key="NormalRadio" >
+			<Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <BulletDecorator Background="White" Cursor="Hand">
+                        <BulletDecorator Cursor="Hand">
                             <BulletDecorator.Bullet>
                                 <Grid Height="16" Width="16">
                                     <!--Define size of the Bullet-->
@@ -55,7 +55,7 @@ and change the color of the selected bullet into a darker gray for better highli
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <BulletDecorator Background="White" Cursor="Hand">
+                        <BulletDecorator Cursor="Hand">
                             <BulletDecorator.Bullet>
                                 <Grid Height="16" Width="16">
                                     <Border Name="RadioOuter" Background="Transparent" BorderBrush="#FF723147" BorderThickness="2" CornerRadius="2" />
@@ -81,11 +81,11 @@ and change the color of the selected bullet into a darker gray for better highli
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <BulletDecorator Background="White" Cursor="Hand">
+                        <BulletDecorator Cursor="Hand">
                             <BulletDecorator.Bullet>
                                 <Grid Height="16" Width="16">
-                                    <Border Name="RadioOuter" Background="Transparent" BorderBrush="#FF002F32" BorderThickness="2" CornerRadius="2" />
-                                    <Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#FFA5C77F" Visibility="Hidden" />
+									<Border Name="RadioOuter" Background="Transparent" BorderBrush="#FFA5C77F" BorderThickness="2" CornerRadius="2" />
+									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#FFA5C77F" Visibility="Hidden" />
                                 </Grid>
                             </BulletDecorator.Bullet>
                             <TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
@@ -106,7 +106,7 @@ and change the color of the selected bullet into a darker gray for better highli
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <BulletDecorator Background="White" Cursor="Hand">
+                        <BulletDecorator Cursor="Hand">
                             <BulletDecorator.Bullet>
                                 <Grid Height="16" Width="16">
                                     <Border Name="RadioOuter" Background="Transparent" BorderBrush="#CCBD41" BorderThickness="2" CornerRadius="2" />
@@ -131,7 +131,7 @@ and change the color of the selected bullet into a darker gray for better highli
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <BulletDecorator Background="White" Cursor="Hand">
+                        <BulletDecorator Cursor="Hand">
                             <BulletDecorator.Bullet>
                                 <Grid Height="16" Width="16">
                                     <Border Name="RadioOuter" Background="Transparent" BorderBrush="#7742A0" BorderThickness="2" CornerRadius="2" />
@@ -156,7 +156,7 @@ and change the color of the selected bullet into a darker gray for better highli
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <BulletDecorator Background="White" Cursor="Hand">
+                        <BulletDecorator Cursor="Hand">
                             <BulletDecorator.Bullet>
                                 <Grid Height="16" Width="16">
                                     <Border Name="RadioOuter" Background="Transparent" BorderBrush="#4EA8B1" BorderThickness="2" CornerRadius="2" />
@@ -181,7 +181,7 @@ and change the color of the selected bullet into a darker gray for better highli
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <BulletDecorator Background="White" Cursor="Hand">
+                        <BulletDecorator Cursor="Hand">
                             <BulletDecorator.Bullet>
                                 <Grid Height="16" Width="16">
                                     <Border Name="RadioOuter" Background="Transparent" BorderBrush="#B4993B" BorderThickness="2" CornerRadius="2" />
@@ -206,7 +206,7 @@ and change the color of the selected bullet into a darker gray for better highli
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type RadioButton}">
-                        <BulletDecorator Background="White" Cursor="Hand">
+                        <BulletDecorator Cursor="Hand">
                             <BulletDecorator.Bullet>
                                 <Grid Height="16" Width="16">
                                     <Border Name="RadioOuter" Background="Transparent" BorderBrush="#505050" BorderThickness="2" CornerRadius="2" />
@@ -227,13 +227,58 @@ and change the color of the selected bullet into a darker gray for better highli
                 </Setter.Value>
             </Setter>
         </Style>
-    </Controls:MetroWindow.Resources>
-    <Controls:MetroWindow.RightWindowCommands>
+		<Style x:Key="{x:Type TextBox}" TargetType="{x:Type TextBoxBase}">
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="OverridesDefaultStyle" Value="True"/>
+			<Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
+			<Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+			<Setter Property="MinWidth" Value="120"/>
+			<Setter Property="MinHeight" Value="20"/>
+			<Setter Property="AllowDrop" Value="true"/>
+			<Setter Property="Foreground" Value="{StaticResource BlackBrush}"/>
+			<Setter Property="CaretBrush" Value="{StaticResource BlackBrush}"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type TextBoxBase}">
+						<Border 
+						  Name="Border"
+						  Padding="2"
+						  Background="{StaticResource WindowBackgroundBrush}"
+						  BorderBrush="{StaticResource AccentColorBrush5}"
+						  BorderThickness="1" >
+							<ScrollViewer Foreground="{StaticResource BlackBrush}" Margin="0" x:Name="PART_ContentHost"/>
+						</Border>
+						<ControlTemplate.Triggers>
+							<Trigger Property="IsEnabled" Value="False">
+								<!--Setter TargetName="Border" Property="Background" Value="{StaticResource DisabledBackgroundBrush}"/>
+								<Setter TargetName="Border" Property="BorderBrush" Value="{StaticResource DisabledBackgroundBrush}"/>
+								<Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/-->
+							</Trigger>
+						</ControlTemplate.Triggers>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+		<Style x:Key="{x:Type ContextMenu}" TargetType="{x:Type ContextMenu}">
+			<Setter Property="OverridesDefaultStyle" Value="True"/>
+			<Setter Property="SnapsToDevicePixels" Value="True"/>
+			<Setter Property="Template">
+				<Setter.Value>
+					<ControlTemplate TargetType="{x:Type ContextMenu}">
+						<Border Background="#F0222120" BorderBrush="{DynamicResource GrayBrush1}" BorderThickness="2" Opacity="1">
+							<StackPanel ClipToBounds="True" Orientation="Vertical" IsItemsHost="True" Margin="5,4,5,4"/>
+						</Border>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+		</Style>
+	</Window.Resources>
+    <!--Window.RightWindowCommands>
         <Controls:WindowCommands>
             <Button Content="project settings" Click="SettingsButton_Click"/>
         </Controls:WindowCommands>
-    </Controls:MetroWindow.RightWindowCommands>
-    <Controls:MetroWindow.CommandBindings>
+    </-->
+    <Window.CommandBindings>
         <CommandBinding Command="New" Executed="NewBinding_Executed" />
         <CommandBinding Command="Save" Executed="Save_Binding" />
         <CommandBinding Command="SaveAs" Executed="SaveAs_Binding" />
@@ -241,7 +286,7 @@ and change the color of the selected bullet into a darker gray for better highli
         <CommandBinding Command="Close" Executed="Exit_Binding" />
         <CommandBinding Command="Undo" Executed="Undo_Executed" CanExecute="Undo_CanExecute" />
         <CommandBinding Command="Redo" Executed="Redo_Executed" CanExecute="Redo_CanExecute" />
-    </Controls:MetroWindow.CommandBindings>
+    </Window.CommandBindings>
     <Window.InputBindings>
         <KeyBinding Key="N" Modifiers="Control" Command="New"/>
         <KeyBinding Key="O" Modifiers="Control" Command="Open"/>
@@ -258,99 +303,99 @@ and change the color of the selected bullet into a darker gray for better highli
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
-        <xcad:DockingManager Name="dockUI" Grid.Row="1">
-            <xcad:DockingManager.Resources>
-                <DataTemplate x:Key="DockingWindowTitleDataTemplate" DataType="{x:Type xcad:LayoutContent}">
-                    <Label Background="{StaticResource ResourceKey=HighlightBrush}">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="180" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Text="{Binding Path=Title}" Foreground="{StaticResource ResourceKey=WhiteBrush}" Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontSize="14" Grid.Column="0"/>
-                            <Button x:Name="btnAddCharacter" ToolTip="{Binding Title}" HorizontalAlignment="Right" Width="24" Margin="0" FontFamily="FontAwesome" Foreground="{StaticResource ResourceKey=WhiteBrush}" Background="Transparent" BorderBrush="Transparent" Click="btnAddGeneric" Grid.Column="1">
-                                <Button.Style>
-                                    <Style TargetType="{x:Type Button}">
-                                        <Style.Triggers>
-                                            <Trigger Property="ToolTip" Value="Overview">
-                                                <Setter Property="Visibility" Value="Hidden" />
-                                            </Trigger>
-                                            <Trigger Property="ToolTip" Value="Properties">
-                                                <Setter Property="Visibility" Value="Hidden" />
-                                            </Trigger>
-                                            <Trigger Property="ToolTip" Value="Script">
-                                                <Setter Property="Visibility" Value="Hidden" />
-                                            </Trigger>
-                                            <Trigger Property="ToolTip" Value="Conditions">
-                                                <Setter Property="Visibility" Value="Hidden" />
-                                            </Trigger>
-                                        </Style.Triggers>
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type Button}">
-                                                    <Border Background="{TemplateBinding Background}">
-                                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                                    </Border>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </Button.Style>
-                                <fa:FontAwesome Name="faAdd" Icon="PlusSquare" FontFamily="FontAwesome" />
-                            </Button>
-                        </Grid>
-                    </Label>
-                </DataTemplate>
-            </xcad:DockingManager.Resources>
-            <xcad:DockingManager.AnchorableTitleTemplate>
+        <xcad:DockingManager Name="dockUI" Grid.Row="1" Background="{DynamicResource GrayBrush1}" Foreground="{DynamicResource BlackBrush}" DocumentPaneControlStyle="{DynamicResource Style1}" AnchorablePaneControlStyle="{DynamicResource Style2}">
+			<xcad:DockingManager.Resources>
+				<DataTemplate x:Key="DockingWindowTitleDataTemplate" DataType="{x:Type xcad:LayoutContent}">
+					<Label Background="{StaticResource ResourceKey=HighlightBrush}">
+						<Grid>
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition Width="160" />
+								<ColumnDefinition Width="Auto" />
+							</Grid.ColumnDefinitions>
+							<TextBlock MinHeight="16" MaxHeight="16" Text="{Binding Path=Title}" Foreground="{StaticResource ResourceKey=WhiteBrush}" Margin="5,0,0,0" FontWeight="Bold" VerticalAlignment="Center" FontSize="14" Grid.Column="0"/>
+							<Button x:Name="btnAddCharacter" ToolTip="{Binding Title}" HorizontalAlignment="Right" Width="24" Margin="0" FontFamily="FontAwesome" Foreground="{StaticResource ResourceKey=WhiteBrush}" Background="Transparent" BorderBrush="Transparent" Click="btnAddGeneric" Grid.Column="1">
+								<Button.Style>
+									<Style TargetType="{x:Type Button}">
+										<Style.Triggers>
+											<Trigger Property="ToolTip" Value="Overview">
+												<Setter Property="Visibility" Value="Hidden" />
+											</Trigger>
+											<Trigger Property="ToolTip" Value="Properties">
+												<Setter Property="Visibility" Value="Hidden" />
+											</Trigger>
+											<Trigger Property="ToolTip" Value="Script">
+												<Setter Property="Visibility" Value="Hidden" />
+											</Trigger>
+											<Trigger Property="ToolTip" Value="Conditions">
+												<Setter Property="Visibility" Value="Hidden" />
+											</Trigger>
+										</Style.Triggers>
+										<Setter Property="Template">
+											<Setter.Value>
+												<ControlTemplate TargetType="{x:Type Button}">
+													<Border Background="{TemplateBinding Background}">
+														<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+													</Border>
+												</ControlTemplate>
+											</Setter.Value>
+										</Setter>
+									</Style>
+								</Button.Style>
+								<fa:FontAwesome Name="faAdd" Icon="PlusSquare" FontFamily="FontAwesome" />
+							</Button>
+						</Grid>
+					</Label>
+				</DataTemplate>
+			</xcad:DockingManager.Resources>
+			<xcad:DockingManager.AnchorableTitleTemplate>
                 <StaticResource ResourceKey="DockingWindowTitleDataTemplate" />
             </xcad:DockingManager.AnchorableTitleTemplate>
             <xcad:LayoutRoot x:Name="_layoutRoot">
                 <xcad:LayoutPanel Orientation="Horizontal">
                     <xcad:LayoutPanel Orientation="Vertical" DockWidth="235">
                         <xcad:LayoutAnchorablePane>
-                            <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="CharacterAnchor" Title="Characters" CanHide="False" CanClose="False" CanAutoHide="False" CanFloat="False">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                            <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="CharacterAnchor" Title="Characters" CanHide="False" CanClose="False" CanFloat="False" CanAutoHide="True">
+                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}" HorizontalContentAlignment="Stretch">
                                     <StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-                                        <ListBox Padding="3" x:Name="lstCharacters" SelectionChanged="lstCharacters_SelectionChanged" GotFocus="lstCharacters_GotFocus" />
-                                    </StackPanel>
+										<ListBox Padding="3" x:Name="lstCharacters" SelectionChanged="lstCharacters_SelectionChanged" GotFocus="lstCharacters_GotFocus" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									</StackPanel>
                                 </ScrollViewer>
                             </xcad:LayoutAnchorable>
-                            <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ItemAnchor" Title="Items" CanHide="False" CanClose="False" CanAutoHide="False" CanFloat="False">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ItemAnchor" Title="Items" CanHide="False" CanClose="False" CanFloat="False">
+								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
                                     <StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-                                        <ListBox Padding="3" x:Name="lstItems" SelectionChanged="lstItems_SelectionChanged" GotFocus="lstItems_GotFocus" />
-                                    </StackPanel>
+										<ListBox Padding="3" x:Name="lstItems" SelectionChanged="lstItems_SelectionChanged" GotFocus="lstItems_GotFocus" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									</StackPanel>
                                 </ScrollViewer>
                             </xcad:LayoutAnchorable>
-                            <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="LocationAnchor" Title="Locations" CanHide="False" CanClose="False" CanAutoHide="False" CanFloat="False">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="LocationAnchor" Title="Locations" CanHide="False" CanClose="False" CanFloat="False">
+								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
                                     <StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-                                        <ListBox Padding="3" x:Name="lstLocations" SelectionChanged="lstLocations_SelectionChanged" GotFocus="lstLocations_GotFocus" />
-                                    </StackPanel>
+										<ListBox Padding="3" x:Name="lstLocations" SelectionChanged="lstLocations_SelectionChanged" GotFocus="lstLocations_GotFocus" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									</StackPanel>
                                 </ScrollViewer>
                             </xcad:LayoutAnchorable>
-                            <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="VariableAnchor" Title="Variables" CanHide="False" CanClose="False" CanAutoHide="False" CanFloat="False">
-                                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="VariableAnchor" Title="Variables" CanHide="False" CanClose="False" CanFloat="False">
+								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
                                     <StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-                                        <ListBox Padding="3" x:Name="lstVariables" SelectionChanged="lstVariables_SelectionChanged" GotFocus="lstVariables_GotFocus" />
-                                    </StackPanel>
+										<ListBox Padding="3" x:Name="lstVariables" SelectionChanged="lstVariables_SelectionChanged" GotFocus="lstVariables_GotFocus" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									</StackPanel>
                                 </ScrollViewer>
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorablePane>
                         <xcad:LayoutAnchorablePane DockHeight="0.4*">
-                            <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ConvoAnchor" Title="Conversations" CanHide="False" CanClose="False" CanAutoHide="False" CanFloat="False">
-                                <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ConvoAnchor" Title="Conversations" CanHide="False" CanClose="False" CanFloat="False">
+                                <ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
                                     <StackPanel Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-                                        <ListBox Padding="3" x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" GotFocus="lstConversations_GotFocus" SelectionChanged="lstConversations_SelectionChanged" />
-                                    </StackPanel>
+										<ListBox Padding="3" x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" GotFocus="lstConversations_GotFocus" SelectionChanged="lstConversations_SelectionChanged" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									</StackPanel>
                                 </ScrollViewer>
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorablePane>
                     </xcad:LayoutPanel>
                     <xcad:LayoutPanel DockWidth="1*" Orientation="Vertical">
                         <xcad:LayoutDocumentPane DockHeight="1*">
-                            <xcad:LayoutDocument Title="Conversation" CanClose="False" CanFloat="False">
+                            <xcad:LayoutDocument Title="Conversation" CanClose="False">
                                 <ScrollViewer Name="scrlTree" KeyUp="Delete_Node" Background="#343D46" BorderBrush="{StaticResource ResourceKey=WhiteBrush}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="Zoom_MouseWheel">
                                     <TreeContainer:TreeContainer Width="Auto" Height="Auto" x:Name="tcMain" Margin="40" VerticalBuffer="40" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="100" MinHeight="20" HorizontalBuffer="20" HorizontalBufferSubtree="20" >
                                         <TreeContainer:TreeContainer.LayoutTransform>
@@ -362,17 +407,17 @@ and change the color of the selected bullet into a darker gray for better highli
                         </xcad:LayoutDocumentPane>
                         <xcad:LayoutPanel Orientation="Horizontal" DockHeight="150">
                             <xcad:LayoutAnchorablePane>
-                                <xcad:LayoutAnchorable ContentId="ScriptAnchor" Title="Script" CanClose="False" CanHide="False" CanAutoHide="False">
+                                <xcad:LayoutAnchorable ContentId="ScriptAnchor" Title="Script" CanClose="False" CanHide="False">
                                     <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="editScript" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" TextChanged="editScript_TextChanged"/>
                                 </xcad:LayoutAnchorable>
                             </xcad:LayoutAnchorablePane>
                             <xcad:LayoutAnchorablePane>
-                                <xcad:LayoutAnchorable ContentId="ConditionsAnchor" Title="Conditions" CanHide="False" CanClose="False" CanAutoHide="False">
+                                <xcad:LayoutAnchorable ContentId="ConditionsAnchor" Title="Conditions" CanHide="False" CanClose="False">
                                     <StackPanel Orientation="Vertical">
                                         <avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="editConditions" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" TextChanged="editConditions_TextChanged" MinHeight="95"/>
                                         <StackPanel Orientation="Horizontal">
-                                            <Label>When False:</Label>
-                                            <ComboBox Name="cmbFunction" Width="100" SelectionChanged="cmbFunction_SelectionChanged">
+                                            <Label Foreground="{DynamicResource WhiteBrush}">When False:</Label>
+                                            <ComboBox Name="cmbFunction" Width="100" SelectionChanged="cmbFunction_SelectionChanged" Background="{DynamicResource AccentColorBrush5}">
                                                 <ComboBoxItem IsSelected="True">Block</ComboBoxItem>
                                                 <ComboBoxItem>Passthrough</ComboBoxItem>
                                             </ComboBox>
@@ -385,7 +430,7 @@ and change the color of the selected bullet into a darker gray for better highli
 
                     <xcad:LayoutPanel Orientation="Vertical" DockWidth="235">
                         <xcad:LayoutAnchorablePane DockHeight="1*">
-                            <xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="OverviewAnchor" Title="Overview" CanClose="False" CanHide="False" CanAutoHide="False" CanFloat="False">
+							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="OverviewAnchor" Title="Overview" CanClose="False" CanHide="False" CanFloat="False">
                                 <Viewbox Name="vbOverview" MouseLeftButtonDown="vbOverview_MouseLeftButtonDown" DataContext="{Binding ElementName=scrlTree}" Stretch="UniformToFill">
                                     <Grid>
                                         <Rectangle Name="recOverview" Width="{Binding Content.ActualWidth}" Height="{Binding Content.ActualHeight}">
@@ -394,7 +439,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                             </Rectangle.Fill>
                                         </Rectangle>
 
-                                        <Thumb Name="thmViewport" Background="{StaticResource ResourceKey=WhiteBrush}" Width="{Binding ViewportWidth}" Height="{Binding ViewportHeight}" HorizontalAlignment="Left" VerticalAlignment="Top" DragDelta="thmViewport_DragDelta">
+                                        <Thumb Name="thmViewport" Background="{StaticResource ResourceKey=WhiteBrush}" Width="{Binding ViewportWidth}" Height="450" HorizontalAlignment="Left" VerticalAlignment="Top" DragDelta="thmViewport_DragDelta">
                                             <Thumb.RenderTransform>
                                                 <TranslateTransform X="{Binding HorizontalOffset}" Y="{Binding VerticalOffset}" />
                                             </Thumb.RenderTransform>
@@ -413,9 +458,9 @@ and change the color of the selected bullet into a darker gray for better highli
                             </xcad:LayoutAnchorable>
                         </xcad:LayoutAnchorablePane>
                         <xcad:LayoutAnchorablePane x:Name="layoutAnchorablePane" DockHeight="3*">
-                            <xcad:LayoutAnchorable ContentId="PropertiesAnchor" Title="Properties" CanClose="False" CanAutoHide="False" CanHide="False" CanFloat="True">
-                                <StackPanel Grid.Column="2" Grid.Row="1">
-                                    <TabControl Margin="0">
+							<xcad:LayoutAnchorable ContentId="PropertiesAnchor" Title="Properties" CanClose="False" CanHide="False" CanFloat="False">
+								<StackPanel Grid.Column="2" Grid.Row="1" Background="{DynamicResource GrayBrush1}">
+									<TabControl Margin="0" BorderBrush="Transparent" Background="{DynamicResource GrayBrush1}">
                                         <TabItem Header="Blank Settings" Name="tabBlank" Visibility="Collapsed">
                                         </TabItem>
                                         <TabItem Header="Character Settings" Name="tabCharacter" Visibility="Collapsed">
@@ -435,11 +480,11 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
 
                                                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">ID</TextBlock>
-                                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Name="txtActorID"/>
+                                                <TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Name="txtActorID" />
 
                                                 <TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Name</TextBlock>
                                                 <TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtActorName" TextChanged="txtActorName_TextChanged"/>
@@ -481,7 +526,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
 
                                                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">ID</TextBlock>
@@ -518,7 +563,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto" Name="rowLinkRow" />
                                                 </Grid.RowDefinitions>
-                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
 
                                                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">ID</TextBlock>
@@ -545,7 +590,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                 <TextBox Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtDialogueWords" TextChanged="txtDialogueWords_TextChanged" />
 
                                                 <TextBlock Grid.Row="7" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Node Color</TextBlock>
-                                                <StackPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" Margin="4,0,4,4">
+                                                <WrapPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" Margin="4,0,4,4">
                                                     <RadioButton Name="rdioColorWhite" Checked="rdioColorNormal_Checked" Style="{StaticResource NormalRadio}" IsChecked="True" GroupName="grpNodeColor" />
                                                     <RadioButton Name="rdioColorRed" Checked="rdioColorNormal_Checked" Style="{StaticResource RedRadio}" GroupName="grpNodeColor" />
                                                     <RadioButton Name="rdioColorGreen" Checked="rdioColorNormal_Checked" Style="{StaticResource GreenRadio}" GroupName="grpNodeColor" />
@@ -554,7 +599,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RadioButton Name="rdioColorBlue" Checked="rdioColorNormal_Checked" Style="{StaticResource BlueRadio}" GroupName="grpNodeColor" />
                                                     <RadioButton Name="rdioColorOrange" Checked="rdioColorNormal_Checked" Style="{StaticResource OrangeRadio}" GroupName="grpNodeColor" />
                                                     <RadioButton Name="rdioColorGrey" Checked="rdioColorNormal_Checked" Style="{StaticResource GreyRadio}" GroupName="grpNodeColor" />
-                                                </StackPanel>
+                                                </WrapPanel>
 
                                                 <TextBlock Grid.Row="8" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Link To:</TextBlock>
                                                 <StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
@@ -579,7 +624,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
                                                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Name</TextBlock>
                                                 <TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtItemName" TextChanged="txtItemName_TextChanged" />
                                                 <TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">In Inventory</TextBlock>
@@ -599,7 +644,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
                                                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Location</TextBlock>
                                                 <TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtLocName" TextChanged="txtLocationName_TextChanged" />
 
@@ -629,7 +674,7 @@ and change the color of the selected bullet into a darker gray for better highli
                                                     <RowDefinition Height="Auto"/>
                                                     <RowDefinition Height="Auto"/>
                                                 </Grid.RowDefinitions>
-                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                                                <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
                                                 <TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Variable</TextBlock>
                                                 <TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtVarName" TextChanged="txtVarName_TextChanged" />
@@ -657,46 +702,46 @@ and change the color of the selected bullet into a darker gray for better highli
                 </xcad:LayoutPanel>
             </xcad:LayoutRoot>
         </xcad:DockingManager>
-        <Menu VerticalAlignment="Top" Grid.ColumnSpan="1000">
+		<Menu VerticalAlignment="Top" Grid.ColumnSpan="1000" Background="{DynamicResource GrayBrush1}"  Foreground="{DynamicResource BlackBrush}">
             <MenuItem x:Name="menuItem" Header="_File">
-                <MenuItem Name="menuNew" Header="_New Project" Command="New">
+				<MenuItem Name="menuNew" Header="_New Project" Command="New" Foreground="Black">
                     <MenuItem.Icon>
                         <fa:FontAwesome Icon="FileCodeOutline" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="menuOpen" Header="_Open Project" Command="Open">
+				<MenuItem Name="menuOpen" Header="_Open Project" Command="Open" Foreground="Black">
                     <MenuItem.Icon>
                         <fa:FontAwesome Icon="FolderOutlinepenOutline" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="menuSave" Header="_Save Project"  Command="Save">
+				<MenuItem Name="menuSave" Header="_Save Project"  Command="Save" Foreground="Black">
                     <MenuItem.Icon>
                         <fa:FontAwesome Icon="Save" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="menuSaveAs" Header="S_ave Project As..."  Command="SaveAs">
+				<MenuItem Name="menuSaveAs" Header="S_ave Project As..."  Command="SaveAs" Foreground="Black">
                     <MenuItem.Icon>
                         <fa:FontAwesome Icon="Save" />
                     </MenuItem.Icon>
                 </MenuItem>
-                <MenuItem Name="menuExport" Header="Export to JSON" Click="menuExport_Click" >
+				<MenuItem Name="menuExport" Header="Export to JSON" Click="menuExport_Click" Foreground="Black" >
                     <MenuItem.Icon>
                         <fa:FontAwesome Icon="ShareSquareOutline" />
                     </MenuItem.Icon>
                 </MenuItem>
                 <s:RecentFileList x:Name="mnuRecent" MaxNumberOfFiles="3" />
-                <MenuItem Name="menuExit" Header="_Exit" Command="Close" />
+				<MenuItem Name="menuExit" Header="_Exit" Command="Close" Foreground="Black" />
             </MenuItem>
             <MenuItem Header="_Edit">
-                <MenuItem Name="menuUndo" Header="Undo" Command="Undo" />
-                <MenuItem Name="menuRedo" Header="Redo" Command="Redo" />
+				<MenuItem Name="menuUndo" Header="Undo" Command="Undo" Foreground="Black" />
+				<MenuItem Name="menuRedo" Header="Redo" Command="Redo" Foreground="Black" />
             </MenuItem>
             <MenuItem Header="_View">
-                <MenuItem Name="menuExpand" Header="Expand All" Click="menuExpand_Click" />
-                <MenuItem Name="menuCollapse" Header="Collapse All" Click="menuExpand_Click" />
+                <MenuItem Name="menuExpand" Header="Expand All" Click="menuExpand_Click" Foreground="Black" />
+				<MenuItem Name="menuCollapse" Header="Collapse All" Click="menuExpand_Click" Foreground="Black" />
             </MenuItem>
         </Menu>
-        <StatusBar Grid.Row="2" Grid.ColumnSpan="100">
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="100" Background="{DynamicResource GrayBrush1}">
             <StatusBarItem HorizontalAlignment="Left">
                 <Slider x:Name="uiScaleSlider" ToolTip="Scales the tree view." Value="1" Minimum="0.7" Maximum="3" MinWidth="100" VerticalAlignment="Center">
                     <Slider.Resources>
@@ -729,7 +774,7 @@ and change the color of the selected bullet into a darker gray for better highli
                             <RowDefinition Height="Auto"/>
                             <RowDefinition Height="Auto"/>
                         </Grid.RowDefinitions>
-                        <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush3}" />
+                        <Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Author</TextBlock>
                         <TextBox Grid.Row="0" Grid.Column="1" Margin="4" Text="" Name="txtSettingAuthor" TextChanged="txtSettingAuthor_TextChanged"/>
@@ -744,4 +789,4 @@ and change the color of the selected bullet into a darker gray for better highli
             </Popup>
         </StackPanel>
     </Grid>
-</Controls:MetroWindow>
+</Window>
