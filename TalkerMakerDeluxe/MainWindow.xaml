@@ -234,8 +234,8 @@ and change the color of the selected bullet into a darker gray for better highli
 			<Setter Property="MinWidth" Value="120"/>
 			<Setter Property="MinHeight" Value="20"/>
 			<Setter Property="AllowDrop" Value="true"/>
-			<Setter Property="Foreground" Value="{StaticResource BlackBrush}"/>
-			<Setter Property="CaretBrush" Value="{StaticResource BlackBrush}"/>
+			<Setter Property="Foreground" Value="{StaticResource GrayBrush2}"/>
+			<Setter Property="CaretBrush" Value="{StaticResource GrayBrush2}"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -430,26 +430,22 @@ and change the color of the selected bullet into a darker gray for better highli
                     <xcad:LayoutPanel Orientation="Vertical" DockWidth="235">
                         <xcad:LayoutAnchorablePane DockHeight="1*">
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="OverviewAnchor" Title="Overview" CanClose="False" CanHide="False" CanFloat="False">
-                                <Viewbox Name="vbOverview" MouseLeftButtonDown="vbOverview_MouseLeftButtonDown" DataContext="{Binding ElementName=scrlTree}" Stretch="UniformToFill">
+                                <Viewbox Name="vbOverview" MouseLeftButtonDown="vbOverview_MouseLeftButtonDown" DataContext="{Binding ElementName=scrlTree}">
                                     <Grid>
                                         <Rectangle Name="recOverview" Width="{Binding Content.ActualWidth}" Height="{Binding Content.ActualHeight}">
                                             <Rectangle.Fill>
-                                                <VisualBrush Visual="{Binding Content}" />
+                                                <VisualBrush Stretch="UniformToFill" Visual="{Binding Content}" />
                                             </Rectangle.Fill>
                                         </Rectangle>
 
-                                        <Thumb Name="thmViewport" Background="{StaticResource ResourceKey=WhiteBrush}" Width="{Binding ViewportWidth}" Height="450" HorizontalAlignment="Left" VerticalAlignment="Top" DragDelta="thmViewport_DragDelta">
+										<Thumb Name="thmViewport" Background="{StaticResource ResourceKey=WhiteBrush}" Width="{Binding ViewportWidth}" Height="{Binding ViewportHeight}" HorizontalAlignment="Left" VerticalAlignment="Top" DragDelta="thmViewport_DragDelta">
                                             <Thumb.RenderTransform>
                                                 <TranslateTransform X="{Binding HorizontalOffset}" Y="{Binding VerticalOffset}" />
                                             </Thumb.RenderTransform>
                                             <Thumb.Template>
                                                 <ControlTemplate TargetType="Thumb">
-                                                    <Border>
-                                                        <Border.Background>
-                                                            <SolidColorBrush Color="#B48EAD" Opacity="0.5" />
-                                                        </Border.Background>
-                                                    </Border>
-                                                </ControlTemplate>
+													<Border BorderBrush="{DynamicResource AccentColorBrush4}" BorderThickness="1" Background="{DynamicResource AccentColorBrush4}" Opacity="0.8"/>
+												</ControlTemplate>
                                             </Thumb.Template>
                                         </Thumb>
                                     </Grid>
@@ -752,13 +748,34 @@ and change the color of the selected bullet into a darker gray for better highli
             <StatusBarItem HorizontalAlignment="Left">
                 <Label x:Name="Scale_Percent" Content="{Binding ElementName=uiScaleSlider,Path=Value}" ContentStringFormat="{}{0:0%}"/>
             </StatusBarItem>
-            <StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-                <TextBlock Text="v1.11.0 Beta" />
-            </StatusBarItem>
-        </StatusBar>
-        <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="225">
-            <Popup Name="popSettings" HorizontalAlignment="Right" VerticalOffset="-1" HorizontalOffset="-80" VerticalAlignment="Top" Width="225" MouseLeave="popSettings_MouseLeave">
-                <Border BorderBrush="#FF81a2be" BorderThickness="1">
+			<StatusBarItem HorizontalAlignment="Right">
+				<Button Margin="5" Content="Project Settings" Cursor="Hand" Click="SettingsButton_Click">
+					<Button.Template>
+						<ControlTemplate TargetType="Button">
+							<TextBlock TextDecorations="Underline">
+								<ContentPresenter />
+							</TextBlock>
+						</ControlTemplate>
+					</Button.Template>
+					<Button.Style>
+						<Style TargetType="Button">
+							<Setter Property="Foreground" Value="{DynamicResource AccentColorBrush4}" />
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="true">
+									<Setter Property="Foreground" Value="{DynamicResource AccentColorBrush2}" />
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Button.Style>
+				</Button>
+			</StatusBarItem>
+			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
+				<TextBlock Text="v1.11.0 Beta" />
+			</StatusBarItem>
+		</StatusBar>
+        <StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">
+            <Popup Name="popSettings" HorizontalAlignment="Left" VerticalOffset="-87" HorizontalOffset="40" VerticalAlignment="Bottom" Width="225" MouseLeave="popSettings_MouseLeave">
+                <Border BorderBrush="{DynamicResource AccentColorBrush2}" BorderThickness="1">
                     <Grid Background="{StaticResource ResourceKey=WhiteBrush}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="70" />
