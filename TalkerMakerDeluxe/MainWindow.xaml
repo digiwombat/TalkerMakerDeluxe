@@ -8,7 +8,6 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:s="clr-namespace:TalkerMakerDeluxe"
     xmlns:fa="http://schemas.fontawesome.io/icons/"
-    xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"       
     Title="TalkerMaker Deluxe" Height="810" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" ResizeMode="CanResizeWithGrip" Closing="MetroWindow_Closing" FontFamily="Roboto">
     <Window.Resources>
         <s:UriToBitmapConverter x:Key="UriToBitmapConverter" />
@@ -754,7 +753,7 @@ and change the color of the selected bullet into a darker gray for better highli
                 <Label x:Name="Scale_Percent" Content="{Binding ElementName=uiScaleSlider,Path=Value}" ContentStringFormat="{}{0:0%}"/>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-                <TextBlock Text="v1.10.1 Beta" />
+                <TextBlock Text="v1.11.0 Beta" />
             </StatusBarItem>
         </StatusBar>
         <StackPanel Grid.Row="0" HorizontalAlignment="Right" VerticalAlignment="Top" Width="225">
