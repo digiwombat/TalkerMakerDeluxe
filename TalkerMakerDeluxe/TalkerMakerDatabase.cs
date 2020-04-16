@@ -200,8 +200,11 @@ namespace TalkerMakerDeluxe
 		public string menuText { get; set; }
 		public string sequence { get; set; }
 		public string dialogueText { get; set; }
+		public bool logicNode { get; set; }
+		public double x { get; set; }
+		public double y { get; set; }
 
-		public List<Link> OutgoingLinks = new List<Link>();
+		public ObservableCollection<Link> OutgoingLinks = new ObservableCollection<Link>();
 
 		public string ToXML()
 		{
@@ -213,6 +216,7 @@ namespace TalkerMakerDeluxe
 			xmlOutput += "<Field Type=\"Text\"><Title>Dialogue Text</Title><Value>" + dialogueText + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Sequence</Title><Value>" + sequence + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Files\"><Title>Pictures</Title><Value>[]</Value></Field>";
+			xmlOutput += "<Field Type=\"Text\"><Title>canvasRect</Title><Value>" + x + ";" + y + "</Value></Field>";
 			xmlOutput += "</Fields><ConditionsString>" + ConditionsString + "</ConditionsString>";
 			xmlOutput += "<UserScript>" + UserScript + "</UserScript>";
 			xmlOutput += "<OutgoingLinks>";

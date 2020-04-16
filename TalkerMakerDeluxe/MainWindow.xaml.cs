@@ -332,7 +332,7 @@ namespace TalkerMakerDeluxe
 
 
 				//Add to tree.
-				rowLinkRow.Height = new GridLength(0);
+				//rowLinkRow.Height = new GridLength(0);
 				tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID).BringIntoView();
 				history.Do("add", new List<TreeNode> { tcMain.Children.OfType<TreeNode>().First(p => p.Name == "node_" + newNodeID) }, new List<DialogueEntry> { newDialogueEntry });
 				needsSave = true;
@@ -344,7 +344,6 @@ namespace TalkerMakerDeluxe
 			TreeNode nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
 			NodeControl node = nodeTree.Content as NodeControl;
 			BrushConverter bc = new BrushConverter();
-			
 			if (currentNode != "" && newNode != currentNode)
 			{
 				//Color newNode
@@ -429,25 +428,26 @@ namespace TalkerMakerDeluxe
 				conditionsStack.DataContext = selectedEntry;
 				editScript.DataContext = selectedEntry;
 				tabDialogue.IsSelected = true;
-
-				if (nodeTree.TreeChildren.Count == 0)
-				{
-					rowLinkRow.Height = new GridLength(1, GridUnitType.Auto);
-					if (selectedEntry.OutgoingLinks.Count == 0)
-					{
-						chkLinkTo.IsChecked = false;
-						txtLinkTo.Text = "0";
-					}
-					else
-					{
-						chkLinkTo.IsChecked = true;
-						txtLinkTo.Text = selectedEntry.OutgoingLinks[0].DestinationDialogID.ToString();
-					}
-				}
-				else
-				{
-					rowLinkRow.Height = new GridLength(0);
-				}
+				lstLinks.ItemsSource = selectedEntry.OutgoingLinks;
+				cbConvo.ItemsSource = theDatabase.Conversations;
+				//if (nodeTree.TreeChildren.Count == 0)
+				//{
+				//	rowLinkRow.Height = new GridLength(1, GridUnitType.Auto);
+				//	if (selectedEntry.OutgoingLinks.Count == 0)
+				//	{
+				//		chkLinkTo.IsChecked = false;
+				//		txtLinkTo.Text = "0";
+				//	}
+				//	else
+				//	{
+				//		chkLinkTo.IsChecked = true;
+				//		txtLinkTo.Text = selectedEntry.OutgoingLinks[0].DestinationDialogID.ToString();
+				//	}
+				//}
+				//else
+				//{
+				//	rowLinkRow.Height = new GridLength(0);
+				//}
 			}
 
 			//MessageBox.Show(node.dialogueEntryID + " | selected node id: " + selectedEntry.ID + " | loaded conversation: " + loadedConversation);
@@ -603,6 +603,18 @@ namespace TalkerMakerDeluxe
 				history.Reset();
 			}
 		}
+
+		private void SaveNodePositions()
+		{
+			for (int i = 0; i < theDatabase.Conversations[loadedConversation].DialogEntries.Count; i++)
+			{
+				TreeNode nodeTree = tcMain.FindName("node_" + i) as TreeNode;
+				Point location = nodeTree.TransformToAncestor(scrlTree).Transform(new Point(0, 0));
+				theDatabase.Conversations[loadedConversation].DialogEntries[i].x = location.X;
+				theDatabase.Conversations[loadedConversation].DialogEntries[i].y = location.Y;
+				//Console.WriteLine(location.ToString());
+			}
+		}
 		#endregion
 
 		#region Front-End Functions
@@ -619,6 +631,7 @@ namespace TalkerMakerDeluxe
 			if (saver.ShowDialog() == true)
 			{
 				Console.WriteLine("Saving...");
+				SaveNodePositions();
 				TalkerMakerDatabase.SaveDatabase(saver.FileName, theDatabase);
 				Console.WriteLine("Save finished.");
 				mnuRecent.InsertFile(saver.FileName);
@@ -634,6 +647,7 @@ namespace TalkerMakerDeluxe
 			if (openedFile != "New Project")
 			{
 				Console.WriteLine("Saving...");
+				SaveNodePositions();
 				TalkerMakerDatabase.SaveDatabase(openedFile, theDatabase);
 				Console.WriteLine("Save finished.");
 				needsSave = false;
@@ -712,7 +726,7 @@ namespace TalkerMakerDeluxe
 			if (saver.ShowDialog() == true)
 			{
 				Console.WriteLine("Saving...");
-				
+				SaveNodePositions();
 				TalkerMakerDatabase.ExportToXML(saver.FileName, theDatabase);
 				MessageBox.Show("Finished XML Export to \n" + saver.FileName);
 				Console.WriteLine("Save finished.");
@@ -928,7 +942,7 @@ namespace TalkerMakerDeluxe
 		{
 			UserVariable newVar = new UserVariable()
 			{
-				ID = theDatabase.Variables.OrderByDescending(item => item.ID).First().ID + 1,
+				ID = theDatabase.Variables.Count > 0 ? theDatabase.Variables.OrderByDescending(item => item.ID).First().ID + 1 : 0,
 				name = "New Variable",
 				initialValue = "false",
 				type = "Boolean"
@@ -941,7 +955,7 @@ namespace TalkerMakerDeluxe
 		{
 			Item newItem = new Item()
 			{
-				ID = theDatabase.Items.OrderByDescending(item => item.ID).FirstOrDefault().ID + 1,
+				ID = theDatabase.Items.Count > 0 ? theDatabase.Items.OrderByDescending(item => item.ID).FirstOrDefault().ID + 1 : 0,
 				name = "New Item",
 				inInventory = false
 			};
@@ -953,7 +967,7 @@ namespace TalkerMakerDeluxe
 		{
 			Location newLoc = new Location()
 			{
-				ID = theDatabase.Locations.OrderByDescending(item => item.ID).First().ID + 1,
+				ID = theDatabase.Locations.Count > 0 ? theDatabase.Locations.OrderByDescending(item => item.ID).First().ID + 1 : 0,
 				name = "New Location",
 				learned = false,
 				visited = false
@@ -1125,6 +1139,150 @@ namespace TalkerMakerDeluxe
 			}
 		}
 
+		private void cbConvo_SelectionChanged(object sender, SelectionChangedEventArgs e)
+		{
+			if (cbConvo.SelectedItem != null)
+			{
+				cbDialogueEntry.ItemsSource = theDatabase.Conversations.FirstOrDefault(x => x.ID == cbConvo.SelectedIndex)?.DialogEntries;
+			}
+		}
+
+		private void Button_Click(object sender, RoutedEventArgs e)
+		{
+			if(loadedConversation == cbConvo.SelectedIndex && selectedEntry.ID == cbDialogueEntry.SelectedIndex)
+			{
+				MessageBox.Show("Cannot link a node to itself");
+				cbConvo.SelectedItem = null;
+				cbDialogueEntry.ItemsSource = null;
+				return;
+			}
+
+			if(selectedEntry != null)
+			{
+				selectedEntry.OutgoingLinks.Add(new Link()
+				{
+					ConversationID = loadedConversation,
+					OriginConvoID = loadedConversation,
+					OriginDialogID = selectedEntry.ID,
+					DestinationConvoID = cbConvo.SelectedIndex,
+					DestinationDialogID = cbDialogueEntry.SelectedIndex
+				});
+
+				cbConvo.SelectedItem = null;
+				cbDialogueEntry.ItemsSource = null;
+			}
+		}
+
+		#region Context Menus
+		private void mnuDeleteConversation_Click(object sender, RoutedEventArgs e)
+		{
+			if (lstConversations.SelectedIndex == -1)
+			{
+				MessageBox.Show("No conversation selected.");
+				return;
+			}
+			if (lstConversations.Items.Count == 1)
+			{
+				MessageBox.Show("Must have at least one conversation");
+				return;
+			}
+			switch (MessageBox.Show("Delete Conversation: [" + theDatabase.Conversations[lstConversations.SelectedIndex].title + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+			{
+				case MessageBoxResult.Yes:
+					theDatabase.Conversations.RemoveAt(lstConversations.SelectedIndex);
+					LoadConversation(0);
+					break;
+			}
+		}
+
+		private void mnuDeleteCharacter_Click(object sender, RoutedEventArgs e)
+		{
+			if (lstCharacters.SelectedIndex == -1)
+			{
+				MessageBox.Show("No character selected.");
+				return;
+			}
+			if (lstConversations.Items.Count == 1)
+			{
+				MessageBox.Show("Must have at least one character.");
+				return;
+			}
+			{ switch (MessageBox.Show("Delete Character: [" + theDatabase.Actors[lstCharacters.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+				{
+					case MessageBoxResult.Yes:
+						theDatabase.Actors.RemoveAt(lstCharacters.SelectedIndex);
+						break;
+				}
+			}
+		}
+
+		private void mnuDeleteItem_Click(object sender, RoutedEventArgs e)
+		{
+			if (lstItems.SelectedIndex == -1)
+			{
+				MessageBox.Show("No item selected.");
+				return;
+			}
+			//if (lstItems.Items.Count == 1)
+			//{
+			//	MessageBox.Show("Must have at least one item.");
+			//	return;
+			//}
+			{
+				switch (MessageBox.Show("Delete Item: [" + theDatabase.Items[lstItems.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+				{
+					case MessageBoxResult.Yes:
+						theDatabase.Items.RemoveAt(lstItems.SelectedIndex);
+						break;
+				}
+			}
+		}
+
+		private void mnuDeleteLocation_Click(object sender, RoutedEventArgs e)
+		{
+			if (lstLocations.SelectedIndex == -1)
+			{
+				MessageBox.Show("No location selected.");
+				return;
+			}
+			//if (lstItems.Items.Count == 1)
+			//{
+			//	MessageBox.Show("Must have at least one item.");
+			//	return;
+			//}
+			{
+				switch (MessageBox.Show("Delete Location: [" + theDatabase.Locations[lstLocations.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+				{
+					case MessageBoxResult.Yes:
+						theDatabase.Locations.RemoveAt(lstLocations.SelectedIndex);
+						break;
+				}
+			}
+		}
+
+		private void mnuDeleteVariable_Click(object sender, RoutedEventArgs e)
+		{
+			if (lstVariables.SelectedIndex == -1)
+			{
+				MessageBox.Show("No variable selected.");
+				return;
+			}
+			//if (lstItems.Items.Count == 1)
+			//{
+			//	MessageBox.Show("Must have at least one item.");
+			//	return;
+			//}
+			{
+				switch (MessageBox.Show("Delete Variable: [" + theDatabase.Variables[lstVariables.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+				{
+					case MessageBoxResult.Yes:
+						theDatabase.Variables.RemoveAt(lstVariables.SelectedIndex);
+						break;
+				}
+			}
+		}
+
+		#endregion
 	}
 
 }

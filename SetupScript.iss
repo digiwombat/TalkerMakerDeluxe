@@ -50,7 +50,6 @@ Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDelux
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.AvalonDock.Themes.Aero.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.AvalonDock.Themes.Metro.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.AvalonDock.Themes.VS2010.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.DataGrid.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.Toolkit.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\recentfiles.config"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files

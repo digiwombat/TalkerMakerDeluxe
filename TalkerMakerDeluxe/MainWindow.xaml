@@ -219,24 +219,29 @@
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}" HorizontalContentAlignment="Stretch">
 									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
 										<ListBox Padding="0" x:Name="lstCharacters" ItemsSource="{Binding Actors}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{x:Null}" SelectionChanged="lstCharacters_SelectionChanged" IsSynchronizedWithCurrentItem="True" GotFocus="lstCharacters_GotFocus" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" >
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteCharacter" Header="Delete Character" Click="mnuDeleteCharacter_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
 											<ListBox.ItemTemplate>
 												<DataTemplate>
 													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
 														<Grid Name="grid">
-														<Grid.ColumnDefinitions>
-															<ColumnDefinition Width="45" Name="pictureRow"/>
-															<ColumnDefinition Width="3*"/>
-															<ColumnDefinition Width="3*"/>
-														</Grid.ColumnDefinitions>
-														<Grid.RowDefinitions>
-															<RowDefinition Height="50"/>
-														</Grid.RowDefinitions>
-														<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" MaxWidth="130" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-														<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.RowSpan="1" Grid.Row="0" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality"/>
-														<Label Content="{Binding Path=ID}" Name="lblActorID" HorizontalAlignment="Left" Height="35" Margin="-224,-69,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
-														<Label Content="{Binding Path=age}" Name="lblActorAge" HorizontalAlignment="Left" Height="26" Margin="0,24,0,0" VerticalAlignment="Bottom" Grid.Column="1"/>
-														<Label Content="{Binding Path=gender}" Name="lblActorGender"  HorizontalContentAlignment="Right" HorizontalAlignment="Right" Height="26" Margin="0,24,0,0" VerticalAlignment="Bottom" Grid.Column="2"/>
-													</Grid>
+															<Grid.ColumnDefinitions>
+																<ColumnDefinition Width="45" Name="pictureRow"/>
+																<ColumnDefinition Width="3*"/>
+																<ColumnDefinition Width="3*"/>
+															</Grid.ColumnDefinitions>
+															<Grid.RowDefinitions>
+																<RowDefinition Height="50"/>
+															</Grid.RowDefinitions>
+															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" MaxWidth="130" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+															<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.RowSpan="1" Grid.Row="0" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality"/>
+															<Label Content="{Binding Path=ID}" Name="lblActorID" HorizontalAlignment="Left" Height="35" Margin="-224,-69,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+															<Label Content="{Binding Path=age}" Name="lblActorAge" HorizontalAlignment="Left" Height="26" Margin="0,24,0,0" VerticalAlignment="Bottom" Grid.Column="1"/>
+															<Label Content="{Binding Path=gender}" Name="lblActorGender"  HorizontalContentAlignment="Right" HorizontalAlignment="Right" Height="26" Margin="0,24,0,0" VerticalAlignment="Bottom" Grid.Column="2"/>
+														</Grid>
 													</Border>
 												</DataTemplate>
 											</ListBox.ItemTemplate>
@@ -248,6 +253,11 @@
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
 									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
 										<ListBox Padding="3" x:Name="lstItems" ItemsSource="{Binding Items}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstItems_GotFocus" HorizontalContentAlignment="Stretch">
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteItem" Header="Delete Item" Click="mnuDeleteItem_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
 											<ListBox.ItemTemplate>
 												<DataTemplate>
 													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
@@ -273,6 +283,11 @@
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
 									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
 										<ListBox Padding="3" x:Name="lstLocations" ItemsSource="{Binding Locations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstLocations_GotFocus" HorizontalContentAlignment="Stretch">
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteLocation" Header="Delete Item" Click="mnuDeleteLocation_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
 											<ListBox.ItemTemplate>
 												<DataTemplate>
 													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
@@ -300,6 +315,11 @@
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
 									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
 										<ListBox Padding="3" x:Name="lstVariables" ItemsSource="{Binding Variables}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstVariables_GotFocus" HorizontalContentAlignment="Stretch">
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteVariable" Header="Delete Item" Click="mnuDeleteVariable_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
 											<ListBox.ItemTemplate>
 												<DataTemplate>
 													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
@@ -328,6 +348,11 @@
 									<StackPanel Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
 										<ListBox Padding="3" x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" GotFocus="lstConversations_GotFocus" 
 												 ItemsSource="{Binding Conversations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch">
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteConversation" Header="Delete Conversation" Click="mnuDeleteConversation_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
 											<ListBox.ItemTemplate>
 												<DataTemplate>
 													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
@@ -341,7 +366,7 @@
 															</Grid.RowDefinitions>
 															<DockPanel Grid.Row="0"  Grid.Column="0">
 																<TextBlock Text="{Binding Path=title}" Grid.ColumnSpan="2" MaxWidth="155" Name="lblConvTitle" HorizontalAlignment="Left" Margin="5,5,38,5" VerticalAlignment="Top" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
-																<Label Content="{Binding Path=DialogueEntries.Count}" Grid.Column="1" Name="lblNodeCount" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Opacity="0.25"/>
+																<Label Content="{Binding Path=ID}" Grid.Column="1" Name="lblNodeCount" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Opacity="0.5"/>
 															</DockPanel>
 															<DockPanel Grid.Row="1"  Grid.Column="0">
 																<TextBlock Text="{Binding Path=actor.name}" Grid.Row="1"  Grid.Column="0" Name="lblConvActor" TextTrimming="CharacterEllipsis" Margin="4" MaxWidth="120" MinWidth="20" />
@@ -542,7 +567,8 @@
 													<RowDefinition Height="Auto"/>
 													<RowDefinition Height="Auto"/>
 													<RowDefinition Height="Auto"/>
-													<RowDefinition Height="Auto" Name="rowLinkRow" />
+													<RowDefinition Height="Auto"/>
+													<RowDefinition Height="Auto"/>
 												</Grid.RowDefinitions>
 												<Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
@@ -599,10 +625,52 @@
 													<ComboBoxItem Background="#FF35203B" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Purple</ComboBoxItem>
 												</ComboBox>
 
+												<TextBlock Grid.Row="9" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Logic Node:</TextBlock>
+												<StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1" Margin="4,0,4,4">
+													<CheckBox Name="chkLogicNode" IsChecked="{Binding logicNode}" Background="{DynamicResource AccentColorBrush5}" BorderBrush="{DynamicResource AccentColorBrush5}" />
+												</StackPanel>
+
 												<TextBlock Grid.Row="8" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Link To:</TextBlock>
-												<StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
-													<CheckBox Name="chkLinkTo" Background="{DynamicResource AccentColorBrush5}" BorderBrush="{DynamicResource AccentColorBrush5}" />
-													<xctk:IntegerUpDown IsEnabled="{Binding ElementName=chkLinkTo, Path=IsChecked}" Minimum="1" Name="txtLinkTo"  MinWidth="60" DefaultValue="0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}" />
+												<StackPanel Orientation="Vertical" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
+													<UniformGrid Margin="0,0,0,5" Columns="3">
+														<ComboBox x:Name="cbConvo" ItemsSource="{Binding ElementName=MainWin, Path=theDatabase.Conversations}" Margin="0,0,5,0" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SelectionChanged="cbConvo_SelectionChanged" ScrollViewer.CanContentScroll="True" HorizontalContentAlignment="Stretch">
+															<ComboBox.ItemTemplate>
+																<DataTemplate>
+																	<StackPanel Orientation="Horizontal">
+																		<TextBlock Text="{Binding title}"/>
+																		<TextBlock Text=" [" />
+																		<TextBlock Text="{Binding ID}" />
+																		<TextBlock Text="]" />
+																	</StackPanel>
+																</DataTemplate>
+															</ComboBox.ItemTemplate>
+														</ComboBox>
+														<ComboBox x:Name="cbDialogueEntry" ItemsSource="{Binding ElementName=MainWin, Path=theDatabase.Conversations[cbConvo.Text].DialogEntries}" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Margin="0,0,5,0">
+															<ComboBox.ItemTemplate>
+																<DataTemplate>
+																	<StackPanel Orientation="Horizontal">
+																		<TextBlock Text="{Binding title}" />
+																		<TextBlock Text=" [" />
+																		<TextBlock Text="{Binding ID}" />
+																		<TextBlock Text="]" />
+																	</StackPanel>
+																</DataTemplate>
+															</ComboBox.ItemTemplate>
+														</ComboBox>
+														<Button Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="2" Click="Button_Click">Add</Button>
+													</UniformGrid>
+													<ListView Height="50" x:Name="lstLinks" ItemsSource="{Binding OutgoingLinks}" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}">
+														<ListView.ItemTemplate>
+															<DataTemplate>
+																<StackPanel Orientation="Horizontal" >
+																	<TextBlock Text="Conversation: " />
+																	<TextBlock Text="{Binding DestinationConvoID}" />
+																	<TextBlock Text=" | Node: " />
+																	<TextBlock Text="{Binding DestinationDialogID}" />
+																</StackPanel>
+															</DataTemplate>
+														</ListView.ItemTemplate>
+													</ListView>
 												</StackPanel>
 											</Grid>
 										</TabItem>
@@ -727,7 +795,7 @@
 						<fa:FontAwesome Icon="ShareSquareOutline" />
 					</MenuItem.Icon>
 				</MenuItem>
-				<s:RecentFileList x:Name="mnuRecent" MaxNumberOfFiles="3" Foreground="Black" />
+				<s:RecentFileList x:Name="mnuRecent" MaxNumberOfFiles="3" />
 				<MenuItem Name="menuExit" Header="_Exit" Command="Close" Foreground="Black" />
 			</MenuItem>
 			<MenuItem Header="_Edit">
@@ -794,7 +862,7 @@
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v2.0.0" />
+				<TextBlock Text="v2.1.0" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">

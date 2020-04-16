@@ -8,6 +8,7 @@ using System.Xml;
 using System.Diagnostics;
 using System.Text;
 using System.Reflection;
+using System.Windows.Media;
 
 namespace TalkerMakerDeluxe
 {
@@ -115,11 +116,13 @@ namespace TalkerMakerDeluxe
 			if ( _RecentFiles.Count == 0 ) return;
 
 			int iMenuItem = FileMenu.Items.IndexOf( this );
+			BrushConverter bc = new BrushConverter();
 			foreach ( RecentFile r in _RecentFiles )
 			{
 				string header = GetMenuItemText( r.Number + 1, r.Filepath, r.DisplayPath );
 
 				r.MenuItem = new MenuItem { Header = header };
+				r.MenuItem.Foreground = (Brush)bc.ConvertFrom("#FF000000");
 				r.MenuItem.Click += MenuItem_Click;
 
 				FileMenu.Items.Insert( ++iMenuItem, r.MenuItem );

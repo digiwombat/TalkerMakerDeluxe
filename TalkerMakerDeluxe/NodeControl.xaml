@@ -10,11 +10,33 @@
 		<Grid Name="grid" Background="{StaticResource ResourceKey=GrayBrush1}" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
 			<Grid.RowDefinitions>
 				<RowDefinition Height="26" MaxHeight="26" />
-				<RowDefinition Height="28" MaxHeight="28" />
-				<RowDefinition Name="grdNodeImage" Height="28" />
+				<RowDefinition>
+					<RowDefinition.Style>
+						<Style TargetType="{x:Type RowDefinition}">
+							<Setter Property="Height" Value="28" />
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding Path=logicNode}" Value="true">
+									<Setter Property="Height" Value="0"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</RowDefinition.Style>
+				</RowDefinition>
+				<RowDefinition Name="grdNodeImage">
+					<RowDefinition.Style>
+						<Style TargetType="{x:Type RowDefinition}">
+							<Setter Property="Height" Value="28" />
+							<Style.Triggers>
+								<DataTrigger Binding="{Binding Path=logicNode}" Value="true">
+									<Setter Property="Height" Value="0"/>
+								</DataTrigger>
+							</Style.Triggers>
+						</Style>
+					</RowDefinition.Style>
+				</RowDefinition>
 				<RowDefinition Name="grdNodeText" Height="Auto" />
 			</Grid.RowDefinitions>
-			<TextBlock Foreground="{DynamicResource GrayBrush2}" TextTrimming="CharacterEllipsis" x:Name="lblDialogueName" Grid.Row="0" Text="{Binding title}" Margin="6,0,60,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="11" FontWeight="Bold"/>
+			<TextBlock Foreground="{DynamicResource GrayBrush2}" TextTrimming="CharacterEllipsis" x:Name="lblDialogueName" Grid.Row="0" Text="{Binding title}" Margin="6,6,60,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="11" FontWeight="Bold"/>
 			<Button x:Name="btnAdd" ToolTip="Add Child Dialogue" HorizontalAlignment="Right" VerticalAlignment="Top" Width="24" Height="24" Margin="0" FontFamily="FontAwesome" Background="Transparent" BorderBrush="Transparent" Click="btnAdd_Click" Grid.Row="0">
 				<Button.Style>
 					<Style TargetType="{x:Type Button}">
@@ -42,6 +64,16 @@
 			</Button>
 			<fa:FontAwesome Name="faLink" Icon="Chain" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,5,7,0" Background="Transparent" Foreground="{StaticResource ResourceKey=BlackBrush}" Opacity="0.5" Grid.Row="0" Visibility="Hidden" />
 			<Border Name="brdDialogue" BorderThickness="1" BorderBrush="{StaticResource ResourceKey=WhiteBrush}" Background="{DynamicResource HighlightBrush}" Padding="5" CornerRadius="2" Margin="2,2,2,2" Grid.Row="3" MinWidth="194">
+				<Border.Style>
+					<Style TargetType="{x:Type Border}">
+						<Setter Property="Visibility" Value="Visible"/>
+						<Style.Triggers>
+							<DataTrigger Binding="{Binding Path=dialogueText.Length}" Value="0">
+								<Setter Property="Height" Value="0"/>
+							</DataTrigger>
+						</Style.Triggers>
+					</Style>
+				</Border.Style>
 				<TextBlock x:Name="txtDialogue" Padding="4" Text="{Binding dialogueText}" TextWrapping="Wrap" Foreground="Black" />
 			</Border>
 			<TextBlock Foreground="{DynamicResource GrayBrush2}" TextTrimming="CharacterEllipsis" x:Name="lblActor" Grid.Row="1" FontWeight="Bold" Text="{Binding actor.name}" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Margin="6,0,60,0" />
