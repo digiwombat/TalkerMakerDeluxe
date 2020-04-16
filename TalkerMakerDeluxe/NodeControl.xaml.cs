@@ -20,7 +20,8 @@ namespace TalkerMakerDeluxe
 {
     public partial class NodeControl : UserControl
     {
-        
+        public int dialogueEntryID;
+
         public NodeControl()
         {
             InitializeComponent();

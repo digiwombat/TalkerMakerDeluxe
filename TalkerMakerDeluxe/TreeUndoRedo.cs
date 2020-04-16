@@ -9,10 +9,10 @@ namespace TalkerMakerDeluxe
 {
     class TreeUndoRedo
     {
-        List<Tuple<object[], List<TreeNode>, List<DialogEntry>>> UndoStack = new List<Tuple<object[], List<TreeNode>, List<DialogEntry>>>();
-        List<Tuple<object[], List<TreeNode>, List<DialogEntry>>> RedoStack = new List<Tuple<object[], List<TreeNode>, List<DialogEntry>>>();
+        List<Tuple<object[], List<TreeNode>, List<DialogueEntry>>> UndoStack = new List<Tuple<object[], List<TreeNode>, List<DialogueEntry>>>();
+        List<Tuple<object[], List<TreeNode>, List<DialogueEntry>>> RedoStack = new List<Tuple<object[], List<TreeNode>, List<DialogueEntry>>>();
 
-        public void Do(string action, List<TreeNode> node, List<DialogEntry> de)
+        public void Do(string action, List<TreeNode> node, List<DialogueEntry> de)
         {
             UndoStack.Add(Tuple.Create(new object[] {action, node[0].Name}, node, de));
         }
@@ -30,9 +30,9 @@ namespace TalkerMakerDeluxe
                     parentWindow.tcMain.Children.Remove(tree);
                     parentWindow.tcMain.UnregisterName(tree.Name);
                 }
-                foreach (DialogEntry subde in UndoStack.Last().Item3)
+                foreach (DialogueEntry subde in UndoStack.Last().Item3)
                 {
-                    parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Remove(subde);
+                    parentWindow.theDatabase.Conversations[parentWindow.loadedConversation].DialogEntries.Remove(subde);
                 }
                 RedoStack.Add(Tuple.Create(UndoStack.Last().Item1, UndoStack.Last().Item2, UndoStack.Last().Item3));
             }
@@ -45,9 +45,9 @@ namespace TalkerMakerDeluxe
                     parentWindow.tcMain.AddNode(tree.Content, tree.Name, parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.TreeParent));
                     trees.Add(parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.Name));
                 }
-                foreach(DialogEntry subde in UndoStack.Last().Item3)
+                foreach(DialogueEntry subde in UndoStack.Last().Item3)
                 {
-                    parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Add(subde);
+                    parentWindow.theDatabase.Conversations[parentWindow.loadedConversation].DialogEntries.Add(subde);
                 }
                 RedoStack.Add(Tuple.Create(UndoStack.Last().Item1, trees, UndoStack.Last().Item3));
             }
@@ -67,9 +67,9 @@ namespace TalkerMakerDeluxe
                     parentWindow.tcMain.Children.Remove(tree);
                     parentWindow.UnregisterName(tree.Name);
                 }
-                foreach (DialogEntry subde in RedoStack.Last().Item3)
+                foreach (DialogueEntry subde in RedoStack.Last().Item3)
                 {
-                    parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Remove(subde);
+                    parentWindow.theDatabase.Conversations[parentWindow.loadedConversation].DialogEntries.Remove(subde);
                 }
                 UndoStack.Add(Tuple.Create(RedoStack.Last().Item1, RedoStack.Last().Item2, RedoStack.Last().Item3));
             }
@@ -82,9 +82,9 @@ namespace TalkerMakerDeluxe
                     parentWindow.tcMain.AddNode(tree.Content, tree.Name, parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.TreeParent));
                     trees.Add(parentWindow.tcMain.Children.OfType<TreeNode>().First(p => p.Name == tree.Name));
                 }
-                foreach (DialogEntry subde in RedoStack.Last().Item3)
+                foreach (DialogueEntry subde in RedoStack.Last().Item3)
                 {
-                    parentWindow.projie.Assets.Conversations[parentWindow.loadedConversation].DialogEntries.Add(subde);
+                    parentWindow.theDatabase.Conversations[parentWindow.loadedConversation].DialogEntries.Add(subde);
                 }
                 UndoStack.Add(Tuple.Create(RedoStack.Last().Item1, trees, RedoStack.Last().Item3));
             }

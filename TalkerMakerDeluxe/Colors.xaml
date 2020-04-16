@@ -1,489 +1,489 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
-                    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-                    xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
-                    xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
-                    mc:Ignorable="options">
-    <!-- from the cosmopolitan theme pack -->
-    <!-- *************COLORS START************* -->
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:options="http://schemas.microsoft.com/winfx/2006/xaml/presentation/options"
+					xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+					xmlns:Custom="http://metro.mahapps.com/winfx/xaml/controls"
+					xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
+					mc:Ignorable="options">
+	<!-- from the cosmopolitan theme pack -->
+	<!-- *************COLORS START************* -->
 
-    <!-- Theme Base Colors -->
-
-
-    <!-- *************BRUSHES START************* -->
-    <!--PROJECT TEMPLATE BRUSHES -->
-
-    <!--ACCENT COLORS-->
-    <Color x:Key="HighlightColor">#FF8FA1B3</Color>
-    <Color x:Key="HighlightDarkColor">#FF8FA1B3</Color>
-    <Color x:Key="HighlightLightColor">#FF8FA1B3</Color>
-    <!--80%-->
-    <Color x:Key="AccentColor">#FF8FA1B3</Color>
-    <!--60%-->
-    <Color x:Key="AccentColor2">#FF8FA1B3</Color>
-    <!--40%-->
-    <Color x:Key="AccentColor3">#FF8FA1B3</Color>
-    <!--20%-->
-    <Color x:Key="AccentColor4">#343D46</Color>
-
-    <Color x:Key="AccentColor5">#343D46</Color>
-
-    <!--BASE COLORS-->
-    <Color x:Key="BlackColor">#FFC0C0C0</Color>
-    <Color x:Key="WhiteColor">#FF343D46</Color>
-    <Color x:Key="Gray1">#FF2d2d2d</Color>
-    <Color x:Key="Gray2">#FFEEEEEE</Color>
-    <Color x:Key="Gray3">#FF333333</Color>
-    <Color x:Key="Gray4">#FFB9B9B9</Color>
-    <Color x:Key="Gray5">#FFD8D8D9</Color>
-    <Color x:Key="Gray6">#FF9D9D9D</Color>
-    <Color x:Key="Gray7">#FFF7F7F7</Color>
-    <Color x:Key="Gray8">#FFE0E0E0</Color>
-    <Color x:Key="Gray9">#FFA59F93</Color>
-    <Color x:Key="Gray10">#7FFFFFFF</Color>
-    <Color x:Key="Gray11">#7FA9A9A9</Color>
-    <Color x:Key="Gray12">#A5F7F7F7</Color>
-    <Color x:Key="Gray13">#5EC9C9C9</Color>
-    <Color x:Key="Gray14">#DEDEDE</Color>
-    <Color x:Key="TextBoxText">#FFEEEEEE</Color>
-    <Color x:Key="NormalForegroundColor">#FFEEEEEE</Color>
-    <Color x:Key="HoverForegroundColor">#FF000000</Color>
-    <!--Note: For the best design BaseColor2 should be a contrast of BaseColor1-->
-    <Color x:Key="BaseColor2">#FFFFFFFF</Color>
-    <Color x:Key="BaseColor5">#FFBABABA</Color>
-    <Color x:Key="BaseColor3">#FF303030</Color>
-
-    <Color x:Key="TransparentWhiteColor">#00FFFFFF</Color>
-    <Color x:Key="SemiTransparentWhiteColor">#55FFFFFF</Color>
-    <Color x:Key="TransparentLightLightColor">#A5FFFFFF</Color>
+	<!-- Theme Base Colors -->
 
 
-    <!-- CORE CONTROL COLORS-->
-    <Color x:Key="ValidationColor1">#052A2E31</Color>
-    <Color x:Key="ValidationColor2">#152A2E31</Color>
-    <Color x:Key="ValidationColor3">#252A2E31</Color>
-    <Color x:Key="ValidationColor4">#352A2E31</Color>
-    <Color x:Key="ValidationColor5">#FFDC000C</Color>
-    <Color x:Key="ValidationSummaryColor1">#FFDC020D</Color>
-    <Color x:Key="ValidationSummaryColor2">#FFCA000C</Color>
-    <Color x:Key="ValidationSummaryColor3">#FFFF9298</Color>
-    <Color x:Key="ValidationSummaryColor4">#FFFDC8C8</Color>
-    <Color x:Key="ValidationSummaryColor5">#DDD43940</Color>
-    <Color x:Key="ValidationSummaryFillColor1">#59F7D8DB</Color>
-    <Color x:Key="ValidationSummaryFillColor2">#FFF7D8DB</Color>
-    <Color x:Key="ControlsValidationColor">#FFDB000C</Color>
+	<!-- *************BRUSHES START************* -->
+	<!--PROJECT TEMPLATE BRUSHES -->
 
-    <Color x:Key="ProgressIndeterminateColor1">#33878787</Color>
-    <Color x:Key="ProgressIndeterminateColor2">#33959595</Color>
-    <Color x:Key="ProgressIndeterminateColor3">#4C000000</Color>
-    <Color x:Key="ProgressIndeterminateColor4">#4C000000</Color>
+	<!--ACCENT COLORS-->
+	<Color x:Key="HighlightColor">#FF8FA1B3</Color>
+	<Color x:Key="HighlightDarkColor">#FF8FA1B3</Color>
+	<Color x:Key="HighlightLightColor">#FF8FA1B3</Color>
+	<!--80%-->
+	<Color x:Key="AccentColor">#FF8FA1B3</Color>
+	<!--60%-->
+	<Color x:Key="AccentColor2">#FF8FA1B3</Color>
+	<!--40%-->
+	<Color x:Key="AccentColor3">#FF8FA1B3</Color>
+	<!--20%-->
+	<Color x:Key="AccentColor4">#343D46</Color>
+
+	<Color x:Key="AccentColor5">#343D46</Color>
+
+	<!--BASE COLORS-->
+	<Color x:Key="BlackColor">#FFC0C0C0</Color>
+	<Color x:Key="WhiteColor">#FF343D46</Color>
+	<Color x:Key="Gray1">#FF2d2d2d</Color>
+	<Color x:Key="Gray2">#FFEEEEEE</Color>
+	<Color x:Key="Gray3">#FF333333</Color>
+	<Color x:Key="Gray4">#FFB9B9B9</Color>
+	<Color x:Key="Gray5">#FFD8D8D9</Color>
+	<Color x:Key="Gray6">#FF9D9D9D</Color>
+	<Color x:Key="Gray7">#FFF7F7F7</Color>
+	<Color x:Key="Gray8">#FFE0E0E0</Color>
+	<Color x:Key="Gray9">#FFA59F93</Color>
+	<Color x:Key="Gray10">#7FFFFFFF</Color>
+	<Color x:Key="Gray11">#7FA9A9A9</Color>
+	<Color x:Key="Gray12">#A5F7F7F7</Color>
+	<Color x:Key="Gray13">#5EC9C9C9</Color>
+	<Color x:Key="Gray14">#DEDEDE</Color>
+	<Color x:Key="TextBoxText">#FFEEEEEE</Color>
+	<Color x:Key="NormalForegroundColor">#FFEEEEEE</Color>
+	<Color x:Key="HoverForegroundColor">#FF000000</Color>
+	<!--Note: For the best design BaseColor2 should be a contrast of BaseColor1-->
+	<Color x:Key="BaseColor2">#FFFFFFFF</Color>
+	<Color x:Key="BaseColor5">#FFBABABA</Color>
+	<Color x:Key="BaseColor3">#FF303030</Color>
+
+	<Color x:Key="TransparentWhiteColor">#00FFFFFF</Color>
+	<Color x:Key="SemiTransparentWhiteColor">#55FFFFFF</Color>
+	<Color x:Key="TransparentLightLightColor">#A5FFFFFF</Color>
 
 
-    <!-- UNIVERSAL CONTROL BRUSHES -->
-    <SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource WhiteColor}"/>
-    <SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource WhiteColor}" />
-    <SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource BlackColor}" />
-    <SolidColorBrush x:Key="TextBrush" Color="{DynamicResource BlackColor}" />
-    <SolidColorBrush x:Key="LabelTextBrush" Color="{DynamicResource BlackColor}" />
-    <SolidColorBrush x:Key="WhiteColorBrush" Color="{DynamicResource WhiteColor}" />
-    <SolidColorBrush x:Key="BlackColorBrush" Color="{DynamicResource BlackColor}" />
-    <SolidColorBrush x:Key="NormalForegroundBrush" Color="{DynamicResource NormalForegroundColor}" />
+	<!-- CORE CONTROL COLORS-->
+	<Color x:Key="ValidationColor1">#052A2E31</Color>
+	<Color x:Key="ValidationColor2">#152A2E31</Color>
+	<Color x:Key="ValidationColor3">#252A2E31</Color>
+	<Color x:Key="ValidationColor4">#352A2E31</Color>
+	<Color x:Key="ValidationColor5">#FFDC000C</Color>
+	<Color x:Key="ValidationSummaryColor1">#FFDC020D</Color>
+	<Color x:Key="ValidationSummaryColor2">#FFCA000C</Color>
+	<Color x:Key="ValidationSummaryColor3">#FFFF9298</Color>
+	<Color x:Key="ValidationSummaryColor4">#FFFDC8C8</Color>
+	<Color x:Key="ValidationSummaryColor5">#DDD43940</Color>
+	<Color x:Key="ValidationSummaryFillColor1">#59F7D8DB</Color>
+	<Color x:Key="ValidationSummaryFillColor2">#FFF7D8DB</Color>
+	<Color x:Key="ControlsValidationColor">#FFDB000C</Color>
 
-    <SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightDarkColor}" />
-    <SolidColorBrush x:Key="HighlightLightBrush" Color="{DynamicResource HighlightLightColor}" />
-    <SolidColorBrush x:Key="NavigationBorderBrush" Color="#FF9D9492" />
-    <SolidColorBrush x:Key="NavigationForegroundBrush" Color="{DynamicResource BlackColor}"/>
-    <SolidColorBrush x:Key="PageBorderBrush" Color="{DynamicResource HighlightColor}" />
-    <SolidColorBrush x:Key="BodyTextColorBrush" Color="#FF313131"/>
-    <SolidColorBrush x:Key="ControlsDisabledBrush" Color="{DynamicResource TransparentLightLightColor}"/>
-    <SolidColorBrush x:Key="DisabledWhiteColorBrush" Color="{DynamicResource WhiteColor}" />
-    <SolidColorBrush x:Key="TransparentWhiteBrush" Color="{DynamicResource TransparentWhiteColor}"/>
-    <SolidColorBrush x:Key="SemiTransparentWhiteBrush" Color="{DynamicResource SemiTransparentWhiteColor}"/>
+	<Color x:Key="ProgressIndeterminateColor1">#33878787</Color>
+	<Color x:Key="ProgressIndeterminateColor2">#33959595</Color>
+	<Color x:Key="ProgressIndeterminateColor3">#4C000000</Color>
+	<Color x:Key="ProgressIndeterminateColor4">#4C000000</Color>
 
-    <SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}" />
-    <SolidColorBrush x:Key="AccentColorBrush2" Color="{StaticResource AccentColor2}" />
-    <SolidColorBrush x:Key="AccentColorBrush3" Color="{StaticResource AccentColor3}" />
-    <SolidColorBrush x:Key="AccentColorBrush4" Color="{StaticResource AccentColor4}" />
 
-    <SolidColorBrush x:Key="GrayBrush1" Color="{DynamicResource Gray1}"/>
-    <SolidColorBrush x:Key="GrayBrush2" Color="{DynamicResource Gray2}"/>
-    <SolidColorBrush x:Key="GrayBrush3" Color="{DynamicResource Gray3}"/>
-    <SolidColorBrush x:Key="GrayBrush4" Color="{DynamicResource Gray4}"/>
-    <SolidColorBrush x:Key="GrayBrush5" Color="{DynamicResource Gray5}"/>
-    <SolidColorBrush x:Key="GrayBrush6" Color="{DynamicResource Gray6}"/>
-    <SolidColorBrush x:Key="GrayBrush7" Color="{DynamicResource Gray7}"/>
-    <SolidColorBrush x:Key="GrayBrush8" Color="{DynamicResource Gray8}"/>
-    <SolidColorBrush x:Key="GrayBrush9" Color="{DynamicResource Gray9}"/>
-    <SolidColorBrush x:Key="GrayBrush10" Color="{DynamicResource Gray10}"/>
-    <SolidColorBrush x:Key="GrayBrush11" Color="{DynamicResource Gray11}"/>
-    <SolidColorBrush x:Key="GrayBrush12" Color="{DynamicResource Gray12}"/>
-    <SolidColorBrush x:Key="GrayBrush13" Color="{DynamicResource Gray13}"/>
-    <SolidColorBrush x:Key="GrayBrush14" Color="{DynamicResource Gray14}" />
+	<!-- UNIVERSAL CONTROL BRUSHES -->
+	<SolidColorBrush x:Key="ControlBackgroundBrush" Color="{DynamicResource WhiteColor}"/>
+	<SolidColorBrush x:Key="WhiteBrush" Color="{DynamicResource WhiteColor}" />
+	<SolidColorBrush x:Key="BlackBrush" Color="{DynamicResource BlackColor}" />
+	<SolidColorBrush x:Key="TextBrush" Color="{DynamicResource BlackColor}" />
+	<SolidColorBrush x:Key="LabelTextBrush" Color="{DynamicResource BlackColor}" />
+	<SolidColorBrush x:Key="WhiteColorBrush" Color="{DynamicResource WhiteColor}" />
+	<SolidColorBrush x:Key="BlackColorBrush" Color="{DynamicResource BlackColor}" />
+	<SolidColorBrush x:Key="NormalForegroundBrush" Color="{DynamicResource NormalForegroundColor}" />
 
-    <SolidColorBrush x:Key="HoverHyperlinkForegroundBrush" Color="{DynamicResource BlackColor}"/>
-    <SolidColorBrush x:Key="HoverHyperlinkBackgroundBrush" Color="{DynamicResource WhiteColor}"/>
+	<SolidColorBrush x:Key="HighlightBrush" Color="{DynamicResource HighlightDarkColor}" />
+	<SolidColorBrush x:Key="HighlightLightBrush" Color="{DynamicResource HighlightLightColor}" />
+	<SolidColorBrush x:Key="NavigationBorderBrush" Color="#FF9D9492" />
+	<SolidColorBrush x:Key="NavigationForegroundBrush" Color="{DynamicResource BlackColor}"/>
+	<SolidColorBrush x:Key="PageBorderBrush" Color="{DynamicResource HighlightColor}" />
+	<SolidColorBrush x:Key="BodyTextColorBrush" Color="#FF313131"/>
+	<SolidColorBrush x:Key="ControlsDisabledBrush" Color="{DynamicResource TransparentLightLightColor}"/>
+	<SolidColorBrush x:Key="DisabledWhiteColorBrush" Color="{DynamicResource WhiteColor}" />
+	<SolidColorBrush x:Key="TransparentWhiteBrush" Color="{DynamicResource TransparentWhiteColor}"/>
+	<SolidColorBrush x:Key="SemiTransparentWhiteBrush" Color="{DynamicResource SemiTransparentWhiteColor}"/>
 
-    <SolidColorBrush x:Key="TextBoxBorderBrush" Color="{DynamicResource Gray1}" />
-    <SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource Gray1}" />
-    <SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{DynamicResource BlackColor}" />
-    <SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
+	<SolidColorBrush x:Key="AccentColorBrush" Color="{StaticResource AccentColor}" />
+	<SolidColorBrush x:Key="AccentColorBrush2" Color="{StaticResource AccentColor2}" />
+	<SolidColorBrush x:Key="AccentColorBrush3" Color="{StaticResource AccentColor3}" />
+	<SolidColorBrush x:Key="AccentColorBrush4" Color="{StaticResource AccentColor4}" />
+
+	<SolidColorBrush x:Key="GrayBrush1" Color="{DynamicResource Gray1}"/>
+	<SolidColorBrush x:Key="GrayBrush2" Color="{DynamicResource Gray2}"/>
+	<SolidColorBrush x:Key="GrayBrush3" Color="{DynamicResource Gray3}"/>
+	<SolidColorBrush x:Key="GrayBrush4" Color="{DynamicResource Gray4}"/>
+	<SolidColorBrush x:Key="GrayBrush5" Color="{DynamicResource Gray5}"/>
+	<SolidColorBrush x:Key="GrayBrush6" Color="{DynamicResource Gray6}"/>
+	<SolidColorBrush x:Key="GrayBrush7" Color="{DynamicResource Gray7}"/>
+	<SolidColorBrush x:Key="GrayBrush8" Color="{DynamicResource Gray8}"/>
+	<SolidColorBrush x:Key="GrayBrush9" Color="{DynamicResource Gray9}"/>
+	<SolidColorBrush x:Key="GrayBrush10" Color="{DynamicResource Gray10}"/>
+	<SolidColorBrush x:Key="GrayBrush11" Color="{DynamicResource Gray11}"/>
+	<SolidColorBrush x:Key="GrayBrush12" Color="{DynamicResource Gray12}"/>
+	<SolidColorBrush x:Key="GrayBrush13" Color="{DynamicResource Gray13}"/>
+	<SolidColorBrush x:Key="GrayBrush14" Color="{DynamicResource Gray14}" />
+
+	<SolidColorBrush x:Key="HoverHyperlinkForegroundBrush" Color="{DynamicResource BlackColor}"/>
+	<SolidColorBrush x:Key="HoverHyperlinkBackgroundBrush" Color="{DynamicResource WhiteColor}"/>
+
+	<SolidColorBrush x:Key="TextBoxBorderBrush" Color="{DynamicResource Gray1}" />
+	<SolidColorBrush x:Key="ControlBorderBrush" Color="{DynamicResource Gray1}" />
+	<SolidColorBrush x:Key="TextBoxMouseOverBorderBrush" Color="{DynamicResource BlackColor}" />
+	<SolidColorBrush x:Key="TextBoxMouseOverInnerBorderBrush" Color="{DynamicResource BlackColor}" />
 
 	<SolidColorBrush x:Key="CheckBoxBrush" Color="{DynamicResource Gray1}" />
 
 	<SolidColorBrush x:Key="MenuItemDisabledBrush" Color="{DynamicResource Gray6}" />
 
-    <SolidColorBrush x:Key="ThumbBrush" Color="{DynamicResource Gray4}" />
+	<SolidColorBrush x:Key="ThumbBrush" Color="{DynamicResource Gray4}" />
 
-    <SolidColorBrush x:Key="ItemSelectedBrush" Color="{DynamicResource Gray5}" />
+	<SolidColorBrush x:Key="ItemSelectedBrush" Color="{DynamicResource Gray5}" />
 
-    <SolidColorBrush x:Key="SliderTrackBrush" Color="{DynamicResource Gray6}" />
-
-
-    <SolidColorBrush x:Key="ComboBoxPopupBrush" Color="{DynamicResource Gray9}" />
-    <LinearGradientBrush x:Key="BrandingBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
-        <GradientStop Color="{DynamicResource HighlightDarkColor}" Offset="0"/>
-        <GradientStop Color="#FF5FC316" Offset="1"/>
-    </LinearGradientBrush>
-
-    <DropShadowEffect x:Key="DropShadowBrush" Direction="330" Opacity="0.3" ShadowDepth="0" BlurRadius="6"/>
-
-    <SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WhiteColor}" />
-    <SolidColorBrush x:Key="SeperatorBrush" Color="#FFC4C4C5"/>
+	<SolidColorBrush x:Key="SliderTrackBrush" Color="{DynamicResource Gray6}" />
 
 
-    <!-- CONTROL VALIDATION BRUSHES -->
-    <SolidColorBrush x:Key="ControlsValidationBrush" Color="{DynamicResource ControlsValidationColor}"/>
-    <SolidColorBrush x:Key="ValidationBrush1" Color="{DynamicResource ValidationColor1}"/>
-    <SolidColorBrush x:Key="ValidationBrush2" Color="{DynamicResource ValidationColor2}"/>
-    <SolidColorBrush x:Key="ValidationBrush3" Color="{DynamicResource ValidationColor3}"/>
-    <SolidColorBrush x:Key="ValidationBrush4" Color="{DynamicResource ValidationColor4}"/>
-    <SolidColorBrush x:Key="ValidationBrush5" Color="{DynamicResource ValidationColor5}"/>
+	<SolidColorBrush x:Key="ComboBoxPopupBrush" Color="{DynamicResource Gray9}" />
+	<LinearGradientBrush x:Key="BrandingBrush" EndPoint="0.001,0.5" StartPoint="1.002,0.5">
+		<GradientStop Color="{DynamicResource HighlightDarkColor}" Offset="0"/>
+		<GradientStop Color="#FF5FC316" Offset="1"/>
+	</LinearGradientBrush>
+
+	<DropShadowEffect x:Key="DropShadowBrush" Direction="330" Opacity="0.3" ShadowDepth="0" BlurRadius="6"/>
+
+	<SolidColorBrush x:Key="WindowBackgroundBrush" Color="{DynamicResource WhiteColor}" />
+	<SolidColorBrush x:Key="SeperatorBrush" Color="#FFC4C4C5"/>
 
 
-    <LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
-        <GradientStop Color="#F3F3F3" Offset="0"/>
-        <GradientStop Color="#EBEBEB" Offset="0.5"/>
-        <GradientStop Color="#DDDDDD" Offset="0.5"/>
-        <GradientStop Color="#CDCDCD" Offset="1"/>
-    </LinearGradientBrush>
-    <SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF1c1c1c"/>
-    <!-- WPF default colours -->
-    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{DynamicResource WhiteColor}" />
-    <SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{DynamicResource BlackColor}" />
+	<!-- CONTROL VALIDATION BRUSHES -->
+	<SolidColorBrush x:Key="ControlsValidationBrush" Color="{DynamicResource ControlsValidationColor}"/>
+	<SolidColorBrush x:Key="ValidationBrush1" Color="{DynamicResource ValidationColor1}"/>
+	<SolidColorBrush x:Key="ValidationBrush2" Color="{DynamicResource ValidationColor2}"/>
+	<SolidColorBrush x:Key="ValidationBrush3" Color="{DynamicResource ValidationColor3}"/>
+	<SolidColorBrush x:Key="ValidationBrush4" Color="{DynamicResource ValidationColor4}"/>
+	<SolidColorBrush x:Key="ValidationBrush5" Color="{DynamicResource ValidationColor5}"/>
+
+
+	<LinearGradientBrush x:Key="ButtonNormalBackground" EndPoint="0,1" StartPoint="0,0">
+		<GradientStop Color="#F3F3F3" Offset="0"/>
+		<GradientStop Color="#EBEBEB" Offset="0.5"/>
+		<GradientStop Color="#DDDDDD" Offset="0.5"/>
+		<GradientStop Color="#CDCDCD" Offset="1"/>
+	</LinearGradientBrush>
+	<SolidColorBrush x:Key="ButtonNormalBorder" Color="#FF1c1c1c"/>
+	<!-- WPF default colours -->
+	<SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="{DynamicResource WhiteColor}" />
+	<SolidColorBrush x:Key="{x:Static SystemColors.ControlTextBrushKey}" Color="{DynamicResource BlackColor}" />
 
 
 	<!-- DOCKING PANE TEMPLATE -->
 	<Style x:Key="Style1" TargetType="{x:Type xcad:LayoutDocumentPaneControl}">
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type xcad:LayoutDocumentPaneControl}">
-                    <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto"/>
-                            <RowDefinition Height="*"/>
-                        </Grid.RowDefinitions>
-                        <Border Background="Transparent" Grid.RowSpan="2"/>
-                        <Grid Panel.ZIndex="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="Auto"/>
-                            </Grid.ColumnDefinitions>
-                            <Grid.Visibility>
-                                <Binding Path="Model.ShowHeader" RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type xcad:LayoutDocumentPaneControl}}">
-                                    <Binding.Converter>
-                                        <xcad:BoolToVisibilityConverter/>
-                                    </Binding.Converter>
-                                </Binding>
-                            </Grid.Visibility>
-                            <xcad:DocumentPaneTabPanel x:Name="HeaderPanel" Grid.Column="0" FlowDirection="LeftToRight" IsItemsHost="True" Grid.Row="0" KeyboardNavigation.TabIndex="1"/>
-                            <xcad:DropDownButton x:Name="MenuDropDownButton" Grid.Column="1" Focusable="False">
-                                <xcad:DropDownButton.DropDownContextMenu>
-                                    <xcad:ContextMenuEx>
-                                        <xcad:ContextMenuEx.ItemContainerStyle>
-                                            <Style TargetType="{x:Type xcad:MenuItemEx}">
-                                                <Setter Property="HeaderTemplate" Value="{Binding Root.Manager.DocumentPaneMenuItemHeaderTemplate}"/>
-                                                <Setter Property="HeaderTemplateSelector" Value="{Binding Root.Manager.DocumentPaneMenuItemHeaderTemplateSelector}"/>
-                                                <Setter Property="IconTemplate" Value="{Binding Root.Manager.IconContentTemplate}"/>
-                                                <Setter Property="IconTemplateSelector" Value="{Binding Root.Manager.IconContentTemplateSelector}"/>
-                                                <Setter Property="Command">
-                                                    <Setter.Value>
-                                                        <Binding Path=".">
-                                                            <Binding.Converter>
-                                                                <xcad:ActivateCommandLayoutItemFromLayoutModelConverter/>
-                                                            </Binding.Converter>
-                                                        </Binding>
-                                                    </Setter.Value>
-                                                </Setter>
-                                                <Style.BasedOn>
-                                                    <Style TargetType="{x:Type MenuItem}">
-                                                        <Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
-                                                        <Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
-                                                        <Setter Property="Background" Value="Transparent"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type xcad:LayoutDocumentPaneControl}">
+					<Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="Auto"/>
+							<RowDefinition Height="*"/>
+						</Grid.RowDefinitions>
+						<Border Background="Transparent" Grid.RowSpan="2"/>
+						<Grid Panel.ZIndex="1">
+							<Grid.ColumnDefinitions>
+								<ColumnDefinition/>
+								<ColumnDefinition Width="Auto"/>
+							</Grid.ColumnDefinitions>
+							<Grid.Visibility>
+								<Binding Path="Model.ShowHeader" RelativeSource="{RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type xcad:LayoutDocumentPaneControl}}">
+									<Binding.Converter>
+										<xcad:BoolToVisibilityConverter/>
+									</Binding.Converter>
+								</Binding>
+							</Grid.Visibility>
+							<xcad:DocumentPaneTabPanel x:Name="HeaderPanel" Grid.Column="0" FlowDirection="LeftToRight" IsItemsHost="True" Grid.Row="0" KeyboardNavigation.TabIndex="1"/>
+							<xcad:DropDownButton x:Name="MenuDropDownButton" Grid.Column="1" Focusable="False">
+								<xcad:DropDownButton.DropDownContextMenu>
+									<xcad:ContextMenuEx>
+										<xcad:ContextMenuEx.ItemContainerStyle>
+											<Style TargetType="{x:Type xcad:MenuItemEx}">
+												<Setter Property="HeaderTemplate" Value="{Binding Root.Manager.DocumentPaneMenuItemHeaderTemplate}"/>
+												<Setter Property="HeaderTemplateSelector" Value="{Binding Root.Manager.DocumentPaneMenuItemHeaderTemplateSelector}"/>
+												<Setter Property="IconTemplate" Value="{Binding Root.Manager.IconContentTemplate}"/>
+												<Setter Property="IconTemplateSelector" Value="{Binding Root.Manager.IconContentTemplateSelector}"/>
+												<Setter Property="Command">
+													<Setter.Value>
+														<Binding Path=".">
+															<Binding.Converter>
+																<xcad:ActivateCommandLayoutItemFromLayoutModelConverter/>
+															</Binding.Converter>
+														</Binding>
+													</Setter.Value>
+												</Setter>
+												<Style.BasedOn>
+													<Style TargetType="{x:Type MenuItem}">
+														<Setter Property="HorizontalContentAlignment" Value="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+														<Setter Property="VerticalContentAlignment" Value="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+														<Setter Property="Background" Value="Transparent"/>
 														<Setter Property="BorderBrush" Value="{StaticResource ResourceKey=HighlightBrush}"/>
-                                                        <Setter Property="BorderThickness" Value="0"/>
-                                                        <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-                                                        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-                                                        <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                                                        <Style.Triggers>
-                                                            <Trigger Property="Role" Value="TopLevelHeader">
-                                                                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                                                                <Setter Property="Padding" Value="6,0"/>
-                                                            </Trigger>
-                                                            <Trigger Property="Role" Value="TopLevelItem">
-                                                                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                                                                <Setter Property="Padding" Value="6,0"/>
-                                                            </Trigger>
-                                                            <Trigger Property="Role" Value="SubmenuHeader">
-                                                                <Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
-                                                            </Trigger>
-                                                        </Style.Triggers>
-                                                    </Style>
-                                                </Style.BasedOn>
-                                            </Style>
-                                        </xcad:ContextMenuEx.ItemContainerStyle>
-                                    </xcad:ContextMenuEx>
-                                </xcad:DropDownButton.DropDownContextMenu>
-                                <xcad:DropDownButton.Style>
-                                    <Style TargetType="{x:Type ToggleButton}">
+														<Setter Property="BorderThickness" Value="0"/>
+														<Setter Property="ScrollViewer.PanningMode" Value="Both"/>
+														<Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
+														<Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
+														<Style.Triggers>
+															<Trigger Property="Role" Value="TopLevelHeader">
+																<Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
+																<Setter Property="Padding" Value="6,0"/>
+															</Trigger>
+															<Trigger Property="Role" Value="TopLevelItem">
+																<Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=TopLevelItemTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
+																<Setter Property="Padding" Value="6,0"/>
+															</Trigger>
+															<Trigger Property="Role" Value="SubmenuHeader">
+																<Setter Property="Template" Value="{DynamicResource {ComponentResourceKey ResourceId=SubmenuHeaderTemplateKey, TypeInTargetAssembly={x:Type MenuItem}}}"/>
+															</Trigger>
+														</Style.Triggers>
+													</Style>
+												</Style.BasedOn>
+											</Style>
+										</xcad:ContextMenuEx.ItemContainerStyle>
+									</xcad:ContextMenuEx>
+								</xcad:DropDownButton.DropDownContextMenu>
+								<xcad:DropDownButton.Style>
+									<Style TargetType="{x:Type ToggleButton}">
 										<Setter Property="Foreground" Value="{StaticResource ResourceKey=BlackBrush}"/>
-                                        <Setter Property="Padding" Value="2"/>
-                                        <Setter Property="BorderThickness" Value="1"/>
-                                        <Setter Property="Background" Value="Transparent"/>
+										<Setter Property="Padding" Value="2"/>
+										<Setter Property="BorderThickness" Value="1"/>
+										<Setter Property="Background" Value="Transparent"/>
 										<Setter Property="BorderBrush" Value="{StaticResource ResourceKey=AccentColorBrush2}"/>
-                                        <Setter Property="HorizontalAlignment" Value="Center"/>
-                                        <Setter Property="VerticalAlignment" Value="Center"/>
+										<Setter Property="HorizontalAlignment" Value="Center"/>
+										<Setter Property="VerticalAlignment" Value="Center"/>
 										<Setter Property="HorizontalContentAlignment" Value="Center"/>
 										<Setter Property="VerticalContentAlignment" Value="Center"/>
 										<Setter Property="Visibility" Value="Hidden"/>
-                                        <Setter Property="Template">
-                                            <Setter.Value>
-                                                <ControlTemplate TargetType="{x:Type ToggleButton}">
-                                                    <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
-                                                        <ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
-                                                    </Border>
-                                                    <ControlTemplate.Triggers>
-                                                        <Trigger Property="IsChecked" Value="True">
+										<Setter Property="Template">
+											<Setter.Value>
+												<ControlTemplate TargetType="{x:Type ToggleButton}">
+													<Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}" SnapsToDevicePixels="True">
+														<ContentPresenter ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+													</Border>
+													<ControlTemplate.Triggers>
+														<Trigger Property="IsChecked" Value="True">
 															<Setter Property="BorderBrush" Value="{StaticResource ResourceKey=AccentColorBrush2}"/>
-                                                            <Setter Property="Background" Value="#400080FF"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsMouseOver" Value="True">
+															<Setter Property="Background" Value="#400080FF"/>
+														</Trigger>
+														<Trigger Property="IsMouseOver" Value="True">
 															<Setter Property="BorderBrush" Value="{StaticResource ResourceKey=AccentColorBrush2}"/>
-                                                            <Setter Property="Background" Value="#210080FF"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsKeyboardFocused" Value="True">
+															<Setter Property="Background" Value="#210080FF"/>
+														</Trigger>
+														<Trigger Property="IsKeyboardFocused" Value="True">
 															<Setter Property="BorderBrush" Value="{StaticResource ResourceKey=AccentColorBrush2}"/>
-                                                            <Setter Property="Background" Value="#210080FF"/>
-                                                        </Trigger>
-                                                        <MultiTrigger>
-                                                            <MultiTrigger.Conditions>
-                                                                <Condition Property="IsMouseOver" Value="True"/>
-                                                                <Condition Property="IsChecked" Value="True"/>
-                                                            </MultiTrigger.Conditions>
+															<Setter Property="Background" Value="#210080FF"/>
+														</Trigger>
+														<MultiTrigger>
+															<MultiTrigger.Conditions>
+																<Condition Property="IsMouseOver" Value="True"/>
+																<Condition Property="IsChecked" Value="True"/>
+															</MultiTrigger.Conditions>
 															<Setter Property="BorderBrush" Value="{StaticResource ResourceKey=AccentColorBrush2}"/>
-                                                            <Setter Property="Background" Value="#400080FF"/>
-                                                        </MultiTrigger>
-                                                        <MultiTrigger>
-                                                            <MultiTrigger.Conditions>
-                                                                <Condition Property="IsKeyboardFocused" Value="True"/>
-                                                                <Condition Property="IsChecked" Value="True"/>
-                                                            </MultiTrigger.Conditions>
+															<Setter Property="Background" Value="#400080FF"/>
+														</MultiTrigger>
+														<MultiTrigger>
+															<MultiTrigger.Conditions>
+																<Condition Property="IsKeyboardFocused" Value="True"/>
+																<Condition Property="IsChecked" Value="True"/>
+															</MultiTrigger.Conditions>
 															<Setter Property="BorderBrush" Value="{StaticResource ResourceKey=AccentColorBrush2}"/>
-                                                            <Setter Property="Background" Value="#400080FF"/>
-                                                        </MultiTrigger>
-                                                        <Trigger Property="IsPressed" Value="True">
+															<Setter Property="Background" Value="#400080FF"/>
+														</MultiTrigger>
+														<Trigger Property="IsPressed" Value="True">
 															<Setter Property="BorderBrush" Value="{StaticResource ResourceKey=AccentColorBrush2}"/>
-                                                            <Setter Property="Background" Value="#400080FF"/>
-                                                        </Trigger>
-                                                        <Trigger Property="IsEnabled" Value="False">
+															<Setter Property="Background" Value="#400080FF"/>
+														</Trigger>
+														<Trigger Property="IsEnabled" Value="False">
 															<Setter Property="Foreground" Value="{StaticResource ResourceKey=HighlightBrush}"/>
-                                                        </Trigger>
-                                                    </ControlTemplate.Triggers>
-                                                </ControlTemplate>
-                                            </Setter.Value>
-                                        </Setter>
-                                    </Style>
-                                </xcad:DropDownButton.Style>
+														</Trigger>
+													</ControlTemplate.Triggers>
+												</ControlTemplate>
+											</Setter.Value>
+										</Setter>
+									</Style>
+								</xcad:DropDownButton.Style>
 								<Border Background="{StaticResource ResourceKey=HighlightBrush}">
-                                    <Image>
-                                        <Image.Source>
-                                            <BitmapImage UriSource="pack://application:,,,/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/PinDocMenu.png"/>
-                                        </Image.Source>
-                                    </Image>
-                                </Border>
-                            </xcad:DropDownButton>
-                        </Grid>
+									<Image>
+										<Image.Source>
+											<BitmapImage UriSource="pack://application:,,,/Xceed.Wpf.AvalonDock;component/Themes/Generic/Images/PinDocMenu.png"/>
+										</Image.Source>
+									</Image>
+								</Border>
+							</xcad:DropDownButton>
+						</Grid>
 						<Border x:Name="ContentPanel" BorderBrush="{StaticResource ResourceKey=HighlightBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" HorizontalAlignment="Stretch" Grid.Row="1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Cycle" VerticalAlignment="Stretch">
-                            <ContentPresenter x:Name="PART_SelectedContentHost" ContentTemplate="{TemplateBinding SelectedContentTemplate}" Content="{TemplateBinding SelectedContent}" ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </Border>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
+							<ContentPresenter x:Name="PART_SelectedContentHost" ContentTemplate="{TemplateBinding SelectedContentTemplate}" Content="{TemplateBinding SelectedContent}" ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+						</Border>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="False">
 							<Setter Property="Foreground" Value="{StaticResource ResourceKey=BlackBrush}"/>
-                        </Trigger>
-                        <DataTrigger Binding="{Binding Model.ChildrenCount, RelativeSource={RelativeSource Self}}" Value="0">
-                            <Setter Property="Visibility" TargetName="MenuDropDownButton" Value="Collapsed"/>
-                        </DataTrigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type TabItem}">
-                    <Setter Property="Visibility">
-                        <Setter.Value>
-                            <Binding Path="IsVisible">
-                                <Binding.Converter>
-                                    <xcad:BoolToVisibilityConverter/>
-                                </Binding.Converter>
-                            </Binding>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-                    <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
-                    <Setter Property="ToolTip" Value="{Binding ToolTip}"/>
+						</Trigger>
+						<DataTrigger Binding="{Binding Model.ChildrenCount, RelativeSource={RelativeSource Self}}" Value="0">
+							<Setter Property="Visibility" TargetName="MenuDropDownButton" Value="Collapsed"/>
+						</DataTrigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemContainerStyle">
+			<Setter.Value>
+				<Style TargetType="{x:Type TabItem}">
+					<Setter Property="Visibility">
+						<Setter.Value>
+							<Binding Path="IsVisible">
+								<Binding.Converter>
+									<xcad:BoolToVisibilityConverter/>
+								</Binding.Converter>
+							</Binding>
+						</Setter.Value>
+					</Setter>
+					<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+					<Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+					<Setter Property="ToolTip" Value="{Binding ToolTip}"/>
 					<Setter Property="Padding" Value="4" />
 					<Setter Property="Margin" Value="0,2,0,0"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type TabItem}">
-                                <Grid SnapsToDevicePixels="True">
-                                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
-                                        <ContentPresenter x:Name="Content" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
+					<Setter Property="Template">
+						<Setter.Value>
+							<ControlTemplate TargetType="{x:Type TabItem}">
+								<Grid SnapsToDevicePixels="True">
+									<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,1,1,0" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+										<ContentPresenter x:Name="Content" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+									</Border>
+								</Grid>
+								<ControlTemplate.Triggers>
+									<Trigger Property="IsSelected" Value="True">
 										<Setter Property="Background" Value="{StaticResource ResourceKey=HighlightBrush}"/>
 										<Setter Property="Foreground" Value="{StaticResource ResourceKey=WhiteBrush}"/>
 										<Setter Property="Panel.ZIndex" Value="1"/>
-                                        <Setter Property="Margin" Value="0,0,0,-2"/>
-                                        <Setter Property="Margin" TargetName="Content" Value="0,0,0,3"/>
-                                    </Trigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsMouseOver" Value="True"/>
-                                            <Condition Property="IsSelected" Value="False"/>
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.GradientInactiveCaptionBrushKey}}"/>
-                                        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                                        <Setter Property="Panel.ZIndex" Value="0"/>
-                                    </MultiTrigger>
-                                    <Trigger Property="IsEnabled" Value="False">
+										<Setter Property="Margin" Value="0,0,0,-2"/>
+										<Setter Property="Margin" TargetName="Content" Value="0,0,0,3"/>
+									</Trigger>
+									<MultiTrigger>
+										<MultiTrigger.Conditions>
+											<Condition Property="IsMouseOver" Value="True"/>
+											<Condition Property="IsSelected" Value="False"/>
+										</MultiTrigger.Conditions>
+										<Setter Property="Background" Value="{StaticResource ResourceKey=BlackBrush}"/>
+										<Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+										<Setter Property="Panel.ZIndex" Value="0"/>
+									</MultiTrigger>
+									<Trigger Property="IsEnabled" Value="False">
 										<Setter Property="Foreground" Value="{StaticResource ResourceKey=BlackBrush}"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ItemTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <xcad:LayoutDocumentTabItem Model="{Binding}"/>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <xcad:LayoutDocumentControl Model="{Binding}"/>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+									</Trigger>
+								</ControlTemplate.Triggers>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<xcad:LayoutDocumentTabItem Model="{Binding}"/>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ContentTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<xcad:LayoutDocumentControl Model="{Binding}"/>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 	
 	
 	<!-- ANCHORABLE TEMPLATE -->
-    <Style x:Key="Style2" TargetType="{x:Type xcad:LayoutAnchorablePaneControl}">
-        <Setter Property="Foreground" Value="{Binding Model.Root.Manager.Foreground, RelativeSource={RelativeSource Self}}"/>
+	<Style x:Key="Style2" TargetType="{x:Type xcad:LayoutAnchorablePaneControl}">
+		<Setter Property="Foreground" Value="{Binding Model.Root.Manager.Foreground, RelativeSource={RelativeSource Self}}"/>
 		<Setter Property="Background" Value="{StaticResource ResourceKey=HighlightBrush}"/>
-        <Setter Property="TabStripPlacement" Value="Bottom"/>
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type xcad:LayoutAnchorablePaneControl}">
-                    <Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="*"/>
-                            <RowDefinition Height="Auto"/>
-                        </Grid.RowDefinitions>
-                        <Border Background="Transparent" Grid.RowSpan="2"/>
-                        <Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="0" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Cycle">
-                            <ContentPresenter x:Name="PART_SelectedContentHost" ContentTemplate="{TemplateBinding SelectedContentTemplate}" Content="{TemplateBinding SelectedContent}" ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
-                        </Border>
-                        <xcad:AnchorablePaneTabPanel x:Name="HeaderPanel" FlowDirection="LeftToRight" IsItemsHost="True" Margin="2,0,2,2" Grid.Row="1" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
-                    </Grid>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="False">
-                            <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ItemContainerStyle">
-            <Setter.Value>
-                <Style TargetType="{x:Type TabItem}">
-                    <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
-                    <Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
+		<Setter Property="TabStripPlacement" Value="Bottom"/>
+		<Setter Property="Template">
+			<Setter.Value>
+				<ControlTemplate TargetType="{x:Type xcad:LayoutAnchorablePaneControl}">
+					<Grid ClipToBounds="True" SnapsToDevicePixels="True" KeyboardNavigation.TabNavigation="Local">
+						<Grid.RowDefinitions>
+							<RowDefinition Height="*"/>
+							<RowDefinition Height="Auto"/>
+						</Grid.RowDefinitions>
+						<Border Background="Transparent" Grid.RowSpan="2"/>
+						<Border x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Grid.Column="0" KeyboardNavigation.DirectionalNavigation="Contained" Grid.Row="0" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Cycle">
+							<ContentPresenter x:Name="PART_SelectedContentHost" ContentTemplate="{TemplateBinding SelectedContentTemplate}" Content="{TemplateBinding SelectedContent}" ContentStringFormat="{TemplateBinding SelectedContentStringFormat}" ContentSource="SelectedContent" Margin="{TemplateBinding Padding}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"/>
+						</Border>
+						<xcad:AnchorablePaneTabPanel x:Name="HeaderPanel" FlowDirection="LeftToRight" IsItemsHost="True" Margin="2,0,2,2" Grid.Row="1" KeyboardNavigation.TabIndex="1" Panel.ZIndex="1"/>
+					</Grid>
+					<ControlTemplate.Triggers>
+						<Trigger Property="IsEnabled" Value="False">
+							<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+						</Trigger>
+					</ControlTemplate.Triggers>
+				</ControlTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemContainerStyle">
+			<Setter.Value>
+				<Style TargetType="{x:Type TabItem}">
+					<Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}"/>
+					<Setter Property="IsEnabled" Value="{Binding IsEnabled}"/>
 					<Setter Property="ToolTip" Value="{Binding ToolTip}"/>
 					<Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type TabItem}">
-                                <Grid SnapsToDevicePixels="True">
-                                    <Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
-                                        <ContentPresenter x:Name="Content" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsSelected" Value="True">
+						<Setter.Value>
+							<ControlTemplate TargetType="{x:Type TabItem}">
+								<Grid SnapsToDevicePixels="True">
+									<Border x:Name="Bd" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="1,0,1,1" Background="{TemplateBinding Background}" Padding="{TemplateBinding Padding}">
+										<ContentPresenter x:Name="Content" ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" ContentStringFormat="{TemplateBinding HeaderStringFormat}" ContentSource="Header" HorizontalAlignment="{Binding HorizontalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{Binding VerticalContentAlignment, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type ItemsControl}}}"/>
+									</Border>
+								</Grid>
+								<ControlTemplate.Triggers>
+									<Trigger Property="IsSelected" Value="True">
 										<Setter Property="Background" Value="{StaticResource ResourceKey=HighlightBrush}"/>
 										<Setter Property="FontWeight" Value="Bold"/>
-                                        <Setter Property="Panel.ZIndex" Value="1"/>
-                                        <Setter Property="Margin" Value="0,-1,-1,-2"/>
-                                    </Trigger>
-                                    <MultiTrigger>
-                                        <MultiTrigger.Conditions>
-                                            <Condition Property="IsMouseOver" Value="True"/>
-                                            <Condition Property="IsSelected" Value="False"/>
-                                        </MultiTrigger.Conditions>
-                                        <Setter Property="Background" Value="Green"/>
-                                        <Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
-                                        <Setter Property="Panel.ZIndex" Value="0"/>
-                                    </MultiTrigger>
-                                    <Trigger Property="IsEnabled" Value="False">
-                                        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <DataTrigger Binding="{Binding Items.Count, FallbackValue=1, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="1">
-                            <Setter Property="Visibility" Value="Collapsed"/>
-                        </DataTrigger>
-                    </Style.Triggers>
-                </Style>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ItemTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <xcad:LayoutAnchorableTabItem Model="{Binding}"/>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="ContentTemplate">
-            <Setter.Value>
-                <DataTemplate>
-                    <xcad:LayoutAnchorableControl Model="{Binding}"/>
-                </DataTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+										<Setter Property="Panel.ZIndex" Value="1"/>
+										<Setter Property="Margin" Value="0,-1,-1,-2"/>
+									</Trigger>
+									<MultiTrigger>
+										<MultiTrigger.Conditions>
+											<Condition Property="IsMouseOver" Value="True"/>
+											<Condition Property="IsSelected" Value="False"/>
+										</MultiTrigger.Conditions>
+										<Setter Property="Background" Value="{StaticResource BlackBrush}"/>
+										<Setter Property="BorderBrush" Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}"/>
+										<Setter Property="Panel.ZIndex" Value="0"/>
+									</MultiTrigger>
+									<Trigger Property="IsEnabled" Value="False">
+										<Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.GrayTextBrushKey}}"/>
+									</Trigger>
+								</ControlTemplate.Triggers>
+							</ControlTemplate>
+						</Setter.Value>
+					</Setter>
+					<Style.Triggers>
+						<DataTrigger Binding="{Binding Items.Count, FallbackValue=1, RelativeSource={RelativeSource FindAncestor, AncestorLevel=1, AncestorType={x:Type TabControl}}}" Value="1">
+							<Setter Property="Visibility" Value="Collapsed"/>
+						</DataTrigger>
+					</Style.Triggers>
+				</Style>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ItemTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<xcad:LayoutAnchorableTabItem Model="{Binding}"/>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+		<Setter Property="ContentTemplate">
+			<Setter.Value>
+				<DataTemplate>
+					<xcad:LayoutAnchorableControl Model="{Binding}"/>
+				</DataTemplate>
+			</Setter.Value>
+		</Setter>
+	</Style>
 
 	
 </ResourceDictionary>

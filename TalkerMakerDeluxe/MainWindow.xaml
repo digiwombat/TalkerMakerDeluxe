@@ -4,11 +4,12 @@
 	xmlns:xcad="http://schemas.xceed.com/wpf/xaml/avalondock"
 	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 	xmlns:TreeContainer="clr-namespace:TreeContainer;assembly=TreeContainer"
-	xmlns:System="clr-namespace:System;assembly=mscorlib"
 	xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
 	xmlns:s="clr-namespace:TalkerMakerDeluxe"
 	xmlns:fa="http://schemas.fontawesome.io/icons/"
-	Title="TalkerMaker Deluxe" Height="810" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" ResizeMode="CanResizeWithGrip" Closing="MetroWindow_Closing" FontFamily="Roboto">
+	Title="TalkerMaker Deluxe" Height="810" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop"
+	xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" SizeToContent="Manual" ResizeMode="CanResizeWithGrip"
+	Closing="MetroWindow_Closing" FontFamily="Roboto" DataContext="{Binding theDatabase, ElementName=MainWin}">
 	<Window.Resources>
 		<s:UriToBitmapConverter x:Key="UriToBitmapConverter" />
 		<s:Actor x:Key="CharacterItems" />
@@ -86,220 +87,6 @@
 								<Setter Property="IsTabStop" Value="False"/>
 								<Setter Property="Visibility" TargetName="PART_EditableTextBox" Value="Visible"/>
 								<Setter Property="Visibility" TargetName="ContentSite" Value="Hidden"/>
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style TargetType="{x:Type RadioButton}" x:Key="NormalRadio" >
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type RadioButton}">
-						<BulletDecorator Cursor="Hand">
-							<BulletDecorator.Bullet>
-								<Grid Height="16" Width="16">
-									<!--Define size of the Bullet-->
-
-									<!--The two borders-->
-									<Border Name="RadioOuter" Background="Transparent" BorderBrush="Gainsboro" BorderThickness="2" CornerRadius="2" />
-									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#FFADADAD" Visibility="Hidden" />
-
-								</Grid>
-							</BulletDecorator.Bullet>
-
-							<!--Text element-->
-							<TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
-	   <ContentPresenter />
-							</TextBlock>
-						</BulletDecorator>
-
-						<!--If item is checked, trigger the visibility of the mark-->
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="true">
-
-								<!--If item is checked, trigger the visibility of the mark
-and change the color of the selected bullet into a darker gray for better highlighting-->
-								<Setter TargetName="RadioMark" Property="Visibility" Value="Visible"/>
-								<Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFADADAD" />
-
-							</Trigger>
-
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style TargetType="{x:Type RadioButton}" x:Key="RedRadio" >
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type RadioButton}">
-						<BulletDecorator Cursor="Hand">
-							<BulletDecorator.Bullet>
-								<Grid Height="16" Width="16">
-									<Border Name="RadioOuter" Background="Transparent" BorderBrush="#FF723147" BorderThickness="2" CornerRadius="2" />
-									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#FFCC4452" Visibility="Hidden" />
-
-								</Grid>
-							</BulletDecorator.Bullet>
-							<TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
-	   <ContentPresenter />
-							</TextBlock>
-						</BulletDecorator>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="true">
-								<Setter TargetName="RadioMark" Property="Visibility" Value="Visible"/>
-								<Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFCC4452" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style TargetType="{x:Type RadioButton}" x:Key="GreenRadio" >
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type RadioButton}">
-						<BulletDecorator Cursor="Hand">
-							<BulletDecorator.Bullet>
-								<Grid Height="16" Width="16">
-									<Border Name="RadioOuter" Background="Transparent" BorderBrush="#FFA5C77F" BorderThickness="2" CornerRadius="2" />
-									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#FFA5C77F" Visibility="Hidden" />
-								</Grid>
-							</BulletDecorator.Bullet>
-							<TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
-	   <ContentPresenter />
-							</TextBlock>
-						</BulletDecorator>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="true">
-								<Setter TargetName="RadioMark" Property="Visibility" Value="Visible"/>
-								<Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFA5C77F" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style TargetType="{x:Type RadioButton}" x:Key="YellowRadio" >
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type RadioButton}">
-						<BulletDecorator Cursor="Hand">
-							<BulletDecorator.Bullet>
-								<Grid Height="16" Width="16">
-									<Border Name="RadioOuter" Background="Transparent" BorderBrush="#CCBD41" BorderThickness="2" CornerRadius="2" />
-									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#FFED51" Visibility="Hidden" />
-								</Grid>
-							</BulletDecorator.Bullet>
-							<TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
-	   <ContentPresenter />
-							</TextBlock>
-						</BulletDecorator>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="true">
-								<Setter TargetName="RadioMark" Property="Visibility" Value="Visible"/>
-								<Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFA5C77F" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style TargetType="{x:Type RadioButton}" x:Key="VioletRadio" >
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type RadioButton}">
-						<BulletDecorator Cursor="Hand">
-							<BulletDecorator.Bullet>
-								<Grid Height="16" Width="16">
-									<Border Name="RadioOuter" Background="Transparent" BorderBrush="#7742A0" BorderThickness="2" CornerRadius="2" />
-									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#BE69FF" Visibility="Hidden" />
-								</Grid>
-							</BulletDecorator.Bullet>
-							<TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
-	   <ContentPresenter />
-							</TextBlock>
-						</BulletDecorator>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="true">
-								<Setter TargetName="RadioMark" Property="Visibility" Value="Visible"/>
-								<Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFA5C77F" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style TargetType="{x:Type RadioButton}" x:Key="BlueRadio" >
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type RadioButton}">
-						<BulletDecorator Cursor="Hand">
-							<BulletDecorator.Bullet>
-								<Grid Height="16" Width="16">
-									<Border Name="RadioOuter" Background="Transparent" BorderBrush="#4EA8B1" BorderThickness="2" CornerRadius="2" />
-									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#99F3FF" Visibility="Hidden" />
-								</Grid>
-							</BulletDecorator.Bullet>
-							<TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
-	   <ContentPresenter />
-							</TextBlock>
-						</BulletDecorator>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="true">
-								<Setter TargetName="RadioMark" Property="Visibility" Value="Visible"/>
-								<Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFA5C77F" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style TargetType="{x:Type RadioButton}" x:Key="OrangeRadio" >
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type RadioButton}">
-						<BulletDecorator Cursor="Hand">
-							<BulletDecorator.Bullet>
-								<Grid Height="16" Width="16">
-									<Border Name="RadioOuter" Background="Transparent" BorderBrush="#B4993B" BorderThickness="2" CornerRadius="2" />
-									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#F0A102" Visibility="Hidden" />
-								</Grid>
-							</BulletDecorator.Bullet>
-							<TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
-	   <ContentPresenter />
-							</TextBlock>
-						</BulletDecorator>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="true">
-								<Setter TargetName="RadioMark" Property="Visibility" Value="Visible"/>
-								<Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFA5C77F" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style>
-		<Style TargetType="{x:Type RadioButton}" x:Key="GreyRadio" >
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="{x:Type RadioButton}">
-						<BulletDecorator Cursor="Hand">
-							<BulletDecorator.Bullet>
-								<Grid Height="16" Width="16">
-									<Border Name="RadioOuter" Background="Transparent" BorderBrush="#505050" BorderThickness="2" CornerRadius="2" />
-									<Border CornerRadius="0" Margin="4" Name="RadioMark" Background="#9D9D9D" Visibility="Hidden" />
-								</Grid>
-							</BulletDecorator.Bullet>
-							<TextBlock Margin="3,1,0,0" Foreground="#FF3E3E3E" FontFamily="Calibri" FontSize="12">
-	   <ContentPresenter />
-							</TextBlock>
-						</BulletDecorator>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsChecked" Value="true">
-								<Setter TargetName="RadioMark" Property="Visibility" Value="Visible"/>
-								<Setter TargetName="RadioOuter" Property="BorderBrush" Value="#FFA5C77F" />
 							</Trigger>
 						</ControlTemplate.Triggers>
 					</ControlTemplate>
@@ -430,29 +217,107 @@ and change the color of the selected bullet into a darker gray for better highli
 						<xcad:LayoutAnchorablePane>
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="CharacterAnchor" Title="Characters" CanHide="False" CanClose="False" CanFloat="False" CanAutoHide="True">
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}" HorizontalContentAlignment="Stretch">
-									<StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstCharacters" SelectionChanged="lstCharacters_SelectionChanged" GotFocus="lstCharacters_GotFocus" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch" />
+									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
+										<ListBox Padding="0" x:Name="lstCharacters" ItemsSource="{Binding Actors}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{x:Null}" SelectionChanged="lstCharacters_SelectionChanged" IsSynchronizedWithCurrentItem="True" GotFocus="lstCharacters_GotFocus" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" >
+											<ListBox.ItemTemplate>
+												<DataTemplate>
+													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
+														<Grid Name="grid">
+														<Grid.ColumnDefinitions>
+															<ColumnDefinition Width="45" Name="pictureRow"/>
+															<ColumnDefinition Width="3*"/>
+															<ColumnDefinition Width="3*"/>
+														</Grid.ColumnDefinitions>
+														<Grid.RowDefinitions>
+															<RowDefinition Height="50"/>
+														</Grid.RowDefinitions>
+														<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Grid.Column="1" Grid.ColumnSpan="2" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" MaxWidth="130" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+														<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.RowSpan="1" Grid.Row="0" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality"/>
+														<Label Content="{Binding Path=ID}" Name="lblActorID" HorizontalAlignment="Left" Height="35" Margin="-224,-69,0,0" VerticalAlignment="Top" Visibility="Hidden"/>
+														<Label Content="{Binding Path=age}" Name="lblActorAge" HorizontalAlignment="Left" Height="26" Margin="0,24,0,0" VerticalAlignment="Bottom" Grid.Column="1"/>
+														<Label Content="{Binding Path=gender}" Name="lblActorGender"  HorizontalContentAlignment="Right" HorizontalAlignment="Right" Height="26" Margin="0,24,0,0" VerticalAlignment="Bottom" Grid.Column="2"/>
+													</Grid>
+													</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
 									</StackPanel>
 								</ScrollViewer>
 							</xcad:LayoutAnchorable>
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ItemAnchor" Title="Items" CanHide="False" CanClose="False" CanFloat="False">
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
-									<StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstItems" SelectionChanged="lstItems_SelectionChanged" GotFocus="lstItems_GotFocus" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
+										<ListBox Padding="3" x:Name="lstItems" ItemsSource="{Binding Items}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstItems_GotFocus" HorizontalContentAlignment="Stretch">
+											<ListBox.ItemTemplate>
+												<DataTemplate>
+													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
+														<Grid Margin="0,0,0,0">
+															<Grid.RowDefinitions>
+																<RowDefinition Height="25"/>
+																<RowDefinition Height="25"/>
+															</Grid.RowDefinitions>
+															<TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Path=name}" Name="lblItemName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
+															<DockPanel Grid.Row="1" >
+																<Label Content="In Inventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+																<Label Content="{Binding Path=inInventory}" Name="lblItemInventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+															</DockPanel>
+														</Grid>
+													</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
 									</StackPanel>
 								</ScrollViewer>
 							</xcad:LayoutAnchorable>
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="LocationAnchor" Title="Locations" CanHide="False" CanClose="False" CanFloat="False">
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
-									<StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstLocations" SelectionChanged="lstLocations_SelectionChanged" GotFocus="lstLocations_GotFocus" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
+										<ListBox Padding="3" x:Name="lstLocations" ItemsSource="{Binding Locations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstLocations_GotFocus" HorizontalContentAlignment="Stretch">
+											<ListBox.ItemTemplate>
+												<DataTemplate>
+													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
+														<Grid Margin="0,0,0,0">
+															<Grid.RowDefinitions>
+																<RowDefinition Height="25"/>
+																<RowDefinition Height="25"/>
+															</Grid.RowDefinitions>
+															<TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Path=name}" Name="lblLocName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
+															<DockPanel Grid.Row="1" >
+																<Label Content="Learned: " HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+																<Label Content="{Binding Path=learned}" Name="lblLocLearned" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+																<Label Content="Visited:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+																<Label Content="{Binding Path=visited}" Name="lblLocVisited" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+															</DockPanel>
+														</Grid>
+													</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
 									</StackPanel>
 								</ScrollViewer>
 							</xcad:LayoutAnchorable>
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="VariableAnchor" Title="Variables" CanHide="False" CanClose="False" CanFloat="False">
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
-									<StackPanel  Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstVariables" SelectionChanged="lstVariables_SelectionChanged" GotFocus="lstVariables_GotFocus" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
+										<ListBox Padding="3" x:Name="lstVariables" ItemsSource="{Binding Variables}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstVariables_GotFocus" HorizontalContentAlignment="Stretch">
+											<ListBox.ItemTemplate>
+												<DataTemplate>
+													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
+														<Grid Margin="0,0,0,0">
+															<Grid.RowDefinitions>
+																<RowDefinition Height="25"/>
+																<RowDefinition Height="25"/>
+															</Grid.RowDefinitions>
+															<TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Path=name}" Name="lblVarName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
+															<DockPanel Grid.Row="1" >
+																<Label Content="Type" Name="lblVarType" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+																<Label Content="{Binding Path=type}" Name="lblVarValue" HorizontalAlignment="Right"/>
+															</DockPanel>
+														</Grid>
+													</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
 									</StackPanel>
 								</ScrollViewer>
 							</xcad:LayoutAnchorable>
@@ -460,8 +325,33 @@ and change the color of the selected bullet into a darker gray for better highli
 						<xcad:LayoutAnchorablePane DockHeight="0.4*">
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ConvoAnchor" Title="Conversations" CanHide="False" CanClose="False" CanFloat="False">
 								<ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
-									<StackPanel Margin="0,0,5,0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" GotFocus="lstConversations_GotFocus" SelectionChanged="lstConversations_SelectionChanged" Background="{DynamicResource GrayBrush1}" BorderThickness="0" HorizontalContentAlignment="Stretch"/>
+									<StackPanel Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
+										<ListBox Padding="3" x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" GotFocus="lstConversations_GotFocus" 
+												 ItemsSource="{Binding Conversations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch">
+											<ListBox.ItemTemplate>
+												<DataTemplate>
+													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
+														<Grid x:Name="grid" Margin="0,0,0,0">
+															<Grid.ColumnDefinitions>
+																<ColumnDefinition Name="grdActor" />
+															</Grid.ColumnDefinitions>
+															<Grid.RowDefinitions>
+																<RowDefinition Height="28"/>
+																<RowDefinition Height="28"/>
+															</Grid.RowDefinitions>
+															<DockPanel Grid.Row="0"  Grid.Column="0">
+																<TextBlock Text="{Binding Path=title}" Grid.ColumnSpan="2" MaxWidth="155" Name="lblConvTitle" HorizontalAlignment="Left" Margin="5,5,38,5" VerticalAlignment="Top" FontWeight="Bold" TextTrimming="CharacterEllipsis"/>
+																<Label Content="{Binding Path=DialogueEntries.Count}" Grid.Column="1" Name="lblNodeCount" HorizontalAlignment="Right" Margin="0" VerticalAlignment="Top" Opacity="0.25"/>
+															</DockPanel>
+															<DockPanel Grid.Row="1"  Grid.Column="0">
+																<TextBlock Text="{Binding Path=actor.name}" Grid.Row="1"  Grid.Column="0" Name="lblConvActor" TextTrimming="CharacterEllipsis" Margin="4" MaxWidth="120" MinWidth="20" />
+																<TextBlock Text="{Binding Path=conversant.name}" Grid.Row="1" Grid.Column="1" Name="lblConvConversant" Margin="4" TextTrimming="CharacterEllipsis" MaxWidth="120" TextAlignment="Right" MinWidth="20" />
+															</DockPanel>
+														</Grid>
+													</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
 									</StackPanel>
 								</ScrollViewer>
 							</xcad:LayoutAnchorable>
@@ -482,16 +372,18 @@ and change the color of the selected bullet into a darker gray for better highli
 						<xcad:LayoutPanel Orientation="Horizontal" DockHeight="150">
 							<xcad:LayoutAnchorablePane>
 								<xcad:LayoutAnchorable ContentId="ScriptAnchor" Title="Script" CanClose="False" CanHide="False">
-									<avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="editScript" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" TextChanged="editScript_TextChanged"/>
+									<s:BindableAvalonEditor x:Name="editScript" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc"
+									Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True"  DataContext="{Binding ElementName=MainWin, Path=selectedEntry}" Text="{Binding Path=UserScript}"/>
 								</xcad:LayoutAnchorable>
 							</xcad:LayoutAnchorablePane>
 							<xcad:LayoutAnchorablePane>
 								<xcad:LayoutAnchorable ContentId="ConditionsAnchor" Title="Conditions" CanHide="False" CanClose="False">
-									<StackPanel Orientation="Vertical">
-										<avalonEdit:TextEditor xmlns:avalonEdit="http://icsharpcode.net/sharpdevelop/avalonedit" Name="editConditions" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" TextChanged="editConditions_TextChanged" MinHeight="95"/>
+									<StackPanel x:Name="conditionsStack" Orientation="Vertical"  DataContext="{Binding ElementName=MainWin, Path=selectedEntry}">
+										<s:BindableAvalonEditor x:Name="editConditions" FontFamily="Consolas" SyntaxHighlighting="Lua"
+										Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" MinHeight="90" Text="{Binding Path=ConditionsString}"/>
 										<StackPanel Orientation="Horizontal">
 											<Label Foreground="{DynamicResource WhiteBrush}">When False:</Label>
-											<ComboBox Name="cmbFunction" Width="100" SelectionChanged="cmbFunction_SelectionChanged" Background="{DynamicResource AccentColorBrush5}">
+											<ComboBox Name="cmbFunction" Width="100" Text="{Binding FalseCondtionAction}">
 												<ComboBoxItem IsSelected="True">Block</ComboBoxItem>
 												<ComboBoxItem>Passthrough</ComboBoxItem>
 											</ComboBox>
@@ -519,7 +411,7 @@ and change the color of the selected bullet into a darker gray for better highli
 											</Thumb.RenderTransform>
 											<Thumb.Template>
 												<ControlTemplate TargetType="Thumb">
-													<Border BorderBrush="{DynamicResource AccentColorBrush4}" BorderThickness="1" Background="{DynamicResource AccentColorBrush4}" Opacity="0.8"/>
+													<Border BorderBrush="{DynamicResource AccentColorBrush4}" BorderThickness="0" Opacity="0.8" Background="{DynamicResource AccentColorBrush4}"/>
 												</ControlTemplate>
 											</Thumb.Template>
 										</Thumb>
@@ -534,7 +426,6 @@ and change the color of the selected bullet into a darker gray for better highli
 										<TabItem Header="Blank Settings" Name="tabBlank" Visibility="Collapsed">
 										</TabItem>
 										<TabItem Header="Character Settings" Name="tabCharacter" Visibility="Collapsed">
-
 											<Grid>
 												<Grid.ColumnDefinitions>
 													<ColumnDefinition  Width="Auto"/>
@@ -554,28 +445,29 @@ and change the color of the selected bullet into a darker gray for better highli
 
 
 												<TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">ID</TextBlock>
-												<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Name="txtActorID" />
+												<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Text="{Binding SelectedItem.ID, ElementName=lstCharacters}" Name="txtActorID" />
 
 												<TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Name</TextBlock>
-												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtActorName" TextChanged="txtActorName_TextChanged"/>
+												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.name, ElementName=lstCharacters}" Name="txtActorName"/>
 
 												<TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Age</TextBlock>
-												<xctk:IntegerUpDown Minimum="0" Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Name="txtActorAge" ValueChanged="txtActorAge_ValueChanged"/>
+												<xctk:IntegerUpDown Minimum="0" Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.age, ElementName=lstCharacters}" Name="txtActorAge" />
 
 												<TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Gender</TextBlock>
-												<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Name="txtActorGender" TextChanged="txtActorGender_TextChanged"/>
+												<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.gender, ElementName=lstCharacters}" Name="txtActorGender"/>
 
 												<TextBlock Grid.Row="4" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Is Player?</TextBlock>
-												<CheckBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" Name="chkActorPlayer" Checked="chkActorPlayer_Checked" Unchecked="chkActorPlayer_Checked"></CheckBox>
+												<CheckBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.isPlayer, ElementName=lstCharacters}" Name="chkActorPlayer" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
 
 												<TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
-												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtActorDescription" TextChanged="txtActorDescription_TextChanged" />
+												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto"
+														  Text="{Binding SelectedItem.description, ElementName=lstCharacters}" Name="txtActorDescription" />
 
 												<TextBlock Grid.Row="6" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Picture</TextBlock>
 												<Grid Grid.Row="6" Grid.Column="1" Margin="4,0,4,4">
 													<TextBlock Name="txtActorPicture" Visibility="Hidden"/>
-													<Image Name="imgActorPicture" Width="64" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality" />
-													<Button Name="btnPicturePicker" Content="..." Width="25" Height="25" HorizontalAlignment="Right" Click="btnPicturePicker_Click" VerticalAlignment="Top"/>
+													<Image Name="imgActorPicture" DataContext="{Binding ElementName=lstCharacters}" Source="{Binding SelectedItem.picture}" Width="64" Stretch="UniformToFill" HorizontalAlignment="Left" VerticalAlignment="Top" RenderOptions.BitmapScalingMode="HighQuality" />
+													<Button Name="btnPicturePicker" Content="..." Width="25" Height="25" HorizontalAlignment="Right" VerticalAlignment="Top" Click="btnPicturePicker_Click" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"/>
 												</Grid>
 
 											</Grid>
@@ -600,26 +492,42 @@ and change the color of the selected bullet into a darker gray for better highli
 
 
 												<TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">ID</TextBlock>
-												<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Name="txtConvoID"/>
+												<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Text="{Binding SelectedItem.ID, ElementName=lstConversations}" Name="txtConvoID"/>
 
 												<TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Title</TextBlock>
-												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtConvoTitle" TextChanged="txtConvoTitle_TextChanged" />
+												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.title, ElementName=lstConversations}" Name="txtConvoTitle" />
 
 												<TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Actor</TextBlock>
-												<ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Name="lstConvoActor" HorizontalContentAlignment="Stretch" SelectionChanged="lstConvoActor_SelectionChanged" OverridesDefaultStyle="True" Background="{DynamicResource GrayBrush3}" Style="{DynamicResource ComboBoxStyle}">
-													
+												<ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedItem="{Binding SelectedItem.actor, ElementName=lstConversations}" Name="lstConvoActor" HorizontalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+													<ComboBox.ItemTemplate>
+														<DataTemplate>
+															<StackPanel Orientation="Horizontal">
+																<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality"/>
+																<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+															</StackPanel>
+														</DataTemplate>
+													</ComboBox.ItemTemplate>
 												</ComboBox>
 
 
 												<TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Conversant</TextBlock>
-												<ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Name="lstConvoConversant" HorizontalContentAlignment="Stretch" SelectionChanged="lstConvoConversant_SelectionChanged" Background="{DynamicResource GrayBrush3}" Style="{DynamicResource ComboBoxStyle}" />
+												<ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedItem="{Binding SelectedItem.conversant, ElementName=lstConversations}" Name="lstConvoConversant" HorizontalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+													<ComboBox.ItemTemplate>
+														<DataTemplate>
+															<StackPanel Orientation="Horizontal">
+																<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality"/>
+																<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Background="{x:Null}" />
+															</StackPanel>
+														</DataTemplate>
+													</ComboBox.ItemTemplate>
+												</ComboBox>
 
 												<TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
-												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtConvoDescription" TextChanged="txtConvoDescription_TextChanged" />
+												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedItem.description, ElementName=lstConversations}" Name="txtConvoDescription" />
 											</Grid>
 										</TabItem>
 										<TabItem Header="Dialogue Settings" Name="tabDialogue" Visibility="Collapsed">
-											<Grid>
+											<Grid x:Name="gridDialogueEntry" DataContext="{Binding ElementName=MainWin, Path=selectedEntry}">
 												<Grid.ColumnDefinitions>
 													<ColumnDefinition  Width="Auto"/>
 													<ColumnDefinition Width="*"/>
@@ -640,44 +548,61 @@ and change the color of the selected bullet into a darker gray for better highli
 
 
 												<TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">ID</TextBlock>
-												<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Name="txtDialogueID"/>
+												<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="{Binding ID}" TextAlignment="Left" Name="txtDialogueID"/>
 
 												<TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Title</TextBlock>
-												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtDialogueTitle" TextChanged="txtDialogueTitle_TextChanged" />
+												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding title}" Name="txtDialogueTitle" />
 
 												<TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Actor</TextBlock>
-												<ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" HorizontalContentAlignment="Stretch" Name="lstDialogueActor" SelectionChanged="lstDialogueActor_SelectionChanged" Style="{DynamicResource ComboBoxStyle}" />
+												<ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding actor}" Name="lstDialogueActor" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+													<ComboBox.ItemTemplate>
+														<DataTemplate>
+															<StackPanel Orientation="Horizontal">
+																<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality"/>
+																<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+															</StackPanel>
+														</DataTemplate>
+													</ComboBox.ItemTemplate>
+												</ComboBox>
 
 
 												<TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Conversant</TextBlock>
-												<ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" HorizontalContentAlignment="Stretch" Name="lstDialogueConversant" SelectionChanged="lstDialogueConversant_SelectionChanged" Style="{DynamicResource ComboBoxStyle}" Background="{DynamicResource GrayBrush3}" />
+												<ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding conversant}" Name="lstDialogueConversant" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+													<ComboBox.ItemTemplate>
+														<DataTemplate>
+															<StackPanel Orientation="Horizontal">
+																<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="Auto" VerticalAlignment="Stretch" Width="Auto" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality"/>
+																<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+															</StackPanel>
+														</DataTemplate>
+													</ComboBox.ItemTemplate>
+												</ComboBox>
 
 
 												<TextBlock Grid.Row="4" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Menu Text</TextBlock>
-												<TextBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtMenuText" TextChanged="txtMenuText_TextChanged"/>
+												<TextBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" Text="{Binding menuText}" Name="txtMenuText"/>
 
 												<TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Dialogue</TextBlock>
-												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtDialogueWords" TextChanged="txtDialogueWords_TextChanged" />
+												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" AcceptsReturn="True"
+														 MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtDialogueWords" Text="{Binding dialogueText}" />
 
 												<TextBlock Grid.Row="6" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Sequence</TextBlock>
-												<TextBox Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Text="" Name="txtSequence" TextChanged="txtSequence_TextChanged"/>
+												<TextBox Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True"
+														 MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtSequence" Text="{Binding sequence}"/>
 
 												<TextBlock Grid.Row="7" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Node Color</TextBlock>
-												<WrapPanel Orientation="Horizontal" Grid.Row="7" Grid.Column="1" Margin="4,0,4,4">
-													<RadioButton Name="rdioColorWhite" Checked="rdioColorNormal_Checked" Style="{StaticResource NormalRadio}" IsChecked="True" GroupName="grpNodeColor" />
-													<RadioButton Name="rdioColorRed" Checked="rdioColorNormal_Checked" Style="{StaticResource RedRadio}" GroupName="grpNodeColor" />
-													<RadioButton Name="rdioColorGreen" Checked="rdioColorNormal_Checked" Style="{StaticResource GreenRadio}" GroupName="grpNodeColor" />
-													<RadioButton Name="rdioColorYellow" Checked="rdioColorNormal_Checked" Style="{StaticResource YellowRadio}" GroupName="grpNodeColor" />
-													<RadioButton Name="rdioColorViolet" Checked="rdioColorNormal_Checked" Style="{StaticResource VioletRadio}" GroupName="grpNodeColor" />
-													<RadioButton Name="rdioColorBlue" Checked="rdioColorNormal_Checked" Style="{StaticResource BlueRadio}" GroupName="grpNodeColor" />
-													<RadioButton Name="rdioColorOrange" Checked="rdioColorNormal_Checked" Style="{StaticResource OrangeRadio}" GroupName="grpNodeColor" />
-													<RadioButton Name="rdioColorGrey" Checked="rdioColorNormal_Checked" Style="{StaticResource GreyRadio}" GroupName="grpNodeColor" />
-												</WrapPanel>
+												<ComboBox Grid.Row="7" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" Text="{Binding NodeColor}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+													<ComboBoxItem Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Normal</ComboBoxItem>
+													<ComboBoxItem Background="#FF631E29" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Red</ComboBoxItem>
+													<ComboBoxItem Background="#FF253831" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Green</ComboBoxItem>
+													<ComboBoxItem Background="#FF004358" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Blue</ComboBoxItem>
+													<ComboBoxItem Background="#FF35203B" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Purple</ComboBoxItem>
+												</ComboBox>
 
 												<TextBlock Grid.Row="8" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Link To:</TextBlock>
 												<StackPanel Orientation="Horizontal" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
-													<CheckBox Name="chkLinkTo" Checked="chkLinkTo_Checked" Unchecked="chkLinkTo_Checked" HorizontalAlignment="Center" />
-													<xctk:IntegerUpDown IsEnabled="{Binding ElementName=chkLinkTo, Path=IsChecked}" Minimum="1" Name="txtLinkTo" ValueChanged="txtLinkTo_ValueChanged" MinWidth="60" DefaultValue="0" />
+													<CheckBox Name="chkLinkTo" Background="{DynamicResource AccentColorBrush5}" BorderBrush="{DynamicResource AccentColorBrush5}" />
+													<xctk:IntegerUpDown IsEnabled="{Binding ElementName=chkLinkTo, Path=IsChecked}" Minimum="1" Name="txtLinkTo"  MinWidth="60" DefaultValue="0" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}" />
 												</StackPanel>
 											</Grid>
 										</TabItem>
@@ -699,9 +624,9 @@ and change the color of the selected bullet into a darker gray for better highli
 												</Grid.RowDefinitions>
 												<Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 												<TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Name</TextBlock>
-												<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtItemName" TextChanged="txtItemName_TextChanged" />
+												<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.name, ElementName=lstItems}" Name="txtItemName" />
 												<TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">In Inventory</TextBlock>
-												<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Name="chkItemInventory" Checked="chkItemInventory_Checked" Unchecked="chkItemInventory_Checked"></CheckBox>
+												<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.inInventory, ElementName=lstItems}" Name="chkItemInventory" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
 											</Grid>
 										</TabItem>
 										<TabItem Header="Location Settings" Name="tabLocation" Visibility="Collapsed">
@@ -719,16 +644,16 @@ and change the color of the selected bullet into a darker gray for better highli
 												</Grid.RowDefinitions>
 												<Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 												<TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Location</TextBlock>
-												<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtLocName" TextChanged="txtLocationName_TextChanged" />
+												<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.name, ElementName=lstLocations}" Name="txtLocName" />
 
 												<TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Learned</TextBlock>
-												<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Name="chkLocLearned" Checked="chkLocLearned_Checked" Unchecked="chkLocLearned_Checked"></CheckBox>
+												<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.learned, ElementName=lstLocations}" Name="chkLocLearned" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
 
 												<TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Visited</TextBlock>
-												<CheckBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Name="chkLocVisited" Checked="chkLocVisited_Checked" Unchecked="chkLocVisited_Checked"></CheckBox>
+												<CheckBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.visited, ElementName=lstLocations}" Name="chkLocVisited" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
 
 												<TextBlock Grid.Row="3" Grid.Column="0" Margin="4,4,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold">Description</TextBlock>
-												<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtLocDescription" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" TextChanged="txtLocDescription_TextChanged" />
+												<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4"  Text="{Binding SelectedItem.description, ElementName=lstLocations}" Name="txtLocDescription" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" />
 											</Grid>
 										</TabItem>
 										<TabItem Header="Variable Settings" Name="tabVariable" Visibility="Hidden">
@@ -750,20 +675,20 @@ and change the color of the selected bullet into a darker gray for better highli
 												<Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
 												<TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Variable</TextBlock>
-												<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtVarName" TextChanged="txtVarName_TextChanged" />
+												<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4"  Text="{Binding SelectedItem.name, ElementName=lstVariables}" Name="txtVarName" />
 
 												<TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Type</TextBlock>
-												<ComboBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="" IsEditable="True" Name="txtVarType" Style="{DynamicResource ComboBoxStyle}" TextBoxBase.TextChanged="txtVarType_TextChanged" Foreground="#FFEEEEEE">
+												<ComboBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4"  Text="{Binding SelectedItem.type, ElementName=lstVariables}" IsEditable="True" Name="txtVarType" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
 													<ComboBoxItem>Boolean</ComboBoxItem>
 													<ComboBoxItem>Text</ComboBoxItem>
 													<ComboBoxItem>Number</ComboBoxItem>
 												</ComboBox>
 
 												<TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Initial Value</TextBlock>
-												<TextBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Text="" Name="txtVarValue" TextChanged="txtVarValue_TextChanged" />
+												<TextBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.initialValue, ElementName=lstVariables}" Name="txtVarValue" />
 
 												<TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold">Description</TextBlock>
-												<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtVarDescription" TextChanged="txtVarDescription_TextChanged" />
+												<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedItem.description, ElementName=lstVariables}" Name="txtVarDescription" />
 											</Grid>
 										</TabItem>
 									</TabControl>
@@ -797,12 +722,12 @@ and change the color of the selected bullet into a darker gray for better highli
 						<fa:FontAwesome Icon="Save" />
 					</MenuItem.Icon>
 				</MenuItem>
-				<MenuItem Name="menuExport" Header="Export to JSON" Click="menuExport_Click" Foreground="Black" >
+				<MenuItem Name="menuExport" Header="Export to Dialogue System XML" Click="menuExport_Click" Foreground="Black" >
 					<MenuItem.Icon>
 						<fa:FontAwesome Icon="ShareSquareOutline" />
 					</MenuItem.Icon>
 				</MenuItem>
-				<s:RecentFileList x:Name="mnuRecent" MaxNumberOfFiles="3" />
+				<s:RecentFileList x:Name="mnuRecent" MaxNumberOfFiles="3" Foreground="Black" />
 				<MenuItem Name="menuExit" Header="_Exit" Command="Close" Foreground="Black" />
 			</MenuItem>
 			<MenuItem Header="_Edit">
@@ -816,7 +741,28 @@ and change the color of the selected bullet into a darker gray for better highli
 		</Menu>
 		<StatusBar Grid.Row="2" Grid.ColumnSpan="100" Background="{DynamicResource GrayBrush1}">
 			<StatusBarItem HorizontalAlignment="Left">
-				<Slider x:Name="uiScaleSlider" ToolTip="Scales the tree view." Value="1" Minimum="0.7" Maximum="3" MinWidth="100" VerticalAlignment="Center">
+				<Button Margin="5" Content="Reset" Cursor="Hand" Click="ResetButton_Click">
+					<Button.Template>
+						<ControlTemplate TargetType="Button">
+							<TextBlock TextDecorations="Underline">
+								<ContentPresenter />
+							</TextBlock>
+						</ControlTemplate>
+					</Button.Template>
+					<Button.Style>
+						<Style TargetType="Button">
+							<Setter Property="Foreground" Value="{DynamicResource AccentColorBrush4}" />
+							<Style.Triggers>
+								<Trigger Property="IsMouseOver" Value="true">
+									<Setter Property="Foreground" Value="{DynamicResource AccentColorBrush2}" />
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</Button.Style>
+				</Button>
+			</StatusBarItem>
+			<StatusBarItem HorizontalAlignment="Left">
+				<Slider x:Name="uiScaleSlider" ToolTip="Scales the tree view." Value="1" Minimum="0.2" Maximum="3" MinWidth="100" VerticalAlignment="Center">
 					<Slider.Resources>
 						<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="Black" />
 						<SolidColorBrush x:Key="{x:Static SystemColors.ControlDarkDarkBrushKey}" Color="Silver" />
@@ -848,7 +794,7 @@ and change the color of the selected bullet into a darker gray for better highli
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v1.11.0 Beta" />
+				<TextBlock Text="v2.0.0" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">
@@ -871,13 +817,13 @@ and change the color of the selected bullet into a darker gray for better highli
 						<Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
 						<TextBlock Grid.Row="0" Grid.Column="0" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Author</TextBlock>
-						<TextBox Grid.Row="0" Grid.Column="1" Margin="4" Text="" Name="txtSettingAuthor" TextChanged="txtSettingAuthor_TextChanged"/>
+						<TextBox Grid.Row="0" Grid.Column="1" Margin="4" Text="{Binding Author}" Name="txtSettingAuthor"/>
 
 						<TextBlock Grid.Row="1" Grid.Column="0" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Title</TextBlock>
-						<TextBox Grid.Row="1" Grid.Column="1" Margin="4" Text="" Name="txtSettingProjectTitle" TextChanged="txtSettingProjectTitle_TextChanged" />
+						<TextBox Grid.Row="1" Grid.Column="1" Margin="4" Text="{Binding Title}" Name="txtSettingProjectTitle" />
 
 						<TextBlock Grid.Row="2" Grid.Column="0" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Version</TextBlock>
-						<TextBox Grid.Row="2" Grid.Column="1" Margin="4" Text="" Name="txtSettingVersion" TextChanged="txtSettingVersion_TextChanged" />
+						<TextBox Grid.Row="2" Grid.Column="1" Margin="4" Text="{Binding Version}" Name="txtSettingVersion" />
 					</Grid>
 				</Border>
 			</Popup>
