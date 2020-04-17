@@ -385,12 +385,14 @@
 					<xcad:LayoutPanel DockWidth="1*" Orientation="Vertical">
 						<xcad:LayoutDocumentPane DockHeight="1*">
 							<xcad:LayoutDocument Title="Conversation" CanClose="False">
-								<ScrollViewer Name="scrlTree" KeyUp="Delete_Node" Background="#343D46" BorderBrush="{StaticResource ResourceKey=WhiteBrush}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="Zoom_MouseWheel">
-									<TreeContainer:TreeContainer Width="Auto" Height="Auto" x:Name="tcMain" Margin="40" VerticalBuffer="40" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="100" MinHeight="20" HorizontalBuffer="20" HorizontalBufferSubtree="20" >
-										<TreeContainer:TreeContainer.LayoutTransform>
-											<ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}" />
-										</TreeContainer:TreeContainer.LayoutTransform>
-									</TreeContainer:TreeContainer>
+								<ScrollViewer Name="scrlTree" KeyUp="Delete_Node" Background="#343D46" BorderBrush="{StaticResource ResourceKey=WhiteBrush}" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="Zoom_MouseWheel" HorizontalContentAlignment="Center">
+									<Grid x:Name="gridTree" HorizontalAlignment="Center" VerticalAlignment="Top">
+										<TreeContainer:TreeContainer Width="Auto" Height="Auto" x:Name="tcMain" Margin="40" VerticalBuffer="40" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="100" MinHeight="20" HorizontalBuffer="20" HorizontalBufferSubtree="20" Panel.ZIndex="1" >
+											<TreeContainer:TreeContainer.LayoutTransform>
+												<ScaleTransform CenterX="0" CenterY="0" ScaleX="{Binding ElementName=uiScaleSlider,Path=Value}" ScaleY="{Binding ElementName=uiScaleSlider,Path=Value}" />
+											</TreeContainer:TreeContainer.LayoutTransform>
+										</TreeContainer:TreeContainer>
+									</Grid>
 								</ScrollViewer>
 							</xcad:LayoutDocument>
 						</xcad:LayoutDocumentPane>
@@ -430,7 +432,10 @@
 											</Rectangle.Fill>
 										</Rectangle>
 
-										<Thumb Name="thmViewport" Background="{StaticResource ResourceKey=WhiteBrush}" Width="{Binding ViewportWidth}" Height="{Binding ViewportHeight}" HorizontalAlignment="Left" VerticalAlignment="Top" DragDelta="thmViewport_DragDelta">
+										<Thumb Name="thmViewport" Width="{Binding ViewportWidth}" Height="{Binding ViewportHeight}" HorizontalAlignment="Left" VerticalAlignment="Top" DragDelta="thmViewport_DragDelta">
+											<Thumb.Background>
+												<SolidColorBrush Color="#FF343D46"/>
+											</Thumb.Background>
 											<Thumb.RenderTransform>
 												<TranslateTransform X="{Binding HorizontalOffset}" Y="{Binding VerticalOffset}" />
 											</Thumb.RenderTransform>
@@ -660,12 +665,17 @@
 														<Button Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="2" Click="Button_Click">Add</Button>
 													</UniformGrid>
 													<ListView Height="50" x:Name="lstLinks" ItemsSource="{Binding OutgoingLinks}" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}">
+														<ListBox.ContextMenu>
+															<ContextMenu>
+																<MenuItem x:Name="mnuDeleteLink" Header="Delete Link" Click="mnuDeleteLink_Click" />
+															</ContextMenu>
+														</ListBox.ContextMenu>
 														<ListView.ItemTemplate>
 															<DataTemplate>
 																<StackPanel Orientation="Horizontal" >
-																	<TextBlock Text="Conversation: " />
-																	<TextBlock Text="{Binding DestinationConvoID}" />
-																	<TextBlock Text=" | Node: " />
+																	<TextBlock Text="Conversation: " Foreground="{DynamicResource AccentColorBrush4}" />
+																	<TextBlock Text="{Binding DestinationConvoID}" Foreground="{DynamicResource AccentColorBrush4}" />
+																	<TextBlock Text=" -> Node: " />
 																	<TextBlock Text="{Binding DestinationDialogID}" />
 																</StackPanel>
 															</DataTemplate>
@@ -805,6 +815,8 @@
 			<MenuItem Header="_View">
 				<MenuItem Name="menuExpand" Header="Expand All" Click="menuExpand_Click" Foreground="Black" />
 				<MenuItem Name="menuCollapse" Header="Collapse All" Click="menuExpand_Click" Foreground="Black" />
+				<Separator />
+				<MenuItem Name="menuLinks" Header="Show All Links" Click="menuLinks_Click" IsCheckable="True" Foreground="Black" />
 			</MenuItem>
 		</Menu>
 		<StatusBar Grid.Row="2" Grid.ColumnSpan="100" Background="{DynamicResource GrayBrush1}">

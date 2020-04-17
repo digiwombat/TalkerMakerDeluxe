@@ -18,6 +18,7 @@ using Xceed.Wpf.AvalonDock.Layout;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Xml;
+using System.Windows.Shapes;
 
 namespace TalkerMakerDeluxe
 {
@@ -36,6 +37,10 @@ namespace TalkerMakerDeluxe
 		DispatcherTimer timer;
 		public string currentNode = "";
 		public int loadedConversation = -1;
+
+		private double oldSize;
+		private double oldZoom;
+
 		private bool _needsSave = false;
 		
 		public bool needsSave
@@ -99,6 +104,9 @@ namespace TalkerMakerDeluxe
 
 			this.DataContext = theDatabase;
 
+			//tcMain.LayoutUpdated
+			tcMain.LayoutUpdated += HandleDrawConnections;
+
 			uiScaleSlider.MouseDoubleClick +=
 			new MouseButtonEventHandler(RestoreScalingFactor);
 
@@ -118,6 +126,17 @@ namespace TalkerMakerDeluxe
 			//Autosave
 			timer = new DispatcherTimer(TimeSpan.FromMilliseconds(300000), DispatcherPriority.Background, new EventHandler(DoAutoSave), this.Dispatcher);
 
+		}
+
+		private void HandleDrawConnections(object sender, EventArgs e)
+		{
+			if (oldSize != tcMain.ActualHeight + tcMain.ActualWidth || oldZoom != uiScaleSlider.Value)
+			{
+				DrawExtraConnections();
+				oldSize = tcMain.ActualHeight + tcMain.ActualWidth;
+				oldZoom = uiScaleSlider.Value;
+				Console.WriteLine("Updated lines | " + oldSize);
+			}
 		}
 
 		void PrepareProject()
@@ -293,6 +312,10 @@ namespace TalkerMakerDeluxe
 			{
 
 				TreeNode nodeTree = tcMain.FindName(parentNode.Remove(0, 1)) as TreeNode;
+				if(nodeTree.Collapsed)
+				{
+					CollapseNode(parentNode);
+				}
 				NodeControl ndctl = nodeTree.Content as NodeControl;
 
 				DialogueEntry newDialogueEntry = new DialogueEntry();
@@ -336,6 +359,66 @@ namespace TalkerMakerDeluxe
 				tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID).BringIntoView();
 				history.Do("add", new List<TreeNode> { tcMain.Children.OfType<TreeNode>().First(p => p.Name == "node_" + newNodeID) }, new List<DialogueEntry> { newDialogueEntry });
 				needsSave = true;
+			}
+		}
+
+		public void DrawExtraConnections()
+		{
+			int intTotalChildren = gridTree.Children.Count - 1;
+			for (int intCounter = intTotalChildren; intCounter > 0; intCounter--)
+			{
+				if (gridTree.Children[intCounter].GetType() == typeof(Line))
+				{
+					gridTree.Children.RemoveAt(intCounter);
+				}
+			}
+			if (menuLinks.IsChecked)
+			{
+				foreach (DialogueEntry de in theDatabase.Conversations[loadedConversation].DialogEntries)
+				{
+					for (int i = 0; i < de.OutgoingLinks.Count; i++)
+					{
+						if (de.OutgoingLinks[i].DestinationConvoID == de.OutgoingLinks[i].OriginConvoID)
+						{
+							TreeNode originNode = tcMain.FindName("node_" + de.OutgoingLinks[i].OriginDialogID) as TreeNode;
+							if (originNode.Collapsed)
+							{
+								continue;
+							}
+							TreeNode destinationNode = tcMain.FindName("node_" + de.OutgoingLinks[i].DestinationDialogID) as TreeNode;
+							if (destinationNode.Collapsed)
+							{
+								continue;
+							}
+
+							Point originPoint = originNode.TransformToAncestor(gridTree).Transform(new Point(0, 0));
+							Point destinationPoint = destinationNode.TransformToAncestor(gridTree).Transform(new Point(0, 0));
+
+							///List<GraphLayout.DPoint> points = new List<GraphLayout.DPoint>();
+							//points.Add(new GraphLayout.DPoint(originPoint.X, originPoint.Y));
+							//points.Add(new GraphLayout.DPoint(destinationPoint.X, destinationPoint.Y));
+							//tcMain.Connections.Add(new GraphLayout.TreeConnection(originNode, destinationNode, points, true));
+
+							Line extraLinkLine = new Line();
+							extraLinkLine.X1 = originPoint.X + (99 * uiScaleSlider.Value);
+							extraLinkLine.Y1 = originPoint.Y + (20 * uiScaleSlider.Value);
+							extraLinkLine.X2 = destinationPoint.X + (99 * uiScaleSlider.Value);
+							extraLinkLine.Y2 = destinationPoint.Y + (20 * uiScaleSlider.Value);
+							extraLinkLine.Stroke = (Brush)Application.Current.FindResource("AccentColorBrush4");
+							extraLinkLine.Opacity = 0.8;
+							extraLinkLine.StrokeThickness = 2;
+							extraLinkLine.StrokeDashOffset = 1;
+							extraLinkLine.StrokeDashArray = new DoubleCollection() { 2, 1 };
+							gridTree.Children.Add(extraLinkLine);
+						}
+						//else
+						//{
+						//	TreeNode originNode = tcMain.FindName("node_" + de.OutgoingLinks[i].OriginDialogID) as TreeNode;
+						//	NodeControl nodeControl = originNode.Content as NodeControl;
+						//	nodeControl.lblExternal.Visibility = Visibility.Visible;
+						//}
+					}
+				}
 			}
 		}
 
@@ -886,6 +969,7 @@ namespace TalkerMakerDeluxe
 		private void ResetButton_Click(object sender, RoutedEventArgs e)
 		{
 			uiScaleSlider.Value = 1;
+			DrawExtraConnections();
 		}
 
 		private void SettingsButton_Click(object sender, RoutedEventArgs e)
@@ -1174,6 +1258,21 @@ namespace TalkerMakerDeluxe
 		}
 
 		#region Context Menus
+		private void mnuDeleteLink_Click(object sender, RoutedEventArgs e)
+		{
+			if (lstLinks.SelectedIndex == -1)
+			{
+				MessageBox.Show("No link selected.");
+				return;
+			}
+			switch (MessageBox.Show("Delete Link: [" + theDatabase.Conversations[lstConversations.SelectedIndex].title + "]?\nThis operation cannot be undone\nand may break your project.", "Are you sure?", MessageBoxButton.YesNo))
+			{
+				case MessageBoxResult.Yes:
+					selectedEntry.OutgoingLinks.RemoveAt(lstConversations.SelectedIndex);
+					break;
+			}
+		}
+
 		private void mnuDeleteConversation_Click(object sender, RoutedEventArgs e)
 		{
 			if (lstConversations.SelectedIndex == -1)
@@ -1186,7 +1285,7 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("Must have at least one conversation");
 				return;
 			}
-			switch (MessageBox.Show("Delete Conversation: [" + theDatabase.Conversations[lstConversations.SelectedIndex].title + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+			switch (MessageBox.Show("Delete Conversation: [" + theDatabase.Conversations[lstConversations.SelectedIndex].title + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 			{
 				case MessageBoxResult.Yes:
 					theDatabase.Conversations.RemoveAt(lstConversations.SelectedIndex);
@@ -1207,7 +1306,7 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("Must have at least one character.");
 				return;
 			}
-			{ switch (MessageBox.Show("Delete Character: [" + theDatabase.Actors[lstCharacters.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+			{ switch (MessageBox.Show("Delete Character: [" + theDatabase.Actors[lstCharacters.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Actors.RemoveAt(lstCharacters.SelectedIndex);
@@ -1229,7 +1328,7 @@ namespace TalkerMakerDeluxe
 			//	return;
 			//}
 			{
-				switch (MessageBox.Show("Delete Item: [" + theDatabase.Items[lstItems.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+				switch (MessageBox.Show("Delete Item: [" + theDatabase.Items[lstItems.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Items.RemoveAt(lstItems.SelectedIndex);
@@ -1251,7 +1350,7 @@ namespace TalkerMakerDeluxe
 			//	return;
 			//}
 			{
-				switch (MessageBox.Show("Delete Location: [" + theDatabase.Locations[lstLocations.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+				switch (MessageBox.Show("Delete Location: [" + theDatabase.Locations[lstLocations.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Locations.RemoveAt(lstLocations.SelectedIndex);
@@ -1273,7 +1372,7 @@ namespace TalkerMakerDeluxe
 			//	return;
 			//}
 			{
-				switch (MessageBox.Show("Delete Variable: [" + theDatabase.Variables[lstVariables.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Delete", MessageBoxButton.YesNo))
+				switch (MessageBox.Show("Delete Variable: [" + theDatabase.Variables[lstVariables.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Variables.RemoveAt(lstVariables.SelectedIndex);
@@ -1283,6 +1382,12 @@ namespace TalkerMakerDeluxe
 		}
 
 		#endregion
+
+		private void menuLinks_Click(object sender, RoutedEventArgs e)
+		{
+			DrawExtraConnections();
+		}
+
 	}
 
 }

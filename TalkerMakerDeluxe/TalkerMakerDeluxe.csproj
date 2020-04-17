@@ -132,7 +132,7 @@
     <Compile Include="RecentFileList.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="TreeUndoRedo.cs" />
-    <Compile Include="UriConverter.cs" />
+    <Compile Include="Converters.cs" />
     <Page Include="Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

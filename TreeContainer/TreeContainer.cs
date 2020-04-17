@@ -343,15 +343,20 @@ namespace TreeContainer
 			if (Connections != null)
 			{
                 RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
-				SolidColorBrush brsh = new SolidColorBrush(Colors.Black);
+				SolidColorBrush brsh = new SolidColorBrush(SystemColors.ControlLightColor);
 				brsh.Opacity = 0.5;
-				Pen pen = new Pen(brsh, 1.0);
+				Pen pen = new Pen(brsh, 2.0);
 				Point ptLast = new Point(0, 0);
 				bool fHaveLastPoint = false;
 
 				foreach (TreeConnection tcn in Connections)
 				{
 					fHaveLastPoint = false;
+					if(tcn.Dashed)
+					{
+						pen.DashStyle = DashStyles.Dash;
+						pen.Thickness = 1;
+					}
 					foreach (DPoint dpt in tcn.LstPt)
 					{
 						if (!fHaveLastPoint)
