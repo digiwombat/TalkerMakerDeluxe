@@ -120,7 +120,10 @@
 							<Style TargetType="{x:Type Border}">
 								<Setter Property="Visibility" Value="Visible"/>
 								<Style.Triggers>
-									<DataTrigger Binding="{Binding Path=sequence.Length}" Value="0">
+									<DataTrigger Binding="{Binding Path=sequence}" Value="">
+										<Setter Property="Visibility" Value="Hidden"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding Path=sequence}" Value="{x:Null}">
 										<Setter Property="Visibility" Value="Hidden"/>
 									</DataTrigger>
 								</Style.Triggers>
@@ -135,7 +138,10 @@
 							<Style TargetType="{x:Type Border}">
 								<Setter Property="Visibility" Value="Visible"/>
 								<Style.Triggers>
-									<DataTrigger Binding="{Binding Path=ConditionsString.Length}" Value="0">
+									<DataTrigger Binding="{Binding Path=ConditionsString}" Value="">
+										<Setter Property="Visibility" Value="Hidden"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding Path=ConditionsString}" Value="{x:Null}">
 										<Setter Property="Visibility" Value="Hidden"/>
 									</DataTrigger>
 								</Style.Triggers>
@@ -150,7 +156,10 @@
 							<Style TargetType="{x:Type Border}">
 								<Setter Property="Visibility" Value="Visible"/>
 								<Style.Triggers>
-									<DataTrigger Binding="{Binding Path=UserScript.Length}" Value="0">
+									<DataTrigger Binding="{Binding Path=UserScript}" Value="">
+										<Setter Property="Visibility" Value="Hidden"/>
+									</DataTrigger>
+									<DataTrigger Binding="{Binding Path=UserScript}" Value="{x:Null}">
 										<Setter Property="Visibility" Value="Hidden"/>
 									</DataTrigger>
 								</Style.Triggers>
