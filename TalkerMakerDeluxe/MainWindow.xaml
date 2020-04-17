@@ -252,7 +252,7 @@
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ItemAnchor" Title="Items" CanHide="False" CanClose="False" CanFloat="False">
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
 									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstItems" ItemsSource="{Binding Items}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstItems_GotFocus" HorizontalContentAlignment="Stretch">
+										<ListBox Padding="0" x:Name="lstItems" ItemsSource="{Binding Items}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstItems_GotFocus" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
 											<ListBox.ContextMenu>
 												<ContextMenu>
 													<MenuItem x:Name="mnuDeleteItem" Header="Delete Item" Click="mnuDeleteItem_Click" />
@@ -282,7 +282,7 @@
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="LocationAnchor" Title="Locations" CanHide="False" CanClose="False" CanFloat="False">
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
 									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstLocations" ItemsSource="{Binding Locations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstLocations_GotFocus" HorizontalContentAlignment="Stretch">
+										<ListBox Padding="0" x:Name="lstLocations" ItemsSource="{Binding Locations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstLocations_GotFocus" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
 											<ListBox.ContextMenu>
 												<ContextMenu>
 													<MenuItem x:Name="mnuDeleteLocation" Header="Delete Item" Click="mnuDeleteLocation_Click" />
@@ -314,7 +314,7 @@
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="VariableAnchor" Title="Variables" CanHide="False" CanClose="False" CanFloat="False">
 								<ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
 									<StackPanel  Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstVariables" ItemsSource="{Binding Variables}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstVariables_GotFocus" HorizontalContentAlignment="Stretch">
+										<ListBox Padding="0" x:Name="lstVariables" ItemsSource="{Binding Variables}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" GotFocus="lstVariables_GotFocus" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
 											<ListBox.ContextMenu>
 												<ContextMenu>
 													<MenuItem x:Name="mnuDeleteVariable" Header="Delete Item" Click="mnuDeleteVariable_Click" />
@@ -346,8 +346,8 @@
 							<xcad:LayoutAnchorable AutoHideMinWidth="235" AutoHideWidth="235" ContentId="ConvoAnchor" Title="Conversations" CanHide="False" CanClose="False" CanFloat="False">
 								<ScrollViewer Grid.Column="0" Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Background="{DynamicResource GrayBrush1}">
 									<StackPanel Margin="0" Height="Auto" ScrollViewer.CanContentScroll="True">
-										<ListBox Padding="3" x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" GotFocus="lstConversations_GotFocus" 
-												 ItemsSource="{Binding Conversations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch">
+										<ListBox Padding="0" x:Name="lstConversations" MouseDoubleClick="lstConversations_MouseDoubleClick" GotFocus="lstConversations_GotFocus" 
+												 ItemsSource="{Binding Conversations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
 											<ListBox.ContextMenu>
 												<ContextMenu>
 													<MenuItem x:Name="mnuDeleteConversation" Header="Delete Conversation" Click="mnuDeleteConversation_Click" />
@@ -356,7 +356,7 @@
 											<ListBox.ItemTemplate>
 												<DataTemplate>
 													<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
-														<Grid x:Name="grid" Margin="0,0,0,0">
+														<Grid x:Name="grid">
 															<Grid.ColumnDefinitions>
 																<ColumnDefinition Name="grdActor" />
 															</Grid.ColumnDefinitions>
@@ -884,7 +884,7 @@
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v2.1.3" />
+				<TextBlock Text="v2.1.4" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">

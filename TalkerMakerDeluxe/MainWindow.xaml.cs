@@ -1286,6 +1286,7 @@ namespace TalkerMakerDeluxe
 				cbConvo.SelectedItem = null;
 				cbDialogueEntry.ItemsSource = null;
 				DrawExtraConnections();
+				needsSave = true;
 			}
 		}
 
@@ -1302,6 +1303,7 @@ namespace TalkerMakerDeluxe
 				case MessageBoxResult.Yes:
 					selectedEntry.OutgoingLinks.RemoveAt(lstLinks.SelectedIndex);
 					DrawExtraConnections();
+					needsSave = true;
 					break;
 			}
 		}
@@ -1323,6 +1325,7 @@ namespace TalkerMakerDeluxe
 				case MessageBoxResult.Yes:
 					theDatabase.Conversations.RemoveAt(lstConversations.SelectedIndex);
 					LoadConversation(0);
+					needsSave = true;
 					break;
 			}
 		}
@@ -1334,7 +1337,7 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("No character selected.");
 				return;
 			}
-			if (lstConversations.Items.Count == 1)
+			if (lstCharacters.Items.Count == 1)
 			{
 				MessageBox.Show("Must have at least one character.");
 				return;
@@ -1343,6 +1346,7 @@ namespace TalkerMakerDeluxe
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Actors.RemoveAt(lstCharacters.SelectedIndex);
+						needsSave = true;
 						break;
 				}
 			}
@@ -1355,16 +1359,12 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("No item selected.");
 				return;
 			}
-			//if (lstItems.Items.Count == 1)
-			//{
-			//	MessageBox.Show("Must have at least one item.");
-			//	return;
-			//}
 			{
 				switch (MessageBox.Show("Delete Item: [" + theDatabase.Items[lstItems.SelectedIndex].name + "]?\n\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Items.RemoveAt(lstItems.SelectedIndex);
+						needsSave = true;
 						break;
 				}
 			}
@@ -1387,6 +1387,7 @@ namespace TalkerMakerDeluxe
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Locations.RemoveAt(lstLocations.SelectedIndex);
+						needsSave = true;
 						break;
 				}
 			}
@@ -1409,6 +1410,7 @@ namespace TalkerMakerDeluxe
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Variables.RemoveAt(lstVariables.SelectedIndex);
+						needsSave = true;
 						break;
 				}
 			}
