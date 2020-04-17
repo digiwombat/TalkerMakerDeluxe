@@ -334,7 +334,7 @@ namespace TalkerMakerDeluxe
 				newDialogueEntry.FalseCondtionAction = "Block";
 				newDialogueEntry.NodeColor = "Normal";
 				newDialogueEntry.UserScript = "";
-				newDialogueEntry.title = "New Dialogue";
+				newDialogueEntry.title = "";
 				newDialogueEntry.actorID = theDatabase.Conversations[loadedConversation].actorID;
 				newDialogueEntry.actor = theDatabase.Actors.FirstOrDefault(x => x.ID == theDatabase.Conversations[loadedConversation].actorID);
 				newDialogueEntry.conversantID = theDatabase.Conversations[loadedConversation].conversantID;
@@ -621,6 +621,8 @@ namespace TalkerMakerDeluxe
 					node.grdNodeImage.Height = new GridLength(0);
 					node.grdNodeText.Height = new GridLength(0);
 					node.lblDialogueName.Text = theDatabase.Conversations[loadedConversation].title;
+					node.lblActor.DataContext = theDatabase.Conversations[loadedConversation];
+					node.lblConversant.DataContext = theDatabase.Conversations[loadedConversation];
 					tcMain.AddRoot(node, "node_" + dh.ID);
 					Console.WriteLine("Writing root: " + dh.ID);
 				}
@@ -1526,6 +1528,12 @@ namespace TalkerMakerDeluxe
 			return path;
 		}
 
+		private void btnSwap_Click(object sender, RoutedEventArgs e)
+		{
+			int holdConversant = lstDialogueConversant.SelectedIndex;
+			lstDialogueConversant.SelectedIndex = lstDialogueActor.SelectedIndex;
+			lstDialogueActor.SelectedIndex = holdConversant;
+		}
 	}
 
 }
