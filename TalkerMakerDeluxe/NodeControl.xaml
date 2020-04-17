@@ -36,6 +36,7 @@
 				</RowDefinition>
 				<RowDefinition Name="grdNodeText" Height="Auto" />
 			</Grid.RowDefinitions>
+			<TextBlock Foreground="{DynamicResource GrayBrush2}" TextTrimming="CharacterEllipsis" x:Name="lblID" Grid.Row="0" Text="{Binding ID}" Margin="0,-16,0,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="11" FontWeight="Bold" HorizontalAlignment="Right"/>
 			<TextBlock Foreground="{DynamicResource GrayBrush2}" TextTrimming="CharacterEllipsis" x:Name="lblDialogueName" Grid.Row="0" Text="{Binding title}" Margin="6,6,60,0" VerticalAlignment="Top" Background="{x:Null}" FontSize="11" FontWeight="Bold"/>
 			<Button x:Name="btnAdd" ToolTip="Add Child Dialogue" HorizontalAlignment="Right" VerticalAlignment="Top" Width="24" Height="24" Margin="0" FontFamily="FontAwesome" Background="Transparent" BorderBrush="Transparent" Click="btnAdd_Click" Grid.Row="0">
 				<Button.Style>
