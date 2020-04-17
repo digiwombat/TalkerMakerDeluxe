@@ -648,6 +648,8 @@ namespace TalkerMakerDeluxe
 			foreach (DialogueEntry d in theDatabase.Conversations[convotoload].DialogEntries)
 			{
 				List<int> childs = new List<int>();
+				d.actor = theDatabase.Actors[d.actorID];
+				d.conversant = theDatabase.Actors[d.conversantID];
 				foreach (Link link in d.OutgoingLinks)
 				{
 					if (link.DestinationConvoID == link.OriginConvoID && link.IsConnector == false)
