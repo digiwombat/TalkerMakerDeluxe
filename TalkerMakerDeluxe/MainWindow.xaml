@@ -410,7 +410,7 @@
 										Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" MinHeight="90" Text="{Binding Path=ConditionsString}"/>
 										<StackPanel Orientation="Horizontal">
 											<Label Foreground="{DynamicResource WhiteBrush}">When False:</Label>
-											<ComboBox Name="cmbFunction" Width="100" Text="{Binding FalseCondtionAction}">
+											<ComboBox Name="cmbFunction" Width="100" Text="{Binding FalseCondtionAction}" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderThickness="1">
 												<ComboBoxItem IsSelected="True">Block</ComboBoxItem>
 												<ComboBoxItem>Passthrough</ComboBoxItem>
 											</ComboBox>
@@ -481,13 +481,13 @@
 												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.name, ElementName=lstCharacters}" Name="txtActorName"/>
 
 												<TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Age</TextBlock>
-												<xctk:IntegerUpDown Minimum="0" Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.age, ElementName=lstCharacters}" Name="txtActorAge" />
+												<xctk:IntegerUpDown Minimum="0" Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Text="{Binding SelectedItem.age, ElementName=lstCharacters}" Name="txtActorAge" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}" />
 
 												<TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Gender</TextBlock>
 												<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.gender, ElementName=lstCharacters}" Name="txtActorGender"/>
 
 												<TextBlock Grid.Row="4" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Is Player?</TextBlock>
-												<CheckBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.isPlayer, ElementName=lstCharacters}" Name="chkActorPlayer" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
+												<CheckBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.isPlayer, ElementName=lstCharacters}" Name="chkActorPlayer" Background="{DynamicResource AccentColorBrush5}" BorderBrush="{DynamicResource AccentColorBrush5}" Foreground="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"></CheckBox>
 
 												<TextBlock Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Description</TextBlock>
 												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto"
@@ -662,7 +662,7 @@
 																</DataTemplate>
 															</ComboBox.ItemTemplate>
 														</ComboBox>
-														<Button Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="2" Click="Button_Click">Add</Button>
+														<Button x:Name="btnLink" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="2" Click="btnLink_Click">Add</Button>
 													</UniformGrid>
 													<ListView Height="50" x:Name="lstLinks" ItemsSource="{Binding OutgoingLinks}" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}">
 														<ListBox.ContextMenu>
@@ -704,7 +704,7 @@
 												<TextBlock Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Name</TextBlock>
 												<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.name, ElementName=lstItems}" Name="txtItemName" />
 												<TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">In Inventory</TextBlock>
-												<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.inInventory, ElementName=lstItems}" Name="chkItemInventory" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
+												<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.inInventory, ElementName=lstItems}" Name="chkItemInventory" Background="{DynamicResource AccentColorBrush5}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
 											</Grid>
 										</TabItem>
 										<TabItem Header="Location Settings" Name="tabLocation" Visibility="Collapsed">
@@ -725,10 +725,10 @@
 												<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.name, ElementName=lstLocations}" Name="txtLocName" />
 
 												<TextBlock Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Learned</TextBlock>
-												<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.learned, ElementName=lstLocations}" Name="chkLocLearned" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
+												<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.learned, ElementName=lstLocations}" Name="chkLocLearned" Background="{DynamicResource AccentColorBrush5}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
 
 												<TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Visited</TextBlock>
-												<CheckBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.visited, ElementName=lstLocations}" Name="chkLocVisited" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
+												<CheckBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.visited, ElementName=lstLocations}" Name="chkLocVisited" Background="{DynamicResource AccentColorBrush5}" BorderBrush="{DynamicResource AccentColorBrush5}"></CheckBox>
 
 												<TextBlock Grid.Row="3" Grid.Column="0" Margin="4,4,4,4" HorizontalAlignment="Right" VerticalAlignment="Top" FontWeight="Bold">Description</TextBlock>
 												<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4"  Text="{Binding SelectedItem.description, ElementName=lstLocations}" Name="txtLocDescription" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" />
@@ -816,7 +816,7 @@
 				<MenuItem Name="menuExpand" Header="Expand All" Click="menuExpand_Click" Foreground="Black" />
 				<MenuItem Name="menuCollapse" Header="Collapse All" Click="menuExpand_Click" Foreground="Black" />
 				<Separator />
-				<MenuItem Name="menuLinks" Header="Show All Links" Click="menuLinks_Click" IsCheckable="True" Foreground="Black" />
+				<MenuItem Name="menuLinks" Header="Show All Links" Click="menuLinks_Click" IsChecked="True" IsCheckable="True" Foreground="Black" />
 			</MenuItem>
 		</Menu>
 		<StatusBar Grid.Row="2" Grid.ColumnSpan="100" Background="{DynamicResource GrayBrush1}">
@@ -874,7 +874,7 @@
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v2.1.1" />
+				<TextBlock Text="v2.1.2" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">

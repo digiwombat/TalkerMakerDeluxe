@@ -340,36 +340,6 @@ namespace TreeContainer
 		protected override void OnRender(System.Windows.Media.DrawingContext dc)
 		{
 			base.OnRender(dc);
-			if (Connections != null)
-			{
-                RenderOptions.SetEdgeMode(this, EdgeMode.Aliased);
-				SolidColorBrush brsh = new SolidColorBrush(SystemColors.ControlLightColor);
-				brsh.Opacity = 0.5;
-				Pen pen = new Pen(brsh, 2.0);
-				Point ptLast = new Point(0, 0);
-				bool fHaveLastPoint = false;
-
-				foreach (TreeConnection tcn in Connections)
-				{
-					fHaveLastPoint = false;
-					if(tcn.Dashed)
-					{
-						pen.DashStyle = DashStyles.Dash;
-						pen.Thickness = 1;
-					}
-					foreach (DPoint dpt in tcn.LstPt)
-					{
-						if (!fHaveLastPoint)
-						{
-							ptLast = PtFromDPoint(tcn.LstPt[0]);
-							fHaveLastPoint = true;
-							continue;
-						}
-						dc.DrawLine(pen, PtFromDPoint(dpt), ptLast);
-						ptLast = PtFromDPoint(dpt);
-					}
-				}
-			}
 		}
 		#endregion
 	}

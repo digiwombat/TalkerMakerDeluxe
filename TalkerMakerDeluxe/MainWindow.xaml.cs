@@ -40,6 +40,7 @@ namespace TalkerMakerDeluxe
 
 		private double oldSize;
 		private double oldZoom;
+		private int oldCount;
 
 		private bool _needsSave = false;
 		
@@ -130,12 +131,13 @@ namespace TalkerMakerDeluxe
 
 		private void HandleDrawConnections(object sender, EventArgs e)
 		{
-			if (oldSize != tcMain.ActualHeight + tcMain.ActualWidth || oldZoom != uiScaleSlider.Value)
+			if (oldSize != tcMain.ActualHeight + tcMain.ActualWidth || oldZoom != uiScaleSlider.Value || oldCount != tcMain.Children.Count)
 			{
 				DrawExtraConnections();
 				oldSize = tcMain.ActualHeight + tcMain.ActualWidth;
 				oldZoom = uiScaleSlider.Value;
-				Console.WriteLine("Updated lines | " + oldSize);
+				oldCount = tcMain.Children.Count;
+				//*Console.WriteLine("Updated lines | " + oldSize);
 			}
 		}
 
@@ -367,56 +369,66 @@ namespace TalkerMakerDeluxe
 			int intTotalChildren = gridTree.Children.Count - 1;
 			for (int intCounter = intTotalChildren; intCounter > 0; intCounter--)
 			{
-				if (gridTree.Children[intCounter].GetType() == typeof(Line))
+				if (gridTree.Children[intCounter].GetType() == typeof(System.Windows.Shapes.Path))
 				{
+					//Console.WriteLine("Removing Shape");
 					gridTree.Children.RemoveAt(intCounter);
 				}
 			}
-			if (menuLinks.IsChecked)
+			foreach (DialogueEntry de in theDatabase.Conversations[loadedConversation].DialogEntries)
 			{
-				foreach (DialogueEntry de in theDatabase.Conversations[loadedConversation].DialogEntries)
+				for (int i = 0; i < de.OutgoingLinks.Count; i++)
 				{
-					for (int i = 0; i < de.OutgoingLinks.Count; i++)
+					if (de.OutgoingLinks[i].DestinationConvoID == de.OutgoingLinks[i].OriginConvoID)
 					{
-						if (de.OutgoingLinks[i].DestinationConvoID == de.OutgoingLinks[i].OriginConvoID)
+						TreeNode originNode = tcMain.FindName("node_" + de.OutgoingLinks[i].OriginDialogID) as TreeNode;
+						if (originNode == null)
 						{
-							TreeNode originNode = tcMain.FindName("node_" + de.OutgoingLinks[i].OriginDialogID) as TreeNode;
-							if (originNode.Collapsed)
-							{
-								continue;
-							}
-							TreeNode destinationNode = tcMain.FindName("node_" + de.OutgoingLinks[i].DestinationDialogID) as TreeNode;
-							if (destinationNode.Collapsed)
-							{
-								continue;
-							}
-
-							Point originPoint = originNode.TransformToAncestor(gridTree).Transform(new Point(0, 0));
-							Point destinationPoint = destinationNode.TransformToAncestor(gridTree).Transform(new Point(0, 0));
-
-							///List<GraphLayout.DPoint> points = new List<GraphLayout.DPoint>();
-							//points.Add(new GraphLayout.DPoint(originPoint.X, originPoint.Y));
-							//points.Add(new GraphLayout.DPoint(destinationPoint.X, destinationPoint.Y));
-							//tcMain.Connections.Add(new GraphLayout.TreeConnection(originNode, destinationNode, points, true));
-
-							Line extraLinkLine = new Line();
-							extraLinkLine.X1 = originPoint.X + (99 * uiScaleSlider.Value);
-							extraLinkLine.Y1 = originPoint.Y + (20 * uiScaleSlider.Value);
-							extraLinkLine.X2 = destinationPoint.X + (99 * uiScaleSlider.Value);
-							extraLinkLine.Y2 = destinationPoint.Y + (20 * uiScaleSlider.Value);
-							extraLinkLine.Stroke = (Brush)Application.Current.FindResource("AccentColorBrush4");
-							extraLinkLine.Opacity = 0.8;
-							extraLinkLine.StrokeThickness = 2;
-							extraLinkLine.StrokeDashOffset = 1;
-							extraLinkLine.StrokeDashArray = new DoubleCollection() { 2, 1 };
-							gridTree.Children.Add(extraLinkLine);
+							continue;
 						}
-						//else
-						//{
-						//	TreeNode originNode = tcMain.FindName("node_" + de.OutgoingLinks[i].OriginDialogID) as TreeNode;
-						//	NodeControl nodeControl = originNode.Content as NodeControl;
-						//	nodeControl.lblExternal.Visibility = Visibility.Visible;
-						//}
+						if (originNode.Collapsed)
+						{
+							continue;
+						}
+						TreeNode destinationNode = tcMain.FindName("node_" + de.OutgoingLinks[i].DestinationDialogID) as TreeNode;
+						if(destinationNode == null)
+						{
+							de.OutgoingLinks.RemoveAt(i);
+							continue;
+						}
+
+
+						Point originPoint = originNode.TransformToAncestor(gridTree).Transform(new Point(0, 0));
+						Point destinationPoint = destinationNode.TransformToAncestor(gridTree).Transform(new Point(0, 0));
+						double originAdjust = originNode.ActualHeight;
+						double destinationAdjust = destinationNode.ActualHeight;
+
+						//Line extraLinkLine = new Line();
+						originPoint.X = originPoint.X + (99 * uiScaleSlider.Value);
+						destinationPoint.X = destinationPoint.X + (99 * uiScaleSlider.Value);
+						//Going Down
+						if (originPoint.Y < destinationPoint.Y)
+						{
+							originPoint.Y = originPoint.Y + (originAdjust * uiScaleSlider.Value);
+							destinationPoint.Y = destinationPoint.Y + (0 * uiScaleSlider.Value);
+						}
+						else
+						{
+							originPoint.Y = originPoint.Y + (0 * uiScaleSlider.Value);
+							destinationPoint.Y = destinationPoint.Y + (destinationAdjust * uiScaleSlider.Value);
+						}
+
+						if (de.OutgoingLinks[i].IsConnector)
+						{
+							if (menuLinks.IsChecked)
+							{
+								gridTree.Children.Add(DrawLinkArrow(originPoint, destinationPoint));
+							}
+						}
+						else
+						{
+							gridTree.Children.Add(DrawLinkArrow(originPoint, destinationPoint, true));
+						}
 					}
 				}
 			}
@@ -647,6 +659,7 @@ namespace TalkerMakerDeluxe
 
 			//Clear the nodes for the next draw cycle since we don't use it for anything else.
 			//recOverview.GetBindingExpression(VisualBrush.VisualProperty).UpdateTarget();
+			DrawExtraConnections();
 			handledNodes.Clear();
 		}
 
@@ -1231,7 +1244,7 @@ namespace TalkerMakerDeluxe
 			}
 		}
 
-		private void Button_Click(object sender, RoutedEventArgs e)
+		private void btnLink_Click(object sender, RoutedEventArgs e)
 		{
 			if(loadedConversation == cbConvo.SelectedIndex && selectedEntry.ID == cbDialogueEntry.SelectedIndex)
 			{
@@ -1249,11 +1262,13 @@ namespace TalkerMakerDeluxe
 					OriginConvoID = loadedConversation,
 					OriginDialogID = selectedEntry.ID,
 					DestinationConvoID = cbConvo.SelectedIndex,
+					IsConnector = true,
 					DestinationDialogID = cbDialogueEntry.SelectedIndex
 				});
 
 				cbConvo.SelectedItem = null;
 				cbDialogueEntry.ItemsSource = null;
+				DrawExtraConnections();
 			}
 		}
 
@@ -1265,10 +1280,11 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("No link selected.");
 				return;
 			}
-			switch (MessageBox.Show("Delete Link: [" + theDatabase.Conversations[lstConversations.SelectedIndex].title + "]?\nThis operation cannot be undone\nand may break your project.", "Are you sure?", MessageBoxButton.YesNo))
+			switch (MessageBox.Show("Delete Link: [Conversation: " + selectedEntry.OutgoingLinks[lstLinks.SelectedIndex].DestinationConvoID + " -> Node: " + selectedEntry.OutgoingLinks[lstLinks.SelectedIndex].DestinationDialogID + "]?\nThis operation cannot be undone\nand may break your project.", "Are you sure?", MessageBoxButton.YesNo))
 			{
 				case MessageBoxResult.Yes:
-					selectedEntry.OutgoingLinks.RemoveAt(lstConversations.SelectedIndex);
+					selectedEntry.OutgoingLinks.RemoveAt(lstLinks.SelectedIndex);
+					DrawExtraConnections();
 					break;
 			}
 		}
@@ -1386,6 +1402,109 @@ namespace TalkerMakerDeluxe
 		private void menuLinks_Click(object sender, RoutedEventArgs e)
 		{
 			DrawExtraConnections();
+		}
+
+		// Based on: https://stackoverflow.com/questions/5188877/how-to-have-arrow-symbol-on-a-line-in-c-wpf
+		private Shape DrawLinkArrow(Point p1, Point p2, bool angled = false)
+		{
+			GeometryGroup lineGroup = new GeometryGroup();
+			double theta = Math.Atan2((p2.Y - p1.Y), (p2.X - p1.X)) * 180 / Math.PI;
+			int adjust = 20;
+			if (p1.Y > p2.Y)
+			{
+				adjust = -adjust;
+			}
+
+			PathGeometry pathGeometry = new PathGeometry();
+			PathFigure pathFigure = new PathFigure();
+			Point p = new Point(p1.X + ((p2.X - p1.X) / 1.4), p1.Y + ((p2.Y - p1.Y) / 1.4));
+			if (angled)
+			{
+				p = new Point((p1.X + p2.X) / 2, p1.Y + adjust);
+			}
+			pathFigure.StartPoint = p;
+
+			Point lpoint = new Point(p.X + 6, p.Y + 15);
+			Point rpoint = new Point(p.X - 6, p.Y + 15);
+			if (!angled)
+			{
+				LineSegment seg1 = new LineSegment();
+				seg1.Point = lpoint;
+				pathFigure.Segments.Add(seg1);
+
+				LineSegment seg2 = new LineSegment();
+				seg2.Point = rpoint;
+				pathFigure.Segments.Add(seg2);
+
+				LineSegment seg3 = new LineSegment();
+				seg3.Point = p;
+				pathFigure.Segments.Add(seg3);
+
+				pathGeometry.Figures.Add(pathFigure);
+			}
+			RotateTransform transform = new RotateTransform();
+			if (angled)
+			{
+				if (p1.X < p2.X)
+				{
+					transform.Angle = 90;
+				}
+				else if (p1.X == p2.X)
+				{
+					transform.Angle = 180;
+				}
+				else
+				{
+					transform.Angle = 270;
+				}
+			}
+			else
+			{
+				transform.Angle = theta + 90;
+			}
+			
+			transform.CenterX = p.X;
+			transform.CenterY = p.Y;
+			pathGeometry.Transform = transform;
+			lineGroup.Children.Add(pathGeometry);
+
+			// Make Angled Connector
+			if (angled)
+			{
+				LineGeometry outofNode = new LineGeometry();
+				outofNode.StartPoint = p1;
+				outofNode.EndPoint = new Point(p1.X, p1.Y + adjust);
+				lineGroup.Children.Add(outofNode);
+				LineGeometry acrossToNode = new LineGeometry();
+				acrossToNode.StartPoint = new Point(p1.X, p1.Y + adjust);
+				acrossToNode.EndPoint = new Point(p2.X, p1.Y + adjust);
+				lineGroup.Children.Add(acrossToNode);
+				LineGeometry intoNode = new LineGeometry();
+				intoNode.StartPoint = new Point(p2.X, p1.Y + adjust);
+				intoNode.EndPoint = new Point(p2.X, p2.Y); ;
+				lineGroup.Children.Add(intoNode);
+			}
+			else
+			{
+				LineGeometry connectorGeometry = new LineGeometry();
+				connectorGeometry.StartPoint = p1;
+				connectorGeometry.EndPoint = p2;
+				lineGroup.Children.Add(connectorGeometry);
+			}
+			System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
+			path.Data = lineGroup;
+			path.StrokeThickness = 2;
+			if (angled)
+			{
+				path.Stroke = path.Fill = (Brush)Application.Current.FindResource("AccentColorBrush5");
+			}
+			else
+			{
+				path.Stroke = path.Fill = (Brush)Application.Current.FindResource("AccentColorBrush4");
+				path.StrokeDashArray = new DoubleCollection() { 10, 1, 1, 1 };
+			}
+
+			return path;
 		}
 
 	}
