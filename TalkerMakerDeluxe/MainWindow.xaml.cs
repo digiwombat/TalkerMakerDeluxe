@@ -334,6 +334,7 @@ namespace TalkerMakerDeluxe
 				newDialogueEntry.FalseCondtionAction = "Block";
 				newDialogueEntry.NodeColor = "Normal";
 				newDialogueEntry.UserScript = "";
+				newDialogueEntry.sequence = "";
 				newDialogueEntry.title = "";
 				newDialogueEntry.actorID = theDatabase.Conversations[loadedConversation].actorID;
 				newDialogueEntry.actor = theDatabase.Actors.FirstOrDefault(x => x.ID == theDatabase.Conversations[loadedConversation].actorID);

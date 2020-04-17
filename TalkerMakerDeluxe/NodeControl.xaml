@@ -113,51 +113,54 @@
 					<fa:ImageAwesome Panel.ZIndex="1" Name="faMin" Icon="ChevronCircleUp" Foreground="{StaticResource ResourceKey=BlackBrush}" Margin="-9,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="10" Height="10" />
 				</StackPanel>
 			</Button>
-			<Label x:Name="lblExternal" Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalAlignment="Right"  Margin="0,0,44,-12" Grid.RowSpan="4" Height="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0" Width="16" ScrollViewer.VerticalScrollBarVisibility="Disabled" Visibility="Hidden">
-				<Border BorderBrush="Black" BorderThickness="0" Background="{StaticResource ResourceKey=BlackBrush}">
-					<Border.Style>
-						<Style TargetType="{x:Type Border}">
-							<Setter Property="Visibility" Value="Visible"/>
-							<Style.Triggers>
-								<DataTrigger Binding="{Binding Path=ConditionsString.Length}" Value="0">
-									<Setter Property="Visibility" Value="Hidden"/>
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</Border.Style>
-					<fa:FontAwesome Name="faLinks" Icon="ExternalLink" VerticalAlignment="Center" Padding="1" FontSize="11" />
-				</Border>
-			</Label>
-			<Label x:Name="lblConditional" Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalAlignment="Right"  Margin="0,0,28,-12" Grid.RowSpan="4" Height="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0" Width="16" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-				<Border BorderBrush="Black" BorderThickness="0" Background="{StaticResource ResourceKey=BlackBrush}">
-					<Border.Style>
-						<Style TargetType="{x:Type Border}">
-							<Setter Property="Visibility" Value="Visible"/>
-							<Style.Triggers>
-								<DataTrigger Binding="{Binding Path=ConditionsString.Length}" Value="0">
-									<Setter Property="Visibility" Value="Hidden"/>
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</Border.Style>
-					<fa:FontAwesome Name="faFork" Icon="CodeFork" VerticalAlignment="Center" Padding="1" FontSize="11" />
-				</Border>
-			</Label>
-			<Label x:Name="lblCode" Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalAlignment="Right"  Margin="0,0,12,-12" Grid.RowSpan="4" Height="18" VerticalAlignment="Bottom" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0" Width="16" ScrollViewer.VerticalScrollBarVisibility="Disabled">
-				<Border Background="{StaticResource ResourceKey=BlackBrush}">
-					<Border.Style>
-						<Style TargetType="{x:Type Border}">
-							<Setter Property="Visibility" Value="Visible"/>
-							<Style.Triggers>
-								<DataTrigger Binding="{Binding Path=UserScript.Length}" Value="0">
-									<Setter Property="Visibility" Value="Hidden"/>
-								</DataTrigger>
-							</Style.Triggers>
-						</Style>
-					</Border.Style>
-					<fa:FontAwesome Name="faCode" Icon="Code" VerticalAlignment="Center" Padding="1" FontSize="11" />
-				</Border>
-			</Label>
+			<StackPanel Orientation="Horizontal" HorizontalAlignment="Right"  Margin="0,0,12,-12" Grid.RowSpan="4" Height="20" VerticalAlignment="Bottom">
+				<Label x:Name="lblSequence" Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0" Width="16" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Right">
+					<Border BorderBrush="Black" BorderThickness="0" Background="{StaticResource ResourceKey=BlackBrush}">
+						<Border.Style>
+							<Style TargetType="{x:Type Border}">
+								<Setter Property="Visibility" Value="Visible"/>
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding Path=sequence.Length}" Value="0">
+										<Setter Property="Visibility" Value="Hidden"/>
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Border.Style>
+						<fa:FontAwesome Name="faSequence" Icon="Play" VerticalAlignment="Center" Padding="1" FontSize="11" />
+					</Border>
+				</Label>
+				<Label x:Name="lblConditional" Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0" Width="16" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Right">
+					<Border BorderBrush="Black" BorderThickness="0" Background="{StaticResource ResourceKey=BlackBrush}">
+						<Border.Style>
+							<Style TargetType="{x:Type Border}">
+								<Setter Property="Visibility" Value="Visible"/>
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding Path=ConditionsString.Length}" Value="0">
+										<Setter Property="Visibility" Value="Hidden"/>
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Border.Style>
+						<fa:FontAwesome Name="faFork" Icon="CodeFork" VerticalAlignment="Center" Padding="1" FontSize="11" />
+					</Border>
+				</Label>
+				<Label x:Name="lblCode" Foreground="{StaticResource ResourceKey=WhiteBrush}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" Padding="0" Width="16" ScrollViewer.VerticalScrollBarVisibility="Disabled" HorizontalAlignment="Right">
+					<Border Background="{StaticResource ResourceKey=BlackBrush}">
+						<Border.Style>
+							<Style TargetType="{x:Type Border}">
+								<Setter Property="Visibility" Value="Visible"/>
+								<Style.Triggers>
+									<DataTrigger Binding="{Binding Path=UserScript.Length}" Value="0">
+										<Setter Property="Visibility" Value="Hidden"/>
+									</DataTrigger>
+								</Style.Triggers>
+							</Style>
+						</Border.Style>
+						<fa:FontAwesome Name="faCode" Icon="Code" VerticalAlignment="Center" Padding="1" FontSize="11" />
+					</Border>
+				</Label>
+			</StackPanel>
+			
 		</Grid>
 	</Border>
 </UserControl>
