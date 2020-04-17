@@ -591,10 +591,7 @@
 												<ComboBox Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Style="{DynamicResource ComboBoxStyle}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding actor}" Name="lstDialogueActor" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top">
 													<ComboBox.ItemTemplate>
 														<DataTemplate>
-															<StackPanel Orientation="Horizontal" Height="50" MaxHeight="50">
-																<Image Source="{Binding Path=picture}" Name="imgActorImage" MaxWidth="48" MaxHeight="48" HorizontalAlignment="Stretch" Height="48" VerticalAlignment="Stretch" Width="48" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,3,0"/>
-																<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-															</StackPanel>
+															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
 														</DataTemplate>
 													</ComboBox.ItemTemplate>
 												</ComboBox>
@@ -604,10 +601,7 @@
 												<ComboBox Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Stretch" SelectedItem="{Binding conversant}" Name="lstDialogueConversant" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
 													<ComboBox.ItemTemplate>
 														<DataTemplate>
-															<StackPanel Orientation="Horizontal" Height="50" MaxHeight="50">
-																<Image Source="{Binding Path=picture}" Name="imgActorImage" MaxWidth="48" MaxHeight="48" HorizontalAlignment="Stretch" Height="48" VerticalAlignment="Stretch" Width="48" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,3,0"/>
-																<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-															</StackPanel>
+															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
 														</DataTemplate>
 													</ComboBox.ItemTemplate>
 												</ComboBox>
