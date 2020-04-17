@@ -306,6 +306,7 @@ namespace TalkerMakerDeluxe
 			{
 				ndctl.faMin.Icon = FontAwesomeIcon.ChevronCircleUp;
 			}
+			DrawExtraConnections();
 		}
 
 		public void AddNode(string parentNode)
@@ -386,7 +387,7 @@ namespace TalkerMakerDeluxe
 						{
 							continue;
 						}
-						if (originNode.Collapsed)
+						if (originNode.Collapsed || !originNode.IsVisible)
 						{
 							continue;
 						}
@@ -396,7 +397,10 @@ namespace TalkerMakerDeluxe
 							de.OutgoingLinks.RemoveAt(i);
 							continue;
 						}
-
+						if (originNode.Collapsed || !destinationNode.IsVisible)
+						{
+							continue;
+						}
 
 						Point originPoint = originNode.TransformToAncestor(gridTree).Transform(new Point(0, 0));
 						Point destinationPoint = destinationNode.TransformToAncestor(gridTree).Transform(new Point(0, 0));
