@@ -216,7 +216,7 @@ namespace TalkerMakerDeluxe
 			xmlOutput += "<Field Type=\"Text\"><Title>Dialogue Text</Title><Value>" + dialogueText + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Sequence</Title><Value>" + sequence + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Files\"><Title>Pictures</Title><Value>[]</Value></Field>";
-			xmlOutput += "<Field Type=\"Text\"><Title>canvasRect</Title><Value>" + x + ";" + y + "</Value></Field>";
+			xmlOutput += "<Field Type=\"Text\"><Title>canvasRect</Title><Value>" + (x*0.8) + ";" + (y*0.6) + "</Value></Field>";
 			xmlOutput += "</Fields><ConditionsString>" + ConditionsString + "</ConditionsString>";
 			xmlOutput += "<UserScript>" + UserScript + "</UserScript>";
 			xmlOutput += "<OutgoingLinks>";

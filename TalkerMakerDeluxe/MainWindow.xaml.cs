@@ -709,7 +709,7 @@ namespace TalkerMakerDeluxe
 			for (int i = 0; i < theDatabase.Conversations[loadedConversation].DialogEntries.Count; i++)
 			{
 				TreeNode nodeTree = tcMain.FindName("node_" + i) as TreeNode;
-				Point location = nodeTree.TransformToAncestor(scrlTree).Transform(new Point(0, 0));
+				Point location = nodeTree.TransformToAncestor(gridTree).Transform(new Point(0, 0));
 				theDatabase.Conversations[loadedConversation].DialogEntries[i].x = location.X;
 				theDatabase.Conversations[loadedConversation].DialogEntries[i].y = location.Y;
 				//Console.WriteLine(location.ToString());
@@ -819,6 +819,17 @@ namespace TalkerMakerDeluxe
 
 		private void menuExport_Click(object sender, RoutedEventArgs e)
 		{
+			List<TreeNode> recollapse = new List<TreeNode>();
+			foreach (TreeNode tn in tcMain.Children.OfType<TreeNode>())
+			{
+				if (tn.Collapsed)
+				{
+					tn.Collapsed = false;
+					recollapse.Add(tn);
+				}
+						
+			}
+			tcMain.UpdateLayout();
 			popSettings.IsOpen = false;
 			SaveFileDialog saver = new SaveFileDialog();
 			saver.Filter = "ChatMapper XML File (*.xml)|*.xml|All Files (*.*)|*.*";
@@ -831,6 +842,10 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("Finished XML Export to \n" + saver.FileName);
 				Console.WriteLine("Save finished.");
 				needsSave = false;
+			}
+			foreach(TreeNode tn in recollapse)
+			{
+				tn.Collapsed = true;
 			}
 		}
 
@@ -851,8 +866,6 @@ namespace TalkerMakerDeluxe
 					ndctl.faMin.Icon = FontAwesomeIcon.ChevronCircleDown;
 				}
 			}
-
-
 		}
 
 		private void Save_Binding(object obSender, ExecutedRoutedEventArgs e)
