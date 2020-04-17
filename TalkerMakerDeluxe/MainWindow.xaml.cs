@@ -1284,7 +1284,7 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("No link selected.");
 				return;
 			}
-			switch (MessageBox.Show("Delete Link: [Conversation: " + selectedEntry.OutgoingLinks[lstLinks.SelectedIndex].DestinationConvoID + " -> Node: " + selectedEntry.OutgoingLinks[lstLinks.SelectedIndex].DestinationDialogID + "]?\nThis operation cannot be undone\nand may break your project.", "Are you sure?", MessageBoxButton.YesNo))
+			switch (MessageBox.Show("Delete Link: [Conversation: " + selectedEntry.OutgoingLinks[lstLinks.SelectedIndex].DestinationConvoID + " -> Node: " + selectedEntry.OutgoingLinks[lstLinks.SelectedIndex].DestinationDialogID + "]?\n\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 			{
 				case MessageBoxResult.Yes:
 					selectedEntry.OutgoingLinks.RemoveAt(lstLinks.SelectedIndex);
@@ -1305,7 +1305,7 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("Must have at least one conversation");
 				return;
 			}
-			switch (MessageBox.Show("Delete Conversation: [" + theDatabase.Conversations[lstConversations.SelectedIndex].title + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
+			switch (MessageBox.Show("Delete Conversation: [" + theDatabase.Conversations[lstConversations.SelectedIndex].title + "]?\n\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 			{
 				case MessageBoxResult.Yes:
 					theDatabase.Conversations.RemoveAt(lstConversations.SelectedIndex);
@@ -1326,7 +1326,7 @@ namespace TalkerMakerDeluxe
 				MessageBox.Show("Must have at least one character.");
 				return;
 			}
-			{ switch (MessageBox.Show("Delete Character: [" + theDatabase.Actors[lstCharacters.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
+			{ switch (MessageBox.Show("Delete Character: [" + theDatabase.Actors[lstCharacters.SelectedIndex].name + "]?\n\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Actors.RemoveAt(lstCharacters.SelectedIndex);
@@ -1348,7 +1348,7 @@ namespace TalkerMakerDeluxe
 			//	return;
 			//}
 			{
-				switch (MessageBox.Show("Delete Item: [" + theDatabase.Items[lstItems.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
+				switch (MessageBox.Show("Delete Item: [" + theDatabase.Items[lstItems.SelectedIndex].name + "]?\n\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Items.RemoveAt(lstItems.SelectedIndex);
@@ -1370,7 +1370,7 @@ namespace TalkerMakerDeluxe
 			//	return;
 			//}
 			{
-				switch (MessageBox.Show("Delete Location: [" + theDatabase.Locations[lstLocations.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
+				switch (MessageBox.Show("Delete Location: [" + theDatabase.Locations[lstLocations.SelectedIndex].name + "]?\n\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Locations.RemoveAt(lstLocations.SelectedIndex);
@@ -1392,7 +1392,7 @@ namespace TalkerMakerDeluxe
 			//	return;
 			//}
 			{
-				switch (MessageBox.Show("Delete Variable: [" + theDatabase.Variables[lstVariables.SelectedIndex].name + "]?\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
+				switch (MessageBox.Show("Delete Variable: [" + theDatabase.Variables[lstVariables.SelectedIndex].name + "]?\n\nThis operation cannot be undone.", "Are you sure?", MessageBoxButton.YesNo))
 				{
 					case MessageBoxResult.Yes:
 						theDatabase.Variables.RemoveAt(lstVariables.SelectedIndex);

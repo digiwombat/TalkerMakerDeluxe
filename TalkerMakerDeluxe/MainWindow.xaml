@@ -635,7 +635,7 @@
 													<CheckBox Name="chkLogicNode" IsChecked="{Binding logicNode}" Background="{DynamicResource AccentColorBrush5}" BorderBrush="{DynamicResource AccentColorBrush5}" />
 												</StackPanel>
 
-												<TextBlock Grid.Row="8" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Link To:</TextBlock>
+												<TextBlock Grid.Row="8" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Links:</TextBlock>
 												<StackPanel Orientation="Vertical" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
 													<UniformGrid Margin="0,0,0,5" Columns="3">
 														<ComboBox x:Name="cbConvo" ItemsSource="{Binding ElementName=MainWin, Path=theDatabase.Conversations}" Margin="0,0,5,0" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SelectionChanged="cbConvo_SelectionChanged" ScrollViewer.CanContentScroll="True" HorizontalContentAlignment="Stretch">
@@ -670,9 +670,19 @@
 																<MenuItem x:Name="mnuDeleteLink" Header="Delete Link" Click="mnuDeleteLink_Click" />
 															</ContextMenu>
 														</ListBox.ContextMenu>
+														<ListBox.ItemContainerStyle>
+															<Style TargetType="{x:Type ListBoxItem}">
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsConnector}" Value="False">
+																		<Setter Property="ListBoxItem.Visibility"  Value="Hidden" />
+																		<Setter Property="ListBoxItem.Height"  Value="0" />
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</ListBox.ItemContainerStyle>
 														<ListView.ItemTemplate>
 															<DataTemplate>
-																<StackPanel Orientation="Horizontal" >
+																<StackPanel Orientation="Horizontal">
 																	<TextBlock Text="Conversation: " Foreground="{DynamicResource AccentColorBrush4}" />
 																	<TextBlock Text="{Binding DestinationConvoID}" Foreground="{DynamicResource AccentColorBrush4}" />
 																	<TextBlock Text=" -> Node: " />
@@ -874,7 +884,7 @@
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v2.1.2" />
+				<TextBlock Text="v2.1.3" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">
