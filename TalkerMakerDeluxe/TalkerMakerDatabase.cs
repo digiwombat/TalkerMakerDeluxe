@@ -97,7 +97,7 @@ namespace TalkerMakerDeluxe
 
 		public string ToXML()
 		{
-			string xmlOutput = "<Actor ID=\"" + ID + "\"><Fields>";
+			string xmlOutput = "<Actor ID=\"" + (ID + 1) + "\"><Fields>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Name</Title><Value>" + name?.Replace("<", "&lt;").Replace(">", "&gt;") + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Description</Title><Value>" + description?.Replace("<", "&lt;").Replace(">", "&gt;") + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Number\"><Title>Age</Title><Value>" + age + "</Value></Field>";
@@ -149,8 +149,8 @@ namespace TalkerMakerDeluxe
 			string xmlOutput = "<Conversation ID=\"" + ID + "\"><Fields>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Title</Title><Value>" + title?.Replace("<", "&lt;").Replace(">", "&gt;") + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Description</Title><Value>" + description?.Replace("<", "&lt;").Replace(">", "&gt;") + "</Value></Field>";
-			xmlOutput += "<Field Type=\"Actor\"><Title>Actor</Title><Value>" + actorID + "</Value></Field>";
-			xmlOutput += "<Field Type=\"Actor\"><Title>Conversant</Title><Value>" + conversantID + "</Value></Field>";
+			xmlOutput += "<Field Type=\"Actor\"><Title>Actor</Title><Value>" + (actorID + 1) + "</Value></Field>";
+			xmlOutput += "<Field Type=\"Actor\"><Title>Conversant</Title><Value>" + (conversantID + 1)  + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Files\"><Title>Pictures</Title><Value>[]</Value></Field>";
 			xmlOutput += "</Fields><DialogEntries>";
 			foreach (DialogueEntry de in DialogEntries)
@@ -215,8 +215,8 @@ namespace TalkerMakerDeluxe
 		{
 			string xmlOutput = "<DialogEntry ID=\"" + ID + "\" IsRoot=\"" + IsRoot.ToString().ToLower() + "\" FalseConditionAction=\"" + FalseCondtionAction + "\"><Fields>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Title</Title><Value>" + title?.Replace("<", "&lt;").Replace(">", "&gt;") + "</Value></Field>";
-			xmlOutput += "<Field Type=\"Actor\"><Title>Actor</Title><Value>" + actorID + "</Value></Field>";
-			xmlOutput += "<Field Type=\"Actor\"><Title>Conversant</Title><Value>" + conversantID + "</Value></Field>";
+			xmlOutput += "<Field Type=\"Actor\"><Title>Actor</Title><Value>" + (actorID + 1)  + "</Value></Field>";
+			xmlOutput += "<Field Type=\"Actor\"><Title>Conversant</Title><Value>" + (conversantID + 1) + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Menu Text</Title><Value>" + menuText?.Replace("<", "&lt;").Replace(">", "&gt;") + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Dialogue Text</Title><Value>" + dialogueText?.Replace("<","&lt;").Replace(">", "&gt;") + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Sequence</Title><Value>" + sequence?.Replace("<", "&lt;").Replace(">", "&gt;") + "</Value></Field>";
