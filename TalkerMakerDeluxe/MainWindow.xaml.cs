@@ -183,6 +183,9 @@ namespace TalkerMakerDeluxe
 			lstLocations.ItemsSource = theDatabase.Locations;
 			lstItems.ItemsSource = theDatabase.Items;
 
+			txtSettingAuthor.DataContext = theDatabase;
+			txtSettingProjectTitle.DataContext = theDatabase;
+			txtSettingVersion.DataContext = theDatabase;
 			editConditions.Text = "";
 			editScript.Text = "";
 			LoadConversation(0);
@@ -218,6 +221,9 @@ namespace TalkerMakerDeluxe
 			lstLocations.ItemsSource = theDatabase.Locations;
 			lstItems.ItemsSource = theDatabase.Items;
 
+			txtSettingAuthor.DataContext = theDatabase;
+			txtSettingProjectTitle.DataContext = theDatabase;
+			txtSettingVersion.DataContext = theDatabase;
 			editConditions.Text = "";
 			editScript.Text = "";
 			LoadConversation(0);
@@ -1536,6 +1542,11 @@ namespace TalkerMakerDeluxe
 			int holdConversant = lstDialogueConversant.SelectedIndex;
 			lstDialogueConversant.SelectedIndex = lstDialogueActor.SelectedIndex;
 			lstDialogueActor.SelectedIndex = holdConversant;
+		}
+
+		private void txtSettingAuthor_TextChanged(object sender, TextChangedEventArgs e)
+		{
+			needsSave = true;
 		}
 	}
 

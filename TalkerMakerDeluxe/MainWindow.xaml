@@ -880,7 +880,7 @@
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v2.1.6" />
+				<TextBlock Text="v2.1.7" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">
@@ -903,13 +903,13 @@
 						<Rectangle Grid.Column="0" Grid.RowSpan="1000" Fill="{StaticResource ResourceKey=AccentColorBrush5}" />
 
 						<TextBlock Grid.Row="0" Grid.Column="0" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Author</TextBlock>
-						<TextBox Grid.Row="0" Grid.Column="1" Margin="4" Text="{Binding Author}" Name="txtSettingAuthor"/>
+						<TextBox Grid.Row="0" Grid.Column="1" Margin="4" Text="{Binding Author}" Name="txtSettingAuthor" TextChanged="txtSettingAuthor_TextChanged"/>
 
 						<TextBlock Grid.Row="1" Grid.Column="0" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Title</TextBlock>
-						<TextBox Grid.Row="1" Grid.Column="1" Margin="4" Text="{Binding Title}" Name="txtSettingProjectTitle" />
+						<TextBox Grid.Row="1" Grid.Column="1" Margin="4" Text="{Binding Title}" Name="txtSettingProjectTitle" TextChanged="txtSettingAuthor_TextChanged" />
 
 						<TextBlock Grid.Row="2" Grid.Column="0" Margin="4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Version</TextBlock>
-						<TextBox Grid.Row="2" Grid.Column="1" Margin="4" Text="{Binding Version}" Name="txtSettingVersion" />
+						<TextBox Grid.Row="2" Grid.Column="1" Margin="4" Text="{Binding Version}" Name="txtSettingVersion" TextChanged="txtSettingAuthor_TextChanged" />
 					</Grid>
 				</Border>
 			</Popup>
