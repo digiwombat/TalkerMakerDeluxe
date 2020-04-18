@@ -528,7 +528,7 @@
 												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.title, ElementName=lstConversations}" Name="txtConvoTitle" />
 
 												<TextBlock Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Actor</TextBlock>
-												<ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedItem="{Binding SelectedItem.actor, ElementName=lstConversations}" Name="lstConvoActor" HorizontalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+												<ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedIndex="{Binding SelectedItem.actorID, ElementName=lstConversations}" Name="lstConvoActor" HorizontalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
 													<ComboBox.ItemTemplate>
 														<DataTemplate>
 															<StackPanel Orientation="Horizontal" Height="50" MaxHeight="50">
@@ -541,7 +541,7 @@
 
 
 												<TextBlock Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" FontWeight="Bold">Conversant</TextBlock>
-												<ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedItem="{Binding SelectedItem.conversant, ElementName=lstConversations}" Name="lstConvoConversant" HorizontalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+												<ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedIndex="{Binding SelectedItem.conversantID, ElementName=lstConversations}" Name="lstConvoConversant" HorizontalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
 													<ComboBox.ItemTemplate>
 														<DataTemplate>
 															<StackPanel Orientation="Horizontal" Height="50" MaxHeight="50">

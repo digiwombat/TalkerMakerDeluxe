@@ -183,6 +183,12 @@ namespace TalkerMakerDeluxe
 			lstLocations.ItemsSource = theDatabase.Locations;
 			lstItems.ItemsSource = theDatabase.Items;
 
+			foreach (Conversation conversation in theDatabase.Conversations)
+			{
+				conversation.actor = theDatabase.Actors[conversation.actorID];
+				conversation.conversant = theDatabase.Actors[conversation.conversantID];
+			}
+
 			txtSettingAuthor.DataContext = theDatabase;
 			txtSettingProjectTitle.DataContext = theDatabase;
 			txtSettingVersion.DataContext = theDatabase;
@@ -220,6 +226,13 @@ namespace TalkerMakerDeluxe
 			lstVariables.ItemsSource = theDatabase.Variables;
 			lstLocations.ItemsSource = theDatabase.Locations;
 			lstItems.ItemsSource = theDatabase.Items;
+
+			// Fix up conversation actor links
+			foreach (Conversation conversation in theDatabase.Conversations)
+			{
+				conversation.actor = theDatabase.Actors[conversation.actorID];
+				conversation.conversant = theDatabase.Actors[conversation.conversantID];
+			}
 
 			txtSettingAuthor.DataContext = theDatabase;
 			txtSettingProjectTitle.DataContext = theDatabase;
