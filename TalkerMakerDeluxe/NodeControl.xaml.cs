@@ -20,7 +20,7 @@ namespace TalkerMakerDeluxe
 {
     public partial class NodeControl : UserControl
     {
-        public int dialogueEntryID;
+        public int dialogueEntryID { get; set; }
 
         public NodeControl()
         {
@@ -56,6 +56,24 @@ namespace TalkerMakerDeluxe
         {
             MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
             parentWindow.AddNode(this.Name);
+        }
+
+        private void menuInsertNode_Click(object sender, RoutedEventArgs e)
+        {
+            if (dialogueEntryID != 0)
+            {
+                MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+                parentWindow.InsertBefore(this.dialogueEntryID);
+            }
+        }
+
+        private void menuDeleteNode_Click(object sender, RoutedEventArgs e)
+        {
+            if (dialogueEntryID != 0)
+            {
+                MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+                parentWindow.DeleteNode(this.dialogueEntryID);
+            }
         }
     }
 }

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Windows;
 using TreeContainer;
 
@@ -9,10 +8,10 @@ namespace TalkerMakerDeluxe
 {
     class TreeUndoRedo
     {
-        List<Tuple<object[], List<TreeNode>, List<DialogueEntry>>> UndoStack = new List<Tuple<object[], List<TreeNode>, List<DialogueEntry>>>();
-        List<Tuple<object[], List<TreeNode>, List<DialogueEntry>>> RedoStack = new List<Tuple<object[], List<TreeNode>, List<DialogueEntry>>>();
+        List<Tuple<object[], List<TreeNode>, HashSet<DialogueEntry>>> UndoStack = new List<Tuple<object[], List<TreeNode>, HashSet<DialogueEntry>>>();
+        List<Tuple<object[], List<TreeNode>, HashSet<DialogueEntry>>> RedoStack = new List<Tuple<object[], List<TreeNode>, HashSet<DialogueEntry>>>();
 
-        public void Do(string action, List<TreeNode> node, List<DialogueEntry> de)
+        public void Do(string action, List<TreeNode> node, HashSet<DialogueEntry> de)
         {
             UndoStack.Add(Tuple.Create(new object[] {action, node[0].Name}, node, de));
         }

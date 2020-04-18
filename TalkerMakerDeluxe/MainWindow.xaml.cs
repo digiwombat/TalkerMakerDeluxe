@@ -133,7 +133,7 @@ namespace TalkerMakerDeluxe
 		{
 			if (oldSize != tcMain.ActualHeight + tcMain.ActualWidth || oldZoom != uiScaleSlider.Value || oldCount != tcMain.Children.Count)
 			{
-				DrawExtraConnections();
+				//DrawExtraConnections();
 				oldSize = tcMain.ActualHeight + tcMain.ActualWidth;
 				oldZoom = uiScaleSlider.Value;
 				oldCount = tcMain.Children.Count;
@@ -380,8 +380,9 @@ namespace TalkerMakerDeluxe
 				//Add to tree.
 				//rowLinkRow.Height = new GridLength(0);
 				tcMain.AddNode(newDialogueNode, "node_" + newNodeID, "node_" + parentID).BringIntoView();
-				history.Do("add", new List<TreeNode> { tcMain.Children.OfType<TreeNode>().First(p => p.Name == "node_" + newNodeID) }, new List<DialogueEntry> { newDialogueEntry });
+				history.Do("add", new List<TreeNode> { tcMain.Children.OfType<TreeNode>().First(p => p.Name == "node_" + newNodeID) }, new HashSet<DialogueEntry> { newDialogueEntry });
 				needsSave = true;
+				DrawExtraConnections();
 			}
 		}
 
@@ -396,6 +397,8 @@ namespace TalkerMakerDeluxe
 					gridTree.Children.RemoveAt(intCounter);
 				}
 			}
+			tcMain.UpdateLayout();
+			gridTree.UpdateLayout();
 			foreach (DialogueEntry de in theDatabase.Conversations[loadedConversation].DialogEntries)
 			{
 				for (int i = 0; i < de.OutgoingLinks.Count; i++)
@@ -405,6 +408,7 @@ namespace TalkerMakerDeluxe
 						TreeNode originNode = tcMain.FindName("node_" + de.OutgoingLinks[i].OriginDialogID) as TreeNode;
 						if (originNode == null)
 						{
+							Console.WriteLine("OriginNode is null, bailing out");
 							continue;
 						}
 						if (originNode.Collapsed || !originNode.IsVisible)
@@ -414,6 +418,7 @@ namespace TalkerMakerDeluxe
 						TreeNode destinationNode = tcMain.FindName("node_" + de.OutgoingLinks[i].DestinationDialogID) as TreeNode;
 						if(destinationNode == null)
 						{
+							Console.WriteLine("DestinationNode is null, bailing out");
 							de.OutgoingLinks.RemoveAt(i);
 							continue;
 						}
@@ -549,30 +554,7 @@ namespace TalkerMakerDeluxe
 				tabDialogue.IsSelected = true;
 				lstLinks.ItemsSource = selectedEntry.OutgoingLinks;
 				cbConvo.ItemsSource = theDatabase.Conversations;
-				//if (nodeTree.TreeChildren.Count == 0)
-				//{
-				//	rowLinkRow.Height = new GridLength(1, GridUnitType.Auto);
-				//	if (selectedEntry.OutgoingLinks.Count == 0)
-				//	{
-				//		chkLinkTo.IsChecked = false;
-				//		txtLinkTo.Text = "0";
-				//	}
-				//	else
-				//	{
-				//		chkLinkTo.IsChecked = true;
-				//		txtLinkTo.Text = selectedEntry.OutgoingLinks[0].DestinationDialogID.ToString();
-				//	}
-				//}
-				//else
-				//{
-				//	rowLinkRow.Height = new GridLength(0);
-				//}
 			}
-
-			//MessageBox.Show(node.dialogueEntryID + " | selected node id: " + selectedEntry.ID + " | loaded conversation: " + loadedConversation);
-
-			
-			//recOverview.GetBindingExpression(VisualBrush.VisualProperty).UpdateTarget();
 		}
 
 		private void DrawConversationTree(DialogHolder dh)
@@ -691,32 +673,74 @@ namespace TalkerMakerDeluxe
 			handledNodes.Clear();
 		}
 
-		private void Delete_Node(TreeNode node)
+		private void Delete_Node(TreeNode mainNode)
 		{
 			List<TreeNode> nodesToRemove = new List<TreeNode>();
-			List<DialogueEntry> dialogToRemove = new List<DialogueEntry>();
-			TreeNode mainNode = node;
+			HashSet<DialogueEntry> dialogToRemove = new HashSet<DialogueEntry>();
 			NodeControl nodeControl = mainNode.Content as NodeControl;
-			mainNode = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
 
 			nodesToRemove.Add(mainNode);
+			Console.WriteLine("Queueing " + nodeControl.dialogueEntryID + " for removal");
 			dialogToRemove.Add(theDatabase.Conversations[loadedConversation].DialogEntries.First(p => p.ID == nodeControl.dialogueEntryID));
-			foreach (TreeNode subnode in tcMain.Children.OfType<TreeNode>().Where(p => p.TreeParent == currentNode.Remove(0, 1)))
+			int oldCount = 0;
+			while(dialogToRemove.Count != oldCount)
+			{
+				HashSet<DialogueEntry> toAdd = new HashSet<DialogueEntry>();
+				oldCount = dialogToRemove.Count;
+				foreach (DialogueEntry de in dialogToRemove)
+				{
+					foreach (Link link in de.OutgoingLinks)
+					{
+						if (!link.IsConnector)
+						{
+							toAdd.Add(theDatabase.Conversations[loadedConversation].DialogEntries.First(x => x.ID == link.DestinationDialogID));
+						}
+					}
+				}
+				dialogToRemove.UnionWith(toAdd);
+			}
+			foreach (TreeNode subnode in tcMain.Children.OfType<TreeNode>().Where(p => p.TreeParent == mainNode.Name))
 			{
 				nodeControl = subnode.Content as NodeControl;
 				nodesToRemove.Add(subnode);
-				dialogToRemove.Add(theDatabase.Conversations[loadedConversation].DialogEntries.First(p => p.ID == nodeControl.dialogueEntryID));
+				//dialogToRemove.Add(theDatabase.Conversations[loadedConversation].DialogEntries.First(p => p.ID == nodeControl.dialogueEntryID));
 			}
 			history.Do("remove", nodesToRemove, dialogToRemove);
 			foreach (TreeNode subnode in nodesToRemove)
 			{
 				nodeControl = subnode.Content as NodeControl;
-				theDatabase.Conversations[loadedConversation].DialogEntries.Remove(theDatabase.Conversations[loadedConversation].DialogEntries.First(p => p.ID == nodeControl.dialogueEntryID));
 				tcMain.Children.Remove(subnode);
 				tcMain.UnregisterName(subnode.Name);
 			}
-			//recOverview.GetBindingExpression(VisualBrush.VisualProperty).UpdateTarget();
+			theDatabase.Conversations[loadedConversation].DialogEntries.RemoveAll(x => dialogToRemove.Contains(x));
+			//foreach (DialogueEntry de in dialogToRemove)
+			//{
+				
+			//}
+
+			LoadConversation(loadedConversation);
+			DrawExtraConnections();
 		}
+
+		public void DeleteNode(int nodeID)
+		{
+			switch (MessageBox.Show("Really delete node " + nodeID + " and any child nodes?", "Are you sure?", MessageBoxButton.YesNo))
+			{
+				case MessageBoxResult.Yes:
+					TreeNode nodeTree = tcMain.FindName("node_" + nodeID) as TreeNode;
+					Delete_Node(nodeTree);
+					history.Reset();
+					break;
+			}
+		}
+
+		public void InsertBefore(int nodeID)
+		{
+			TreeNode nodeTree = tcMain.FindName("node_" + nodeID) as TreeNode;
+			Insert_Before(nodeTree);
+			history.Reset();
+		}
+
 
 		private void Insert_Before(TreeNode node)
 		{
@@ -740,20 +764,27 @@ namespace TalkerMakerDeluxe
 
 				theDatabase.Conversations[loadedConversation].DialogEntries.Last().OutgoingLinks.Add(newNodeToChild);
 				theDatabase.Conversations[loadedConversation].DialogEntries[parentNodeControl.dialogueEntryID].OutgoingLinks.Remove(parentToChild);
-				tcMain.UpdateLayout();
-				DrawExtraConnections();
+
+				LoadConversation(loadedConversation);
+				parentNode.BringIntoView();
 
 			}
-			
+			DrawExtraConnections();
 		}
 
 		private void Delete_Node(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Delete && currentNode != "" && currentNode != "_node_0")
 			{
-				TreeNode nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
-				Delete_Node(nodeTree);
-				history.Reset();
+				switch (MessageBox.Show("Really delete node " + selectedEntry.ID + " and any child nodes?", "Are you sure?", MessageBoxButton.YesNo))
+				{
+					case MessageBoxResult.Yes:
+						TreeNode nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+						Delete_Node(nodeTree);
+						history.Reset();
+						break;
+				}
+				
 			}
 			if(e.Key == Key.Insert && currentNode != "" && currentNode != "_node_0")
 			{
@@ -1030,24 +1061,26 @@ namespace TalkerMakerDeluxe
 
 		private void Undo_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			history.Undo();
-			needsSave = true;
+			//history.Undo();
+			//DrawExtraConnections();
+			//needsSave = true;
 		}
 
 		private void Undo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = history.CanUndo;
+			//e.CanExecute = history.CanUndo;
 		}
 
 		private void Redo_Executed(object sender, ExecutedRoutedEventArgs e)
 		{
-			history.Redo();
-			needsSave = true;
+			//history.Redo();
+			//DrawExtraConnections();
+			//needsSave = true;
 		}
 
 		private void Redo_CanExecute(object sender, CanExecuteRoutedEventArgs e)
 		{
-			e.CanExecute = history.CanRedo;
+			//e.CanExecute = history.CanRedo;
 		}
 
 		#endregion
