@@ -718,12 +718,48 @@ namespace TalkerMakerDeluxe
 			//recOverview.GetBindingExpression(VisualBrush.VisualProperty).UpdateTarget();
 		}
 
+		private void Insert_Before(TreeNode node)
+		{
+			TreeNode parentNode = tcMain.FindName(node.TreeParent) as TreeNode;
+			NodeControl nodeControl = node.Content as NodeControl;
+			NodeControl parentNodeControl = parentNode.Content as NodeControl;
+
+			//Remove Links from Parent to Child
+			Link parentToChild = theDatabase.Conversations[loadedConversation].DialogEntries[parentNodeControl.dialogueEntryID].OutgoingLinks.FirstOrDefault(x => x.DestinationConvoID == loadedConversation && x.DestinationDialogID == nodeControl.dialogueEntryID);
+			if(parentToChild != null)
+			{
+				AddNode(parentNodeControl.Name);
+
+				Link newNodeToChild = new Link();
+				newNodeToChild.ConversationID = loadedConversation;
+				newNodeToChild.OriginConvoID = loadedConversation;
+				newNodeToChild.DestinationConvoID = loadedConversation;
+				newNodeToChild.OriginDialogID = theDatabase.Conversations[loadedConversation].DialogEntries.Last().ID;
+				newNodeToChild.DestinationDialogID = nodeControl.dialogueEntryID;
+				newNodeToChild.IsConnector = false;
+
+				theDatabase.Conversations[loadedConversation].DialogEntries.Last().OutgoingLinks.Add(newNodeToChild);
+				theDatabase.Conversations[loadedConversation].DialogEntries[parentNodeControl.dialogueEntryID].OutgoingLinks.Remove(parentToChild);
+				tcMain.UpdateLayout();
+				DrawExtraConnections();
+
+			}
+			
+		}
+
 		private void Delete_Node(object sender, KeyEventArgs e)
 		{
 			if (e.Key == Key.Delete && currentNode != "" && currentNode != "_node_0")
 			{
 				TreeNode nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
 				Delete_Node(nodeTree);
+				history.Reset();
+			}
+			if(e.Key == Key.Insert && currentNode != "" && currentNode != "_node_0")
+			{
+				Console.WriteLine(currentNode);
+				TreeNode nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
+				Insert_Before(nodeTree);
 				history.Reset();
 			}
 		}
@@ -1157,7 +1193,6 @@ namespace TalkerMakerDeluxe
 		private void lstConversations_MouseDoubleClick(object sender, MouseButtonEventArgs e)
 		{
 			LoadConversation(lstConversations.SelectedIndex);
-
 		}
 
 		private void lstConversations_GotFocus(object sender, RoutedEventArgs e)
