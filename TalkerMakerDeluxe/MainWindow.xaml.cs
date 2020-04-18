@@ -42,6 +42,9 @@ namespace TalkerMakerDeluxe
 		private double oldZoom;
 		private int oldCount;
 
+		public bool hasCopiedDialogue { get; set; }
+		private DialogueEntry dialogueToCopy;
+
 		private bool _needsSave = false;
 		
 		public bool needsSave
@@ -328,7 +331,7 @@ namespace TalkerMakerDeluxe
 			DrawExtraConnections();
 		}
 
-		public void AddNode(string parentNode)
+		public void AddNode(string parentNode, DialogueEntry entryToAdd = null)
 		{
 			if (loadedConversation != -1)
 			{
@@ -340,27 +343,36 @@ namespace TalkerMakerDeluxe
 				}
 				NodeControl ndctl = nodeTree.Content as NodeControl;
 
-				DialogueEntry newDialogueEntry = new DialogueEntry();
 				Link newDialogueLink = new Link();
 				NodeControl newDialogueNode = new NodeControl();
 
 				int parentID = (int)ndctl.dialogueEntryID;
 				int newNodeID = theDatabase.Conversations[loadedConversation].DialogEntries.OrderByDescending(p => p.ID).First().ID + 1;
 
+				DialogueEntry newDialogueEntry;
 				//Create Dialogue Item in Project
-				newDialogueEntry.ID = newNodeID;
-				newDialogueEntry.ConditionsString = "";
-				newDialogueEntry.FalseCondtionAction = "Block";
-				newDialogueEntry.NodeColor = "Normal";
-				newDialogueEntry.UserScript = "";
-				newDialogueEntry.sequence = "";
-				newDialogueEntry.title = "";
-				newDialogueEntry.actorID = theDatabase.Conversations[loadedConversation].actorID;
-				newDialogueEntry.actor = theDatabase.Actors.FirstOrDefault(x => x.ID == theDatabase.Conversations[loadedConversation].actorID);
-				newDialogueEntry.conversantID = theDatabase.Conversations[loadedConversation].conversantID;
-				newDialogueEntry.conversant = theDatabase.Actors.FirstOrDefault(x => x.ID == theDatabase.Conversations[loadedConversation].conversantID);
-				newDialogueEntry.menuText = "";
-				newDialogueEntry.dialogueText = "";
+				if (entryToAdd == null)
+				{
+					newDialogueEntry = new DialogueEntry();
+					newDialogueEntry.ID = newNodeID;
+					newDialogueEntry.ConditionsString = "";
+					newDialogueEntry.FalseCondtionAction = "Block";
+					newDialogueEntry.NodeColor = "Normal";
+					newDialogueEntry.UserScript = "";
+					newDialogueEntry.sequence = "";
+					newDialogueEntry.title = "";
+					newDialogueEntry.actorID = theDatabase.Conversations[loadedConversation].actorID;
+					newDialogueEntry.actor = theDatabase.Actors.FirstOrDefault(x => x.ID == theDatabase.Conversations[loadedConversation].actorID);
+					newDialogueEntry.conversantID = theDatabase.Conversations[loadedConversation].conversantID;
+					newDialogueEntry.conversant = theDatabase.Actors.FirstOrDefault(x => x.ID == theDatabase.Conversations[loadedConversation].conversantID);
+					newDialogueEntry.menuText = "";
+					newDialogueEntry.dialogueText = "";
+				}
+				else
+				{
+					newDialogueEntry = new DialogueEntry(entryToAdd);
+					newDialogueEntry.ID = theDatabase.Conversations[loadedConversation].DialogEntries.OrderByDescending(p => p.ID).First().ID + 1;
+				}
 
 				//Add to conversation
 				theDatabase.Conversations[loadedConversation].DialogEntries.Add(newDialogueEntry);
@@ -738,7 +750,42 @@ namespace TalkerMakerDeluxe
 		{
 			TreeNode nodeTree = tcMain.FindName("node_" + nodeID) as TreeNode;
 			Insert_Before(nodeTree);
-			history.Reset();
+			//history.Reset();
+		}
+
+		public void InsertAfter(int nodeID)
+		{
+			TreeNode nodeTree = tcMain.FindName("node_" + nodeID) as TreeNode;
+			Insert_After(nodeTree);
+			//history.Reset();
+		}
+
+		public void DeleteSingleNode(int nodeID)
+		{
+			TreeNode node = tcMain.FindName("node_" + nodeID) as TreeNode;
+			TreeNode parentNode = tcMain.FindName(node.TreeParent) as TreeNode;
+			NodeControl nodeControl = node.Content as NodeControl;
+			NodeControl parentNodeControl = parentNode.Content as NodeControl;
+			DialogueEntry dialogueEntry = theDatabase.Conversations[loadedConversation].DialogEntries.First(x => x.ID == nodeControl.dialogueEntryID);
+			DialogueEntry parentEntry = theDatabase.Conversations[loadedConversation].DialogEntries.First(x => x.ID == parentNodeControl.dialogueEntryID);
+			foreach(Link link in dialogueEntry.OutgoingLinks)
+			{
+				parentEntry.OutgoingLinks.Add(new Link()
+				{
+					ConversationID = link.ConversationID,
+					DestinationConvoID = link.DestinationConvoID,
+					DestinationDialogID = link.DestinationDialogID,
+					OriginConvoID = link.OriginConvoID,
+					OriginDialogID = parentEntry.ID,
+					IsConnector = link.IsConnector
+				});
+			}
+			tcMain.Children.Remove(node);
+			tcMain.UnregisterName(node.Name);
+			theDatabase.Conversations[loadedConversation].DialogEntries.Remove(dialogueEntry);
+			LoadConversation(loadedConversation);
+			parentNode.BringIntoView();
+			DrawExtraConnections();
 		}
 
 
@@ -749,7 +796,7 @@ namespace TalkerMakerDeluxe
 			NodeControl parentNodeControl = parentNode.Content as NodeControl;
 
 			//Remove Links from Parent to Child
-			Link parentToChild = theDatabase.Conversations[loadedConversation].DialogEntries[parentNodeControl.dialogueEntryID].OutgoingLinks.FirstOrDefault(x => x.DestinationConvoID == loadedConversation && x.DestinationDialogID == nodeControl.dialogueEntryID);
+			Link parentToChild = theDatabase.Conversations[loadedConversation].DialogEntries.FirstOrDefault(x => x.ID == parentNodeControl.dialogueEntryID).OutgoingLinks.FirstOrDefault(x => x.DestinationConvoID == loadedConversation && x.DestinationDialogID == nodeControl.dialogueEntryID);
 			if(parentToChild != null)
 			{
 				AddNode(parentNodeControl.Name);
@@ -763,12 +810,44 @@ namespace TalkerMakerDeluxe
 				newNodeToChild.IsConnector = false;
 
 				theDatabase.Conversations[loadedConversation].DialogEntries.Last().OutgoingLinks.Add(newNodeToChild);
-				theDatabase.Conversations[loadedConversation].DialogEntries[parentNodeControl.dialogueEntryID].OutgoingLinks.Remove(parentToChild);
+				theDatabase.Conversations[loadedConversation].DialogEntries.FirstOrDefault(x => x.ID == parentNodeControl.dialogueEntryID).OutgoingLinks.Remove(parentToChild);
 
 				LoadConversation(loadedConversation);
 				parentNode.BringIntoView();
 
 			}
+			DrawExtraConnections();
+		}
+
+		private void Insert_After(TreeNode parentNode)
+		{
+			//TreeNode parentNode = tcMain.FindName(node.TreeParent) as TreeNode;
+			//NodeControl nodeControl = node.Content as NodeControl;
+			NodeControl parentNodeControl = parentNode.Content as NodeControl;
+
+			// Add Child node to parent Adding underscore due to stupidity in the past
+			Console.WriteLine("Adding child to " + parentNode.Name);
+			AddNode("_" + parentNode.Name);
+			DialogueEntry newNode = theDatabase.Conversations[loadedConversation].DialogEntries.Last();
+			// Remove Links from Parent Add Links to New Child
+			List<Link> allButChild = theDatabase.Conversations[loadedConversation].DialogEntries.FirstOrDefault(x => x.ID == parentNodeControl.dialogueEntryID).OutgoingLinks.Where(x => x.DestinationDialogID != newNode.ID).ToList();
+			foreach(Link link in allButChild)
+			{
+				Link linkToAdd = new Link()
+				{
+					ConversationID = link.ConversationID,
+					DestinationConvoID = link.DestinationConvoID,
+					DestinationDialogID = link.DestinationDialogID,
+					OriginConvoID = link.OriginConvoID,
+					OriginDialogID = newNode.ID,
+					IsConnector = link.IsConnector
+				};
+				theDatabase.Conversations[loadedConversation].DialogEntries.FirstOrDefault(x => x.ID == newNode.ID).OutgoingLinks.Add(linkToAdd);
+				theDatabase.Conversations[loadedConversation].DialogEntries.FirstOrDefault(x => x.ID == parentNodeControl.dialogueEntryID).OutgoingLinks.Remove(link);
+			}
+
+			LoadConversation(loadedConversation);
+			parentNode.BringIntoView();
 			DrawExtraConnections();
 		}
 
@@ -792,6 +871,22 @@ namespace TalkerMakerDeluxe
 				TreeNode nodeTree = tcMain.FindName(currentNode.Remove(0, 1)) as TreeNode;
 				Insert_Before(nodeTree);
 				history.Reset();
+			}
+		}
+
+		public void CopyNode(int dialogueID)
+		{
+			dialogueToCopy = theDatabase.Conversations[loadedConversation].DialogEntries.First(x => x.ID == dialogueID);
+			hasCopiedDialogue = true;
+		}
+
+		public void PasteAsChild(int parentID)
+		{
+			if (dialogueToCopy != null)
+			{
+				AddNode("_node_" + parentID, dialogueToCopy);
+				dialogueToCopy = null;
+				hasCopiedDialogue = false;
 			}
 		}
 

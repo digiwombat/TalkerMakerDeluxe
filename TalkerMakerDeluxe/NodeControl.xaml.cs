@@ -75,5 +75,35 @@ namespace TalkerMakerDeluxe
                 parentWindow.DeleteNode(this.dialogueEntryID);
             }
         }
+
+        private void menuCopyNode_Click(object sender, RoutedEventArgs e)
+        {
+            if (dialogueEntryID != 0)
+            {
+                MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+                parentWindow.CopyNode(this.dialogueEntryID);
+            }
+        }
+
+        private void menuPasteAsChild_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+            parentWindow.PasteAsChild(this.dialogueEntryID);
+        }
+
+        private void menuDeleteSingle_Click(object sender, RoutedEventArgs e)
+        {
+            if (dialogueEntryID != 0)
+            {
+                MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+                parentWindow.DeleteSingleNode(this.dialogueEntryID);
+            }
+        }
+
+        private void menuInsertAfter_Click(object sender, RoutedEventArgs e)
+        {
+            MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+            parentWindow.InsertAfter(this.dialogueEntryID);
+        }
     }
 }

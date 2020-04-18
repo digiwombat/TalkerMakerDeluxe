@@ -211,6 +211,32 @@ namespace TalkerMakerDeluxe
 
 		public ObservableCollection<Link> OutgoingLinks = new ObservableCollection<Link>();
 
+		public DialogueEntry()
+		{
+		}
+
+		public DialogueEntry(DialogueEntry de)
+		{
+			title = de.title;
+			actorID = de.actorID;
+			actor = de.actor;
+			conversantID = de.conversantID;
+			conversant = de.conversant;
+			UserScript = de.UserScript;
+			ConditionsString = de.ConditionsString;
+			ConditionPriority = de.ConditionPriority;
+			FalseCondtionAction = de.FalseCondtionAction;
+			IsRoot = de.IsRoot;
+			NodeColor = de.NodeColor;
+			menuText = de.menuText;
+			sequence = de.sequence;
+			dialogueText = de.dialogueText;
+			logicNode = de.logicNode;
+			x = de.x;
+			y = de.y;
+
+		}
+
 		public string ToXML()
 		{
 			string xmlOutput = "<DialogEntry ID=\"" + ID + "\" IsRoot=\"" + IsRoot.ToString().ToLower() + "\" FalseConditionAction=\"" + FalseCondtionAction + "\"><Fields>";

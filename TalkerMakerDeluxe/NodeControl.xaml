@@ -3,15 +3,22 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 			 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
 			 xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-			 xmlns:s="clr-namespace:TalkerMakerDeluxe;assembly=TalkerMakerDeluxe"
+			 xmlns:s="clr-namespace:TalkerMakerDeluxe"
 			 xmlns:fa="http://schemas.fontawesome.io/icons/"
 			 mc:Ignorable="d" Height="Auto" Width="202">
 	<Border x:Name="border" BorderBrush="{StaticResource ResourceKey=HighlightBrush}" BorderThickness="2" CornerRadius="2">
 		<Grid Name="grid" Background="{StaticResource ResourceKey=GrayBrush1}" MouseLeftButtonUp="Grid_MouseLeftButtonUp">
 			<Grid.ContextMenu>
 				<ContextMenu>
-					<MenuItem x:Name="menuInsertNode" Header="Insert Before" Command="" Click="menuInsertNode_Click"></MenuItem>
-					<MenuItem x:Name="menuDeleteNode" Header="Delete Node Tree" Command="" Click="menuDeleteNode_Click"></MenuItem>
+					<MenuItem x:Name="menuCopy" Header="Copy Node" Click="menuCopyNode_Click" />
+					<MenuItem x:Name="menuPasteAsChild" Header="Paste as Child" Click="menuPasteAsChild_Click" />
+
+					<Separator/>
+					<MenuItem x:Name="menuInsertNode" Header="Insert Before" Click="menuInsertNode_Click" />
+					<MenuItem x:Name="menuInsertAfter" Header="Insert After" Click="menuInsertAfter_Click" />
+					<Separator/>
+					<MenuItem x:Name="menuDeleteSingle" Header="Delete Node" Click="menuDeleteSingle_Click" />
+					<MenuItem x:Name="menuDeleteNode" Header="Delete Node Tree" Click="menuDeleteNode_Click" />
 				</ContextMenu>
 			</Grid.ContextMenu>
 			<Grid.RowDefinitions>
@@ -175,7 +182,7 @@
 					</Border>
 				</Label>
 			</StackPanel>
-			
+
 		</Grid>
 	</Border>
 </UserControl>
