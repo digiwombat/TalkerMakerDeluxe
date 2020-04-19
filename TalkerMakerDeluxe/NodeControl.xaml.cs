@@ -30,7 +30,7 @@ namespace TalkerMakerDeluxe
         private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             //This is the part where I break all your little rules. BWAHAHAHAHA! BWAAAAAHAHAHAHAHAHA!
-            MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
             parentWindow.SelectNode(this.Name);
         }
 
@@ -48,13 +48,13 @@ namespace TalkerMakerDeluxe
 
         private void btnMin_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
             parentWindow.CollapseNode(this.Name);
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
             parentWindow.AddNode(this.Name);
         }
 
@@ -62,7 +62,7 @@ namespace TalkerMakerDeluxe
         {
             if (dialogueEntryID != 0)
             {
-                MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+                EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
                 parentWindow.InsertBefore(this.dialogueEntryID);
             }
         }
@@ -71,7 +71,7 @@ namespace TalkerMakerDeluxe
         {
             if (dialogueEntryID != 0)
             {
-                MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+                EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
                 parentWindow.DeleteNode(this.dialogueEntryID);
             }
         }

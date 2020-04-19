@@ -1,14 +1,14 @@
 ﻿<Application x:Class="TalkerMakerDeluxe.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    StartupUri="MainWindow.xaml">
-    <Application.Resources>
+	xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	StartupUri="EditorWindow.xaml">
+	<Application.Resources>
 		<ResourceDictionary>
 			<ResourceDictionary.MergedDictionaries>
 				<ResourceDictionary Source="Colors.xaml" />
 				<ResourceDictionary Source="Tomorrow_Theme.xaml" />
 			</ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-    </Application.Resources>
+		</ResourceDictionary>
+	</Application.Resources>
 
 </Application>
