@@ -112,6 +112,7 @@
 			<Setter Property="AllowDrop" Value="true"/>
 			<Setter Property="Foreground" Value="{StaticResource GrayBrush2}"/>
 			<Setter Property="CaretBrush" Value="{StaticResource GrayBrush2}"/>
+			<Setter Property="FontWeight" Value="Normal"/>
 			<Setter Property="Template">
 				<Setter.Value>
 					<ControlTemplate TargetType="{x:Type TextBoxBase}">
@@ -177,12 +178,6 @@
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
-			<Setter Property="FontWeight" Value="Bold" />
-			<Style.Triggers>
-				<Trigger Property="IsSelected" Value="True">
-					<Setter Property="FontWeight" Value="Bold" />
-				</Trigger>
-			</Style.Triggers>
 		</Style>
 	</Window.Resources>
 	<Window.CommandBindings>
