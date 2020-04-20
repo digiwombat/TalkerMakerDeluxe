@@ -7,10 +7,7 @@ It makes use of  FontAwesome Font which is licensed under the Open Font License 
 https://fortawesome.github.io/Font-Awesome/
 
 AvalonEdit is licensed under the MIT License and is available at:
-https://github.com/icsharpcode/SharpDevelop/wiki/AvalonEdit
+https://github.com/icsharpcode/AvalonEdit
 
 RecentFileList is licensed under the CPOL and can be found at:
 http://www.codeproject.com/Articles/23731/RecentFileList-a-WPF-MRU
-
-Parts of the WPF Extended Toolkit are used and are licensed under the Microsoft Public License and are available at:
-https://wpftoolkit.codeplex.com/

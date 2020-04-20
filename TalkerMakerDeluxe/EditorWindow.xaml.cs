@@ -13,13 +13,9 @@ using FontAwesome.WPF;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using ICSharpCode.AvalonEdit.Highlighting;
 using System.Reflection;
-using Xceed.Wpf.AvalonDock.Layout.Serialization;
-using Xceed.Wpf.AvalonDock.Layout;
 using System.Windows.Threading;
-using System.Diagnostics;
 using System.Xml;
 using System.Windows.Shapes;
-using System.Collections.ObjectModel;
 
 namespace TalkerMakerDeluxe
 {
@@ -103,9 +99,11 @@ namespace TalkerMakerDeluxe
 
 			EditorWin.Title = "TalkerMaker Deluxe - " + openedFile;
 
-			LoadLayout();
+			theDatabase = new TalkerMakerDatabase();
 
+			Console.WriteLine("Make new project");
 			PrepareProject();
+			Console.WriteLine("New Project Made");
 
 			this.DataContext = theDatabase;
 
@@ -128,6 +126,14 @@ namespace TalkerMakerDeluxe
 			mnuRecent.UseXmlPersister(System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "recentfiles.config"));
 			mnuRecent.MenuClick += (s, e) => OpenHandler(e.Filepath);
 
+			tabConvo.Visibility = Visibility.Collapsed;
+			tabEntry.Visibility = Visibility.Collapsed;
+			tabEntry.IsSelected = false;
+			tabConvo.IsSelected = true;
+
+			editConditions.IsEnabled = false;
+			editScript.IsEnabled = false;
+
 			//Autosave
 			timer = new DispatcherTimer(TimeSpan.FromMilliseconds(300000), DispatcherPriority.Background, new EventHandler(DoAutoSave), this.Dispatcher);
 
@@ -147,7 +153,7 @@ namespace TalkerMakerDeluxe
 
 		void PrepareProject()
 		{
-
+			Console.WriteLine("Start making new project");
 			Assembly _assembly = Assembly.GetExecutingAssembly();
 
 			theDatabase = new TalkerMakerDatabase();
@@ -164,6 +170,8 @@ namespace TalkerMakerDeluxe
 			currentNode = "";
 			editConditions.Text = "";
 			editScript.Text = "";
+
+			lstConversations.SelectionChanged -= lstConversations_SelectionChanged;
 
 			lstCharacters.SelectedItem = null;
 			lstConversations.SelectedItem = null;
@@ -206,7 +214,12 @@ namespace TalkerMakerDeluxe
 			txtSettingVersion.DataContext = theDatabase;
 			editConditions.Text = "";
 			editScript.Text = "";
-			LoadConversation(0);
+
+			lstConversations.Items.Refresh();
+			lstConversations.SelectionChanged += lstConversations_SelectionChanged;
+			lstConversations.SelectedIndex = 0;
+			//LoadConversation(0);
+			Console.WriteLine("Finish making new project");
 		}
 
 		void PrepareProject(string project)
@@ -216,6 +229,8 @@ namespace TalkerMakerDeluxe
 			currentNode = "";
 			editConditions.Text = "";
 			editScript.Text = "";
+
+			lstConversations.SelectionChanged -= lstConversations_SelectionChanged;
 
 			lstCharacters.SelectedItem = null;
 			lstConversations.SelectedItem = null;
@@ -259,48 +274,10 @@ namespace TalkerMakerDeluxe
 			txtSettingVersion.DataContext = theDatabase;
 			editConditions.Text = "";
 			editScript.Text = "";
-			LoadConversation(0);
-		}
 
-		void SaveLayout()
-		{
-			string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "layout.config");
-			if (!File.Exists(path))
-				File.Create(path).Close();
-			//var serializer = new XmlLayoutSerializer(dockUI);
-			//using (var stream = new StreamWriter(path))
-			//	serializer.Serialize(stream);
-		}
-
-		void LoadLayout()
-		{
-			string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "layout.config");
-
-			if (File.Exists(path))
-			{
-				//try
-				//{
-				//	var serializer = new XmlLayoutSerializer(dockUI);
-				//	var currentContentsList = dockUI.Layout.Descendents().OfType<LayoutContent>().Where(c => c.ContentId != null).ToArray();
-
-
-				//	serializer.LayoutSerializationCallback += (s, args) =>
-				//	{
-				//		var prevContent = currentContentsList.FirstOrDefault(c => c.ContentId == args.Model.ContentId);
-				//		if (prevContent != null)
-				//			args.Content = prevContent.Content;
-
-				//	};
-
-				//	StreamReader sr = new StreamReader(path);
-				//	serializer.Deserialize(sr);
-				//}
-				//catch (Exception ex)
-				//{
-				//	Debug.WriteLine("Error loading layout. | " + ex);
-				//}
-			}
-
+			lstConversations.Items.Refresh();
+			lstConversations.SelectionChanged += lstConversations_SelectionChanged;
+			lstConversations.SelectedIndex = 0;
 		}
 
 		private void DoAutoSave(object sender, EventArgs e)
@@ -570,8 +547,11 @@ namespace TalkerMakerDeluxe
 				lstConversations.SelectedIndex = loadedConversation;
 				//lstConvoActor.SelectedItem = theDatabase.Conversations[loadedConversation].actor;
 				//lstConvoConversant.SelectedItem = theDatabase.Conversations[loadedConversation].conversant;
+				tabConvo.IsSelected = true;
 				currentNode = newNode;
 				selectedEntry = null;
+				editConditions.IsEnabled = false;
+				editScript.IsEnabled = false;
 			}
 			else
 			{
@@ -581,6 +561,9 @@ namespace TalkerMakerDeluxe
 				editScript.DataContext = selectedEntry;
 				lstLinks.ItemsSource = selectedEntry.OutgoingLinks;
 				cbConvo.ItemsSource = theDatabase.Conversations;
+				tabEntry.IsSelected = true;
+				editConditions.IsEnabled = true;
+				editScript.IsEnabled = true;
 			}
 		}
 
@@ -665,6 +648,11 @@ namespace TalkerMakerDeluxe
 
 		private void LoadConversation(int convotoload)
 		{
+			Console.WriteLine("Attempting to load conversation " + convotoload);
+			if (convotoload == -1)
+			{
+				return;
+			}
 			//Prep to draw new conversation.
 			currentNode = "";
 			selectedEntry = null;
@@ -943,7 +931,6 @@ namespace TalkerMakerDeluxe
 
 		private void SaveHandler()
 		{
-			SaveLayout();
 			// Do the Save All thing here.
 			if (openedFile != "New Project")
 			{
@@ -1060,16 +1047,12 @@ namespace TalkerMakerDeluxe
 			}
 		}
 
-		private void Button_MouseDown(object sender, MouseButtonEventArgs e)
+		private void Button_MouseDown(object sender, RoutedEventArgs e)
 		{
-			if (e.ChangedButton == MouseButton.Left)
-			{
-				Button button = sender as Button;
-				ContextMenu contextMenu = button.ContextMenu;
-				contextMenu.PlacementTarget = button;
-				contextMenu.IsOpen = true;
-				e.Handled = true;
-			}
+			Button button = sender as Button;
+			ContextMenu contextMenu = button.ContextMenu;
+			contextMenu.PlacementTarget = button;
+			contextMenu.IsOpen = true;
 		}
 
 		private void menuExport_Click(object sender, RoutedEventArgs e)
@@ -1180,7 +1163,6 @@ namespace TalkerMakerDeluxe
 
 		private void MetroWindow_Closing(object sender, CancelEventArgs e)
 		{
-			SaveLayout();
 			if (needsSave)
 			{
 				MessageBoxResult result1 = System.Windows.MessageBox.Show("Would you like to save the changes to your project before quitting?", "Save before quitting?", MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
@@ -1589,7 +1571,8 @@ namespace TalkerMakerDeluxe
 			{
 				case MessageBoxResult.Yes:
 					theDatabase.Conversations.RemoveAt(lstConversations.SelectedIndex);
-					LoadConversation(0);
+					lstConversations.SelectedIndex = 0;
+					//LoadConversation(0);
 					needsSave = true;
 					break;
 			}
@@ -1694,7 +1677,7 @@ namespace TalkerMakerDeluxe
 		{
 			GeometryGroup lineGroup = new GeometryGroup();
 			double theta = Math.Atan2((p2.Y - p1.Y), (p2.X - p1.X)) * 180 / Math.PI;
-			int adjust = 20;
+			double adjust = 20 * uiScaleSlider.Value;
 			if (p1.Y > p2.Y)
 			{
 				adjust = -adjust;
@@ -1778,7 +1761,7 @@ namespace TalkerMakerDeluxe
 			}
 			System.Windows.Shapes.Path path = new System.Windows.Shapes.Path();
 			path.Data = lineGroup;
-			path.StrokeThickness = 2;
+			path.StrokeThickness = 2 * uiScaleSlider.Value;
 			if (angled)
 			{
 				path.Stroke = path.Fill = (Brush)Application.Current.FindResource("AccentColorBrush5");
@@ -1806,7 +1789,7 @@ namespace TalkerMakerDeluxe
 
 		private void lstConversations_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-			LoadConversation(lstConversations.SelectedIndex);
+				LoadConversation(lstConversations.SelectedIndex);
 		}
 
 		private void ScaleTransform_Changed(object sender, EventArgs e)
@@ -1816,6 +1799,40 @@ namespace TalkerMakerDeluxe
 				tcMain.UpdateLayout();
 				DrawExtraConnections();
 			}
+		}
+	}
+
+	public static class SelectOnInternalClick
+	{
+		public static readonly DependencyProperty EnableProperty = DependencyProperty.RegisterAttached(
+			"Enable",
+			typeof(bool),
+			typeof(SelectOnInternalClick),
+			new FrameworkPropertyMetadata(false, OnEnableChanged));
+
+
+		public static bool GetEnable(FrameworkElement frameworkElement)
+		{
+			return (bool)frameworkElement.GetValue(EnableProperty);
+		}
+
+
+		public static void SetEnable(FrameworkElement frameworkElement, bool value)
+		{
+			frameworkElement.SetValue(EnableProperty, value);
+		}
+
+
+		private static void OnEnableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+		{
+			if (d is ListBoxItem listBoxItem)
+				listBoxItem.PreviewGotKeyboardFocus += ListBoxItem_PreviewGotKeyboardFocus;
+		}
+
+		private static void ListBoxItem_PreviewGotKeyboardFocus(object sender, System.Windows.Input.KeyboardFocusChangedEventArgs e)
+		{
+			var listBoxItem = (ListBoxItem)sender;
+			listBoxItem.IsSelected = true;
 		}
 	}
 

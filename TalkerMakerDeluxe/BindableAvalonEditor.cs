@@ -1,9 +1,5 @@
-﻿using ICSharpCode.AvalonEdit;
-using ICSharpCode.AvalonEdit.Document;
-using System;
+﻿using System;
 using System.ComponentModel;
-using System.Windows.Media;
-using System.Runtime.CompilerServices;
 using System.Windows;
 
 namespace TalkerMakerDeluxe

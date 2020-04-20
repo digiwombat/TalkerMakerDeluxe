@@ -5,13 +5,16 @@
 		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
 		xmlns:local="clr-namespace:TalkerMakerDeluxe"
 		mc:Ignorable="d"
-		xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit" xmlns:TreeContainer="clr-namespace:TreeContainer;assembly=TreeContainer"
+		xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:TreeContainer="clr-namespace:TreeContainer;assembly=TreeContainer"
 		Title="TalkerMaker Deluxe" Height="800" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop"
 	SizeToContent="Manual" ResizeMode="CanResizeWithGrip"
 	Closing="MetroWindow_Closing" FontFamily="Roboto" DataContext="{Binding theDatabase, ElementName=MainWin}" MouseUp="ScrollViewer_MouseUp">
 	<Window.Resources>
 		<local:UriToBitmapConverter x:Key="UriToBitmapConverter" />
 		<local:Actor x:Key="CharacterItems" />
+		<Style TargetType="ListBoxItem">
+			<Setter Property="local:SelectOnInternalClick.Enable" Value="true"/>
+		</Style>
 		<Style TargetType="{x:Type ComboBox}" x:Key="ComboBoxStyle">
 			<Setter Property="SnapsToDevicePixels" Value="True"/>
 			<Setter Property="OverridesDefaultStyle" Value="True"/>
@@ -63,7 +66,7 @@
 								</ToggleButton.Template>
 							</ToggleButton>
 							<ContentPresenter x:Name="ContentSite" ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}" Content="{TemplateBinding SelectionBoxItem}" HorizontalAlignment="Left" IsHitTestVisible="False" Margin="5,3,23,3" UseLayoutRounding="True" VerticalAlignment="Center" d:DesignUseLayoutRounding="True"/>
-							<TextBox x:Name="PART_EditableTextBox" Background="Transparent" Focusable="True" HorizontalAlignment="Left" InputMethod.IsInputMethodEnabled="False" IsReadOnly="{TemplateBinding IsReadOnly}" Margin="3,3,23,3" UseLayoutRounding="True" Visibility="Hidden" VerticalAlignment="Center" d:DesignUseLayoutRounding="True" FontSize="11" FontWeight="Normal">
+							<TextBox x:Name="PART_EditableTextBox" Background="Transparent" Focusable="True" HorizontalAlignment="Left" InputMethod.IsInputMethodEnabled="False" IsReadOnly="{TemplateBinding IsReadOnly}" Margin="0,0,23,0" UseLayoutRounding="True" Visibility="Hidden" VerticalAlignment="Center" d:DesignUseLayoutRounding="True" FontSize="11" FontWeight="Normal" VerticalContentAlignment="Center">
 								<TextBox.Template>
 									<ControlTemplate TargetType="{x:Type TextBox}">
 										<Border x:Name="PART_ContentHost" Focusable="False" UseLayoutRounding="True" d:DesignUseLayoutRounding="True"/>
@@ -174,6 +177,12 @@
 					</ControlTemplate>
 				</Setter.Value>
 			</Setter>
+			<Setter Property="FontWeight" Value="Bold" />
+			<Style.Triggers>
+				<Trigger Property="IsSelected" Value="True">
+					<Setter Property="FontWeight" Value="Bold" />
+				</Trigger>
+			</Style.Triggers>
 		</Style>
 	</Window.Resources>
 	<Window.CommandBindings>
@@ -237,7 +246,7 @@
 				<MenuItem Name="menuLinks" Header="Show All Links" Click="menuLinks_Click" IsChecked="True" IsCheckable="True" Foreground="Black" />
 			</MenuItem>
 		</Menu>
-		<DockPanel Grid.Row="1" Margin="0,10,0,0">
+		<DockPanel Grid.Row="1" Margin="0,0,0,0">
 			<TabControl Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="14" FontWeight="Bold" Margin="0" Padding="0" ScrollViewer.CanContentScroll="True">
 				<TabControl.Resources>
 					<Style TargetType="{x:Type TabPanel}">
@@ -254,7 +263,7 @@
 											<RowDefinition Height="Auto"/>
 											<RowDefinition Height="*"/>
 										</Grid.RowDefinitions>
-										<Border BorderThickness="2" CornerRadius="4" BorderBrush="{DynamicResource GrayBrush3}" Background="{DynamicResource GrayBrush3}" Padding="5" HorizontalAlignment="Center">
+										<Border BorderThickness="2" BorderBrush="{DynamicResource GrayBrush3}" Background="{DynamicResource GrayBrush3}" Padding="5" HorizontalAlignment="Stretch" Margin="0">
 											<TabPanel Name="HeaderPanel"
 										  Grid.Row="0"
 										  Panel.ZIndex="1"
@@ -271,7 +280,7 @@
 						</Setter>
 					</Style>
 				</TabControl.Resources>
-				<TabItem Header="Characters" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12" FontWeight="Normal">
+				<TabItem Header="Characters" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="3*"/>
@@ -290,19 +299,27 @@
 										<ColumnDefinition Width="1*" />
 										<ColumnDefinition Width="3*" />
 									</Grid.ColumnDefinitions>
-									<TextBlock Grid.Row="0" Grid.Column="1" Margin="10,0,0,0">Name</TextBlock>
-									<TextBlock Grid.Row="0" Grid.Column="2">Description</TextBlock>
-								
-								<Border Grid.ColumnSpan="3" Margin="15,15,15,0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
-									<ListBox Padding="0" x:Name="lstCharacters" ItemsSource="{Binding Actors}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{x:Null}" IsSynchronizedWithCurrentItem="True" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Margin="5" >
-										<ListBox.ContextMenu>
-											<ContextMenu>
-												<MenuItem x:Name="mnuDeleteCharacter" Header="Delete Character" Click="mnuDeleteCharacter_Click" />
-											</ContextMenu>
-										</ListBox.ContextMenu>
-										<ListBox.ItemTemplate>
-											<DataTemplate>
-												<Border BorderBrush="{DynamicResource AccentColorBrush5}" HorizontalAlignment="Stretch">
+									<TextBlock Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" FontWeight="Normal">Name</TextBlock>
+									<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Normal">Description</TextBlock>
+
+									<Border Grid.ColumnSpan="3" Margin="15,15,15,0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
+										<ListBox Padding="0" x:Name="lstCharacters" ItemsSource="{Binding Actors}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{x:Null}" IsSynchronizedWithCurrentItem="True" BorderThickness="0" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Top" Margin="5" >
+											<ListBox.ItemContainerStyle>
+												<Style TargetType="ListBoxItem">
+													<Style.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="4"/>
+														</Style>
+													</Style.Resources>
+												</Style>
+											</ListBox.ItemContainerStyle>
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteCharacter" Header="Delete Character" Click="mnuDeleteCharacter_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
+											<ListBox.ItemTemplate>
+												<DataTemplate>
 													<Grid>
 														<Grid.ColumnDefinitions>
 															<ColumnDefinition Width="20" />
@@ -313,11 +330,10 @@
 														<TextBox Grid.Column="1" Text="{Binding Path=name}"  Name="lblActorName" Margin="2,1,2,1" />
 														<TextBox Grid.Column="2" Text="{Binding Path=description}" Name="lblActorID" Margin="0,1,10,1" />
 													</Grid>
-												</Border>
-											</DataTemplate>
-										</ListBox.ItemTemplate>
-									</ListBox>
-								</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
+									</Border>
 								</Grid>
 							</ScrollViewer>
 							<Border Grid.Row="1" Padding="10,6,10,10" HorizontalAlignment="Right" Margin="0,-2,50,0" VerticalAlignment="Top" Background="{DynamicResource GrayBrush3}" CornerRadius="0,0,4,4">
@@ -370,6 +386,16 @@
 						</Grid>
 						<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="{DynamicResource ButtonNormalBorder}" BorderThickness="3,0,0,0" Margin="0,15" />
 						<Border Grid.Column="2"  Margin="15" Padding="10" Background="{DynamicResource GrayBrush3}" CornerRadius="4">
+							<Border.Style>
+								<Style>
+									<Setter Property="Border.Visibility"  Value="Visible" />
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding ElementName=lstCharacters, Path=SelectedIndex}" Value="-1">
+											<Setter Property="Border.Visibility" Value="Hidden" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Border.Style>
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition  Width="Auto"/>
@@ -392,14 +418,7 @@
 								<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.name, ElementName=lstCharacters}" Name="txtActorName" Background="{DynamicResource GrayBrush1}" VerticalAlignment="Top" />
 
 								<Label Grid.Row="2" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Age</Label>
-								<xctk:IntegerUpDown Grid.Row="2" Grid.Column="1" Minimum="0" Margin="4,0,4,4" Text="{Binding SelectedItem.age, ElementName=lstCharacters}" Name="txtActorAge" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Background="#FF2A2A2A" VerticalAlignment="Top" >
-									<xctk:IntegerUpDown.BorderBrush>
-										<LinearGradientBrush EndPoint="0.5,0.1" StartPoint="0.5,0">
-											<GradientStop Color="Black" Offset="0"/>
-											<GradientStop Color="#FF1f1f1f" Offset="1"/>
-										</LinearGradientBrush>
-									</xctk:IntegerUpDown.BorderBrush>
-								</xctk:IntegerUpDown>
+								<TextBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.age, ElementName=lstCharacters}" Name="txtActorAge" Background="{DynamicResource GrayBrush1}" VerticalAlignment="Top" />
 
 								<Label Grid.Row="3" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Center" FontWeight="Bold" HorizontalAlignment="Left">Gender</Label>
 								<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.gender, ElementName=lstCharacters}" Name="txtActorGender" VerticalAlignment="Top" />
@@ -448,7 +467,7 @@
 						</Border>
 					</Grid>
 				</TabItem>
-				<TabItem Header="Items" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12" FontWeight="Normal">
+				<TabItem Header="Items" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="3*"/>
@@ -457,50 +476,112 @@
 						</Grid.ColumnDefinitions>
 						<Grid>
 							<Grid.RowDefinitions>
-								<RowDefinition Height="*" />
+								<RowDefinition Height="Auto" MinHeight="50" />
 								<RowDefinition Height="50" />
 							</Grid.RowDefinitions>
 							<ScrollViewer Grid.Row="0" Padding="0" VerticalScrollBarVisibility="Auto">
-								<Border Margin="15,15,15,0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
-									<ListBox Padding="0" x:Name="lstItems" ItemsSource="{Binding Items}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
-										<ListBox.ContextMenu>
-											<ContextMenu>
-												<MenuItem x:Name="mnuDeleteItem" Header="Delete Item" Click="mnuDeleteItem_Click" />
-											</ContextMenu>
-										</ListBox.ContextMenu>
-										<ListBox.ItemTemplate>
-											<DataTemplate>
-												<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
-													<Grid Margin="0,0,0,0">
-														<Grid.RowDefinitions>
-															<RowDefinition Height="25"/>
-															<RowDefinition Height="25"/>
-														</Grid.RowDefinitions>
-														<TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Path=name}" Name="lblItemName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
-														<DockPanel Grid.Row="1" >
-															<Label Content="In Inventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-															<Label Content="{Binding Path=inInventory}" Name="lblItemInventory" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-														</DockPanel>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="40" />
+										<ColumnDefinition Width="1*" />
+										<ColumnDefinition Width="3*" />
+									</Grid.ColumnDefinitions>
+									<TextBlock Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" FontWeight="Normal">Name</TextBlock>
+									<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Normal">Description</TextBlock>
+									<Border Grid.ColumnSpan="3" Margin="15,15,15,0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
+										<ListBox Padding="0" x:Name="lstItems" ItemsSource="{Binding Items}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" Margin="5">
+											<ListBox.ItemContainerStyle>
+												<Style TargetType="ListBoxItem">
+													<Style.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="4"/>
+														</Style>
+													</Style.Resources>
+												</Style>
+											</ListBox.ItemContainerStyle>
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteItem" Header="Delete Item" Click="mnuDeleteItem_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
+											<ListBox.ItemTemplate>
+												<DataTemplate>
+													<Grid>
+														<Grid.ColumnDefinitions>
+															<ColumnDefinition Width="20" />
+															<ColumnDefinition Width="1*" />
+															<ColumnDefinition Width="3*" />
+														</Grid.ColumnDefinitions>
+														<fa:ImageAwesome Grid.Column="0" Icon="EllipsisH" Width="15" Height="15" Foreground="#FF585858" />
+														<TextBox Grid.Column="1" Text="{Binding Path=name}" Margin="2,1,2,1" />
+														<TextBox Grid.Column="2" Text="{Binding Path=description}" Margin="0,1,10,1" />
 													</Grid>
-												</Border>
-											</DataTemplate>
-										</ListBox.ItemTemplate>
-									</ListBox>
-								</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
+									</Border>
+								</Grid>
 							</ScrollViewer>
 							<Border Grid.Row="1" Padding="10,6,10,10" HorizontalAlignment="Right" Margin="0,-2,50,0" VerticalAlignment="Top" Background="{DynamicResource GrayBrush3}" CornerRadius="0,0,4,4">
 								<StackPanel Orientation="Horizontal" Margin="0" VerticalAlignment="Top" Background="{DynamicResource GrayBrush3}">
-									<Button Background="{x:Null}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="30" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderThickness="0" FontWeight="Bold">
-										<fa:FontAwesome Name="faAddItem" Icon="Plus" FontFamily="FontAwesome" />
+									<Button fa:Awesome.Content="Plus" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="24" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderThickness="0" FontWeight="Bold" Height="24" Click="btnAddItem_Click">
+										<Button.Style>
+											<Style TargetType="{x:Type Button}">
+												<Setter Property="Background" Value="Transparent"/>
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="{x:Type Button}">
+															<Border Background="{TemplateBinding Background}">
+																<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+															</Border>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+												<Style.Triggers>
+													<Trigger Property="IsMouseOver" Value="True">
+														<Setter Property="Background" Value="#FF2a2a2a"/>
+													</Trigger>
+												</Style.Triggers>
+											</Style>
+										</Button.Style>
 									</Button>
-									<Button Background="{x:Null}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="30" BorderThickness="0" FontWeight="Bold">
-										<fa:FontAwesome Name="faRemoveItem" Icon="Minus" FontFamily="FontAwesome" />
+									<Button fa:Awesome.Content="Minus" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="24" BorderThickness="0" FontWeight="Bold" Click="mnuDeleteItem_Click">
+										<Button.Style>
+											<Style TargetType="{x:Type Button}">
+												<Setter Property="Background" Value="Transparent"/>
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="{x:Type Button}">
+															<Border Background="{TemplateBinding Background}">
+																<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+															</Border>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+												<Style.Triggers>
+													<Trigger Property="IsMouseOver" Value="True">
+														<Setter Property="Background" Value="#FF2a2a2a"/>
+													</Trigger>
+												</Style.Triggers>
+											</Style>
+										</Button.Style>
 									</Button>
+
 								</StackPanel>
 							</Border>
 						</Grid>
 						<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="{DynamicResource ButtonNormalBorder}" BorderThickness="3,0,0,0" Margin="0,15" />
 						<Border Grid.Column="2"  Margin="15" Padding="10" Background="{DynamicResource GrayBrush3}" CornerRadius="4">
+							<Border.Style>
+								<Style>
+									<Setter Property="Border.Visibility"  Value="Visible" />
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding ElementName=lstItems, Path=SelectedIndex}" Value="-1">
+											<Setter Property="Border.Visibility" Value="Hidden" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Border.Style>
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition  Width="Auto"/>
@@ -518,8 +599,10 @@
 								</Grid.RowDefinitions>
 								<Label Grid.Row="0" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Name</Label>
 								<TextBox Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.name, ElementName=lstItems}" Name="txtItemName" HorizontalAlignment="Left" VerticalAlignment="Top" />
-								<Label Grid.Row="1" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">In Inventory</Label>
-								<CheckBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.inInventory, ElementName=lstItems}" Name="chkItemInventory" Background="#FF585858" HorizontalAlignment="Left" VerticalAlignment="Center">
+								<Label Grid.Row="1" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Description</Label>
+								<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.description, ElementName=lstItems}" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" AcceptsReturn="True" Name="txtItemDescription" HorizontalAlignment="Left" VerticalAlignment="Top" />
+								<Label Grid.Row="2" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">In Inventory</Label>
+								<CheckBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" IsChecked="{Binding SelectedItem.inInventory, ElementName=lstItems}" Name="chkItemInventory" Background="#FF585858" HorizontalAlignment="Left" VerticalAlignment="Center">
 									<CheckBox.BorderBrush>
 										<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.95">
 											<GradientStop Color="Black" Offset="1"/>
@@ -531,7 +614,7 @@
 						</Border>
 					</Grid>
 				</TabItem>
-				<TabItem Header="Locations" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12" FontWeight="Normal">
+				<TabItem Header="Locations" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="3*"/>
@@ -540,52 +623,112 @@
 						</Grid.ColumnDefinitions>
 						<Grid>
 							<Grid.RowDefinitions>
-								<RowDefinition Height="*" />
+								<RowDefinition Height="Auto" MinHeight="50" />
 								<RowDefinition Height="50" />
 							</Grid.RowDefinitions>
 							<ScrollViewer Grid.Row="0" Padding="0" VerticalScrollBarVisibility="Auto">
-								<Border Margin="15,15,15,0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
-									<ListBox Padding="0" x:Name="lstLocations" ItemsSource="{Binding Locations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
-										<ListBox.ContextMenu>
-											<ContextMenu>
-												<MenuItem x:Name="mnuDeleteLocation" Header="Delete Item" Click="mnuDeleteLocation_Click" />
-											</ContextMenu>
-										</ListBox.ContextMenu>
-										<ListBox.ItemTemplate>
-											<DataTemplate>
-												<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
-													<Grid Margin="0,0,0,0">
-														<Grid.RowDefinitions>
-															<RowDefinition Height="25"/>
-															<RowDefinition Height="25"/>
-														</Grid.RowDefinitions>
-														<TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Path=name}" Name="lblLocName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
-														<DockPanel Grid.Row="1" >
-															<Label Content="Learned: " HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-															<Label Content="{Binding Path=learned}" Name="lblLocLearned" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-															<Label Content="Visited:" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-															<Label Content="{Binding Path=visited}" Name="lblLocVisited" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-														</DockPanel>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="40" />
+										<ColumnDefinition Width="1*" />
+										<ColumnDefinition Width="3*" />
+									</Grid.ColumnDefinitions>
+									<TextBlock Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" FontWeight="Normal">Name</TextBlock>
+									<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Normal">Description</TextBlock>
+									<Border Grid.ColumnSpan="3" Margin="15,15,15,0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
+										<ListBox Padding="0" x:Name="lstLocations" ItemsSource="{Binding Locations}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" Margin="5">
+											<ListBox.ItemContainerStyle>
+												<Style TargetType="ListBoxItem">
+													<Style.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="4"/>
+														</Style>
+													</Style.Resources>
+												</Style>
+											</ListBox.ItemContainerStyle>
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteLocation" Header="Delete Item" Click="mnuDeleteLocation_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
+											<ListBox.ItemTemplate>
+												<DataTemplate>
+													<Grid>
+														<Grid.ColumnDefinitions>
+															<ColumnDefinition Width="20" />
+															<ColumnDefinition Width="1*" />
+															<ColumnDefinition Width="3*" />
+														</Grid.ColumnDefinitions>
+														<fa:ImageAwesome Grid.Column="0" Icon="EllipsisH" Width="15" Height="15" Foreground="#FF585858" />
+														<TextBox Grid.Column="1" Text="{Binding Path=name}"  Margin="2,1,2,1" />
+														<TextBox Grid.Column="2" Text="{Binding Path=description}" Margin="0,1,10,1" />
 													</Grid>
-												</Border>
-											</DataTemplate>
-										</ListBox.ItemTemplate>
-									</ListBox>
-								</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
+									</Border>
+								</Grid>
 							</ScrollViewer>
 							<Border Grid.Row="1" Padding="10,6,10,10" HorizontalAlignment="Right" Margin="0,-2,50,0" VerticalAlignment="Top" Background="{DynamicResource GrayBrush3}" CornerRadius="0,0,4,4">
 								<StackPanel Orientation="Horizontal" Margin="0" VerticalAlignment="Top" Background="{DynamicResource GrayBrush3}">
-									<Button Background="{x:Null}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="30" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderThickness="0" FontWeight="Bold">
-										<fa:FontAwesome Name="faAddLocation" Icon="Plus" FontFamily="FontAwesome" />
+									<Button fa:Awesome.Content="Plus" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="24" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderThickness="0" FontWeight="Bold" Height="24" Click="btnAddLocation_Click">
+										<Button.Style>
+											<Style TargetType="{x:Type Button}">
+												<Setter Property="Background" Value="Transparent"/>
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="{x:Type Button}">
+															<Border Background="{TemplateBinding Background}">
+																<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+															</Border>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+												<Style.Triggers>
+													<Trigger Property="IsMouseOver" Value="True">
+														<Setter Property="Background" Value="#FF2a2a2a"/>
+													</Trigger>
+												</Style.Triggers>
+											</Style>
+										</Button.Style>
 									</Button>
-									<Button Background="{x:Null}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="30" BorderThickness="0" FontWeight="Bold">
-										<fa:FontAwesome Name="faRemoveLocation" Icon="Minus" FontFamily="FontAwesome" />
+									<Button fa:Awesome.Content="Minus" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="24" BorderThickness="0" FontWeight="Bold" Click="mnuDeleteLocation_Click">
+										<Button.Style>
+											<Style TargetType="{x:Type Button}">
+												<Setter Property="Background" Value="Transparent"/>
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="{x:Type Button}">
+															<Border Background="{TemplateBinding Background}">
+																<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+															</Border>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+												<Style.Triggers>
+													<Trigger Property="IsMouseOver" Value="True">
+														<Setter Property="Background" Value="#FF2a2a2a"/>
+													</Trigger>
+												</Style.Triggers>
+											</Style>
+										</Button.Style>
 									</Button>
+
 								</StackPanel>
 							</Border>
 						</Grid>
 						<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="{DynamicResource ButtonNormalBorder}" BorderThickness="3,0,0,0" Margin="0,15" />
 						<Border Grid.Column="2"  Margin="15" Padding="10" Background="{DynamicResource GrayBrush3}" CornerRadius="4">
+							<Border.Style>
+								<Style>
+									<Setter Property="Border.Visibility"  Value="Visible" />
+									<Style.Triggers>
+										<DataTrigger Binding="{Binding ElementName=lstLocations, Path=SelectedIndex}" Value="-1">
+											<Setter Property="Border.Visibility" Value="Hidden" />
+										</DataTrigger>
+									</Style.Triggers>
+								</Style>
+							</Border.Style>
 							<Grid>
 								<Grid.ColumnDefinitions>
 									<ColumnDefinition  Width="Auto"/>
@@ -627,58 +770,119 @@
 						</Border>
 					</Grid>
 				</TabItem>
-				<TabItem Header="Variables" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12" FontWeight="Normal">
+				<TabItem Header="Variables" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12">
 					<Grid>
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="3*"/>
-							<ColumnDefinition Width="5"/>
-							<ColumnDefinition Width="1*"/>
+							<ColumnDefinition Width="*"/>
 						</Grid.ColumnDefinitions>
 						<Grid>
 							<Grid.RowDefinitions>
-								<RowDefinition Height="*" />
+								<RowDefinition Height="Auto" MinHeight="50" />
 								<RowDefinition Height="50" />
 							</Grid.RowDefinitions>
 							<ScrollViewer Grid.Row="0" Padding="0" VerticalScrollBarVisibility="Auto">
-								<Border Margin="15,15,15,0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
-									<ListBox Padding="0" x:Name="lstVariables" ItemsSource="{Binding Variables}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}">
-										<ListBox.ContextMenu>
-											<ContextMenu>
-												<MenuItem x:Name="mnuDeleteVariable" Header="Delete Item" Click="mnuDeleteVariable_Click" />
-											</ContextMenu>
-										</ListBox.ContextMenu>
-										<ListBox.ItemTemplate>
-											<DataTemplate>
-												<Border BorderBrush="{DynamicResource AccentColorBrush5}" BorderThickness="0,0,0,2" HorizontalAlignment="Stretch">
-													<Grid Margin="0,0,0,0">
-														<Grid.RowDefinitions>
-															<RowDefinition Height="25"/>
-															<RowDefinition Height="25"/>
-														</Grid.RowDefinitions>
-														<TextBlock TextTrimming="CharacterEllipsis" Text="{Binding Path=name}" Name="lblVarName" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold" />
-														<DockPanel Grid.Row="1" >
-															<Label Content="Type" Name="lblVarType" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-															<Label Content="{Binding Path=type}" Name="lblVarValue" HorizontalAlignment="Right"/>
-														</DockPanel>
+								<Grid>
+									<Grid.ColumnDefinitions>
+										<ColumnDefinition Width="40" />
+										<ColumnDefinition Width="2*" />
+										<ColumnDefinition Width="2*" />
+										<ColumnDefinition Width="2*" />
+										<ColumnDefinition Width="1*" />
+									</Grid.ColumnDefinitions>
+									<TextBlock Grid.Row="0" Grid.Column="1" Margin="10,0,0,0" FontWeight="Normal">Name</TextBlock>
+									<TextBlock Grid.Row="0" Grid.Column="2" FontWeight="Normal">Initial Value</TextBlock>
+									<TextBlock Grid.Row="0" Grid.Column="3" Margin="-10,0,0,0" FontWeight="Normal">Description</TextBlock>
+									<TextBlock Grid.Row="0" Grid.Column="4" Margin="-25,0,0,0" FontWeight="Normal">Type</TextBlock>
+									<Border Grid.ColumnSpan="99" Margin="15,15,15,0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
+										<ListBox Padding="0" x:Name="lstVariables" ItemsSource="{Binding Variables}" Background="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" BorderBrush="{x:Null}" Margin="5">
+											<ListBox.ItemContainerStyle>
+												<Style TargetType="ListBoxItem">
+													<Style.Resources>
+														<Style TargetType="Border">
+															<Setter Property="CornerRadius" Value="4"/>
+														</Style>
+													</Style.Resources>
+												</Style>
+											</ListBox.ItemContainerStyle>
+											<ListBox.ContextMenu>
+												<ContextMenu>
+													<MenuItem x:Name="mnuDeleteVariable" Header="Delete Item" Click="mnuDeleteVariable_Click" />
+												</ContextMenu>
+											</ListBox.ContextMenu>
+											<ListBox.ItemTemplate>
+												<DataTemplate>
+													<Grid>
+														<Grid.ColumnDefinitions>
+															<ColumnDefinition Width="20" />
+															<ColumnDefinition Width="2*" />
+															<ColumnDefinition Width="2*" />
+															<ColumnDefinition Width="2*" />
+															<ColumnDefinition Width="1*" />
+														</Grid.ColumnDefinitions>
+														<fa:ImageAwesome Grid.Column="0" Icon="EllipsisH" Width="15" Height="15" Foreground="#FF585858" />
+														<TextBox Grid.Column="1" Text="{Binding Path=name}"  Margin="2,1,2,1" />
+														<TextBox Grid.Column="2" Text="{Binding Path=initialValue}" Margin="0,1,0,1" />
+														<TextBox Grid.Column="3" Text="{Binding Path=description}"  Margin="1,1,2,1" />
+														<ComboBox Grid.Column="4" Margin="0,1,10,1"  SelectedValue="{Binding type}" SelectedValuePath="Content" IsSynchronizedWithCurrentItem="True" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Center" VerticalContentAlignment="Top">
+															<ComboBoxItem>Boolean</ComboBoxItem>
+															<ComboBoxItem>Text</ComboBoxItem>
+															<ComboBoxItem>Number</ComboBoxItem>
+														</ComboBox>
 													</Grid>
-												</Border>
-											</DataTemplate>
-										</ListBox.ItemTemplate>
-									</ListBox>
-								</Border>
+												</DataTemplate>
+											</ListBox.ItemTemplate>
+										</ListBox>
+									</Border>
+								</Grid>
 							</ScrollViewer>
 							<Border Grid.Row="1" Padding="10,6,10,10" HorizontalAlignment="Right" Margin="0,-2,50,0" VerticalAlignment="Top" Background="{DynamicResource GrayBrush3}" CornerRadius="0,0,4,4">
 								<StackPanel Orientation="Horizontal" Margin="0" VerticalAlignment="Top" Background="{DynamicResource GrayBrush3}">
-									<Button Background="{x:Null}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="30" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderThickness="0" FontWeight="Bold">
-										<fa:FontAwesome Name="faAddVariable" Icon="Plus" FontFamily="FontAwesome" />
+									<Button fa:Awesome.Content="Plus" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="24" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderThickness="0" FontWeight="Bold" Height="24" Click="btnAddVariable_Click">
+										<Button.Style>
+											<Style TargetType="{x:Type Button}">
+												<Setter Property="Background" Value="Transparent"/>
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="{x:Type Button}">
+															<Border Background="{TemplateBinding Background}">
+																<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+															</Border>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+												<Style.Triggers>
+													<Trigger Property="IsMouseOver" Value="True">
+														<Setter Property="Background" Value="#FF2a2a2a"/>
+													</Trigger>
+												</Style.Triggers>
+											</Style>
+										</Button.Style>
 									</Button>
-									<Button Background="{x:Null}" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="30" BorderThickness="0" FontWeight="Bold">
-										<fa:FontAwesome Name="faRemoveVariable" Icon="Minus" FontFamily="FontAwesome" />
+									<Button fa:Awesome.Content="Minus" Padding="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" BorderBrush="{x:Null}" Width="24" BorderThickness="0" FontWeight="Bold" Click="mnuDeleteVariable_Click">
+										<Button.Style>
+											<Style TargetType="{x:Type Button}">
+												<Setter Property="Background" Value="Transparent"/>
+												<Setter Property="Template">
+													<Setter.Value>
+														<ControlTemplate TargetType="{x:Type Button}">
+															<Border Background="{TemplateBinding Background}">
+																<ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+															</Border>
+														</ControlTemplate>
+													</Setter.Value>
+												</Setter>
+												<Style.Triggers>
+													<Trigger Property="IsMouseOver" Value="True">
+														<Setter Property="Background" Value="#FF2a2a2a"/>
+													</Trigger>
+												</Style.Triggers>
+											</Style>
+										</Button.Style>
 									</Button>
 								</StackPanel>
 							</Border>
 						</Grid>
-						<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="{DynamicResource ButtonNormalBorder}" BorderThickness="3,0,0,0" Margin="0,15" />
+						<!--GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="{DynamicResource ButtonNormalBorder}" BorderThickness="3,0,0,0" Margin="0,15" />
 						<Border Grid.Column="2"  Margin="15" Padding="10" Background="{DynamicResource GrayBrush3}" CornerRadius="4">
 							<Grid>
 								<Grid.ColumnDefinitions>
@@ -711,10 +915,10 @@
 								<Label Grid.Row="3" Grid.Column="0"  FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Description</Label>
 								<TextBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedItem.description, ElementName=lstVariables}" Name="txtVarDescription" />
 							</Grid>
-						</Border>
+						</Border-->
 					</Grid>
 				</TabItem>
-				<TabItem Header="Conversations" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12" FontWeight="Normal">
+				<TabItem Header="Conversations" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="3*"/>
@@ -731,14 +935,38 @@
 								<ColumnDefinition />
 								<ColumnDefinition />
 							</Grid.ColumnDefinitions>
-							<ComboBox x:Name="lstConversations" Style="{DynamicResource ComboBoxStyle}" Grid.Row="0" Grid.ColumnSpan="2" ItemsSource="{Binding}" Text="{Binding Path=title}" SelectionChanged="lstConversations_SelectionChanged">
-								<ComboBox.ItemTemplate>
-									<DataTemplate>
-										<TextBlock Text="{Binding Path=title}" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-									</DataTemplate>
-								</ComboBox.ItemTemplate>
-							</ComboBox>
-							<Border Grid.Row="1" Grid.ColumnSpan="2" Margin="0" Background="{DynamicResource GrayBrush3}" CornerRadius="4" BorderThickness="1">
+							<Grid Grid.Row="0" Grid.ColumnSpan="2">
+								<Grid.ColumnDefinitions>
+									<ColumnDefinition Width="*" />
+									<ColumnDefinition Width="30" />
+								</Grid.ColumnDefinitions>
+								<ComboBox x:Name="lstConversations" Style="{DynamicResource ComboBoxStyle}" Grid.Column="0" HorizontalContentAlignment="Stretch">
+									<ComboBox.ItemTemplate>
+										<DataTemplate>
+											<TextBlock Text="{Binding Path=title}" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+										</DataTemplate>
+									</ComboBox.ItemTemplate>
+								</ComboBox>
+								<Button Grid.Column="1" Click="Button_MouseDown" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Width="24" Height="24" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch">
+									<Button.Template>
+										<ControlTemplate TargetType="{x:Type Button}">
+											<Border Background="{TemplateBinding Background}" VerticalAlignment="Stretch">
+												<Label HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+													<ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+												</Label>
+											</Border>
+										</ControlTemplate>
+									</Button.Template>
+									<Button.ContextMenu>
+										<ContextMenu>
+											<MenuItem Header="New Conversation" Click="btnAddConversation_Click"/>
+											<MenuItem Header="Delete Current Conversation" Click="mnuDeleteConversation_Click" />
+										</ContextMenu>
+									</Button.ContextMenu>
+									<fa:FontAwesome Icon="EllipsisV" FontSize="14" />
+								</Button>
+							</Grid>
+							<Border Grid.Row="1" Grid.ColumnSpan="2" Margin="0" BorderThickness="1">
 								<ScrollViewer Grid.Row="0" Name="scrlTree" KeyUp="Delete_Node" BorderThickness="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Width="Auto" Height="Auto" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" PreviewMouseWheel="Zoom_MouseWheel" HorizontalContentAlignment="Center" MouseWheel="Zoom_MouseWheel" MouseDown="ScrollViewer_MouseDown" MouseMove="ScrollViewer_MouseMove">
 									<Grid x:Name="gridTree" HorizontalAlignment="Center" VerticalAlignment="Top">
 										<TreeContainer:TreeContainer Width="Auto" Height="Auto" x:Name="tcMain" Margin="40" VerticalBuffer="40" HorizontalAlignment="Center" VerticalAlignment="Top" MinWidth="100" MinHeight="20" HorizontalBuffer="20" HorizontalBufferSubtree="20" Panel.ZIndex="1" >
@@ -749,16 +977,17 @@
 									</Grid>
 								</ScrollViewer>
 							</Border>
-							<Grid Grid.Column="0" Grid.Row="2" Margin="0,0,5,0">
+							<Border Grid.Column="0" Grid.Row="2" Margin="0,0,4,0" CornerRadius="4" Background="{DynamicResource GrayBrush3}" BorderBrush="{DynamicResource GrayBrush3}" BorderThickness="2" Padding="2">
+							<Grid>
 								<Grid.RowDefinitions>
 									<RowDefinition Height="Auto" />
 									<RowDefinition />
 								</Grid.RowDefinitions>
 								<Label Grid.Row="0" DockPanel.Dock="Top" Height="27" VerticalAlignment="Center">Script</Label>
 								<local:BindableAvalonEditor Grid.Row="1" x:Name="editScript" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc"
-									Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True"  DataContext="{Binding ElementName=MainWin, Path=selectedEntry}" Text="{Binding Path=UserScript}">
+									Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True"  DataContext="{Binding ElementName=MainWin, Path=selectedEntry}" Text="{Binding Path=UserScript}" FontWeight="Normal">
 									<local:BindableAvalonEditor.ContextMenu>
-										<ContextMenu DataContext="{Binding ElementName=EditorWin}">
+										<ContextMenu FontFamily="Roboto" DataContext="{Binding ElementName=EditorWin}">
 											<MenuItem x:Name="menuScriptCharacters" Header="Characters" ItemsSource="{Binding theDatabase.Actors, ElementName=EditorWin}" Click="InsertVar_Click">
 												<MenuItem.ItemContainerStyle>
 													<Style TargetType="{x:Type MenuItem}">
@@ -795,8 +1024,10 @@
 									</local:BindableAvalonEditor.ContextMenu>
 								</local:BindableAvalonEditor>
 							</Grid>
-							<DockPanel x:Name="conditionsStack" Grid.Column="1" Grid.Row="2" Margin="5,0,0,0">
-								<DockPanel DockPanel.Dock="Top" Height="27">
+							</Border>
+							<Border  Grid.Column="1" Grid.Row="2" Margin="0,0,4,0" CornerRadius="4" Background="{DynamicResource GrayBrush3}" BorderBrush="{DynamicResource GrayBrush3}" BorderThickness="2" Padding="2">
+							<DockPanel x:Name="conditionsStack">
+								<DockPanel DockPanel.Dock="Top" Height="27" Background="{DynamicResource GrayBrush3}">
 									<Label>Conditions</Label>
 									<StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
 										<Label Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Background="{x:Null}" HorizontalAlignment="Right">When False:</Label>
@@ -808,9 +1039,9 @@
 								</DockPanel>
 
 								<local:BindableAvalonEditor x:Name="editConditions" FontFamily="Consolas" SyntaxHighlighting="Lua"
-										Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" MinHeight="90" Text="{Binding Path=ConditionsString}">
+										Foreground="#ffcccccc " Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" MinHeight="90" Text="{Binding Path=ConditionsString}" FontWeight="Normal">
 									<local:BindableAvalonEditor.ContextMenu>
-										<ContextMenu DataContext="{Binding ElementName=EditorWin}">
+										<ContextMenu FontFamily="Roboto" DataContext="{Binding ElementName=EditorWin}">
 											<MenuItem x:Name="menuCondCharacters" Header="Characters" ItemsSource="{Binding theDatabase.Actors, ElementName=EditorWin}" Click="InsertVarCondition_Click">
 												<MenuItem.ItemContainerStyle>
 													<Style TargetType="{x:Type MenuItem}">
@@ -847,6 +1078,7 @@
 									</local:BindableAvalonEditor.ContextMenu>
 								</local:BindableAvalonEditor>
 							</DockPanel>
+							</Border>
 						</Grid>
 						<GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="{DynamicResource ButtonNormalBorder}" BorderThickness="3,0,0,0" Margin="0" />
 						<Border Grid.Column="2"  Margin="5,0,0,15" Padding="10" Background="{DynamicResource GrayBrush3}" CornerRadius="4">
@@ -879,7 +1111,58 @@
 									</Grid>
 								</Viewbox>
 								<TabControl Grid.Row="1">
-									<TabItem Header="Entry" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+									<TabItem x:Name="tabConvo" Header="Convo" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+										<Grid>
+											<Grid.ColumnDefinitions>
+												<ColumnDefinition  Width="Auto"/>
+												<ColumnDefinition Width="*"/>
+											</Grid.ColumnDefinitions>
+
+											<Grid.RowDefinitions>
+												<RowDefinition Height="Auto"/>
+												<RowDefinition Height="Auto"/>
+												<RowDefinition Height="Auto"/>
+												<RowDefinition Height="Auto"/>
+												<RowDefinition Height="Auto"/>
+												<RowDefinition Height="Auto"/>
+												<RowDefinition Height="Auto"/>
+											</Grid.RowDefinitions>
+											<Label Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">ID</Label>
+											<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Text="{Binding SelectedItem.ID, ElementName=lstConversations}" Name="txtConvoID" VerticalAlignment="Top"/>
+
+											<Label Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Title</Label>
+											<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.title, ElementName=lstConversations}" Name="txtConvoTitle" VerticalAlignment="Top" />
+
+											<Label Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Actor</Label>
+											<ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedIndex="{Binding SelectedItem.actorID, ElementName=lstConversations}" Name="lstConvoActor" HorizontalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top">
+												<ComboBox.ItemTemplate>
+													<DataTemplate>
+														<StackPanel Orientation="Horizontal" Height="50" MaxHeight="50">
+															<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="48" VerticalAlignment="Stretch" Width="48" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality" MaxWidth="48" MaxHeight="48" Margin="0,0,3,0"/>
+															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+														</StackPanel>
+													</DataTemplate>
+												</ComboBox.ItemTemplate>
+											</ComboBox>
+
+
+											<Label Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Conversant</Label>
+											<ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedIndex="{Binding SelectedItem.conversantID, ElementName=lstConversations}" Name="lstConvoConversant" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" VerticalAlignment="Top">
+												<ComboBox.ItemTemplate>
+													<DataTemplate>
+														<StackPanel Orientation="Horizontal" Height="50" MaxHeight="50">
+															<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="48" VerticalAlignment="Stretch" Width="48" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality" MaxWidth="48" MaxHeight="48" Margin="0,0,3,0"/>
+															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Background="{x:Null}" />
+														</StackPanel>
+													</DataTemplate>
+												</ComboBox.ItemTemplate>
+											</ComboBox>
+
+											<Label Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Description</Label>
+											<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedItem.description, ElementName=lstConversations}" Name="txtConvoDescription" />
+										</Grid>
+									</TabItem>
+									<TabItem x:Name="tabEntry" Header="Entry" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
 										<ScrollViewer VerticalScrollBarVisibility="Auto">
 											<Grid x:Name="gridDialogueEntry">
 												<Grid.ColumnDefinitions>
@@ -905,15 +1188,8 @@
 												<Label Grid.Row="1" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Title</Label>
 												<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding title}" Name="txtDialogueTitle" />
 
-												<Label Grid.Row="2" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Actor</Label>
-												<ComboBox Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Style="{DynamicResource ComboBoxStyle}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding actor}" Name="lstDialogueActor" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top">
-													<ComboBox.ItemTemplate>
-														<DataTemplate>
-															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-														</DataTemplate>
-													</ComboBox.ItemTemplate>
-												</ComboBox>
-
+												<StackPanel Orientation="Vertical" Grid.Row="2" Grid.Column="0">
+												<Label FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Actor</Label>
 												<Button x:Name="btnSwap" Margin="0,0,4,4" Click="btnSwap_Click" VerticalAlignment="Bottom" HorizontalAlignment="Right" Padding="3,1">
 													<Button.Style>
 														<Style TargetType="Button">
@@ -937,6 +1213,14 @@
 													</Button.Style>
 													↑↓
 												</Button>
+												</StackPanel>
+												<ComboBox Margin="4,0,4,4" Grid.Row="2" Grid.Column="1" Style="{DynamicResource ComboBoxStyle}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding actor}" Name="lstDialogueActor" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top">
+													<ComboBox.ItemTemplate>
+														<DataTemplate>
+															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+														</DataTemplate>
+													</ComboBox.ItemTemplate>
+												</ComboBox>
 
 												<Label Grid.Row="3" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Conversant</Label>
 												<ComboBox Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" Grid.Row="3" Grid.Column="1" HorizontalContentAlignment="Stretch" SelectedItem="{Binding conversant}" Name="lstDialogueConversant" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
@@ -1067,57 +1351,6 @@
 											</Grid>
 										</ScrollViewer>
 									</TabItem>
-									<TabItem Header="Convo" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
-										<Grid>
-											<Grid.ColumnDefinitions>
-												<ColumnDefinition  Width="Auto"/>
-												<ColumnDefinition Width="*"/>
-											</Grid.ColumnDefinitions>
-
-											<Grid.RowDefinitions>
-												<RowDefinition Height="Auto"/>
-												<RowDefinition Height="Auto"/>
-												<RowDefinition Height="Auto"/>
-												<RowDefinition Height="Auto"/>
-												<RowDefinition Height="Auto"/>
-												<RowDefinition Height="Auto"/>
-												<RowDefinition Height="Auto"/>
-											</Grid.RowDefinitions>
-											<Label Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">ID</Label>
-											<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Text="{Binding SelectedItem.ID, ElementName=lstConversations}" Name="txtConvoID" VerticalAlignment="Top"/>
-
-											<Label Grid.Row="1" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Title</Label>
-											<TextBox Grid.Row="1" Grid.Column="1" Margin="4,0,4,4" Text="{Binding SelectedItem.title, ElementName=lstConversations}" Name="txtConvoTitle" VerticalAlignment="Top" />
-
-											<Label Grid.Row="2" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Actor</Label>
-											<ComboBox Grid.Row="2" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedIndex="{Binding SelectedItem.actorID, ElementName=lstConversations}" Name="lstConvoActor" HorizontalContentAlignment="Stretch" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
-												<ComboBox.ItemTemplate>
-													<DataTemplate>
-														<StackPanel Orientation="Horizontal" Height="50" MaxHeight="50">
-															<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="48" VerticalAlignment="Stretch" Width="48" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality" MaxWidth="48" MaxHeight="48" Margin="0,0,3,0"/>
-															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
-														</StackPanel>
-													</DataTemplate>
-												</ComboBox.ItemTemplate>
-											</ComboBox>
-
-
-											<Label Grid.Row="3" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Conversant</Label>
-											<ComboBox Grid.Row="3" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" SelectedIndex="{Binding SelectedItem.conversantID, ElementName=lstConversations}" Name="lstConvoConversant" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" HorizontalContentAlignment="Stretch" VerticalAlignment="Top">
-												<ComboBox.ItemTemplate>
-													<DataTemplate>
-														<StackPanel Orientation="Horizontal" Height="50" MaxHeight="50">
-															<Image Source="{Binding Path=picture}" Name="imgActorImage" HorizontalAlignment="Stretch" Height="48" VerticalAlignment="Stretch" Width="48" Grid.ColumnSpan="1" RenderOptions.BitmapScalingMode="HighQuality" MaxWidth="48" MaxHeight="48" Margin="0,0,3,0"/>
-															<TextBlock Text="{Binding Path=name}"  Name="lblActorName" HorizontalAlignment="Stretch" Margin="0" VerticalAlignment="Top" FontWeight="Bold" Height="28" Width="Auto" TextTrimming="CharacterEllipsis" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Background="{x:Null}" />
-														</StackPanel>
-													</DataTemplate>
-												</ComboBox.ItemTemplate>
-											</ComboBox>
-
-											<Label Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Description</Label>
-											<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedItem.description, ElementName=lstConversations}" Name="txtConvoDescription" />
-										</Grid>
-									</TabItem>
 								</TabControl>
 							</Grid>
 						</Border>
@@ -1180,7 +1413,7 @@
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v2.1.9" />
+				<TextBlock Text="v2.2.0" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">

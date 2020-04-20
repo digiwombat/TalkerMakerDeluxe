@@ -84,7 +84,7 @@ namespace TalkerMakerDeluxe
 	{
 		public int ID { get; set; }
 		public string name { get; set; }
-		public int age { get; set; }
+		public string age { get; set; }
 		public string gender { get; set; }
 		public bool isPlayer { get; set; }
 		public string description { get; set; }
@@ -301,12 +301,14 @@ namespace TalkerMakerDeluxe
 	{
 		public int ID { get; set; }
 		public string name { get; set; }
+		public string description { get; set; }
 		public bool inInventory { get; set; }
 
 		public string ToXML()
 		{
 			string xmlOutput = "<Item ID=\"" + ID + "\"><Fields>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Name</Title><Value>" + name + "</Value></Field>";
+			xmlOutput += "<Field Type=\"Text\"><Title>Description</Title><Value>" + description + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Boolean\"><Title>InInventory</Title><Value>" + inInventory.ToString().ToLower() + "</Value></Field>";
 			xmlOutput += "</Fields></Item>";
 			return xmlOutput;

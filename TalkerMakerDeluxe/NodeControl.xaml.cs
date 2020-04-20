@@ -1,20 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Xceed.Wpf.Toolkit.PropertyGrid;
-using Xceed.Wpf.Toolkit.PropertyGrid.Attributes;
 
 namespace TalkerMakerDeluxe
 {
@@ -80,14 +67,14 @@ namespace TalkerMakerDeluxe
         {
             if (dialogueEntryID != 0)
             {
-                MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+                EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
                 parentWindow.CopyNode(this.dialogueEntryID);
             }
         }
 
         private void menuPasteAsChild_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
             parentWindow.PasteAsChild(this.dialogueEntryID);
         }
 
@@ -95,14 +82,14 @@ namespace TalkerMakerDeluxe
         {
             if (dialogueEntryID != 0)
             {
-                MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+                EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
                 parentWindow.DeleteSingleNode(this.dialogueEntryID);
             }
         }
 
         private void menuInsertAfter_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow parentWindow = Window.GetWindow(this) as MainWindow;
+            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
             parentWindow.InsertAfter(this.dialogueEntryID);
         }
     }

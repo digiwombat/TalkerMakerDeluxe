@@ -18,7 +18,7 @@ namespace TalkerMakerDeluxe
 
         public void Undo()
         {
-            MainWindow parentWindow = Application.Current.MainWindow as MainWindow;
+            EditorWindow parentWindow = Application.Current.MainWindow as EditorWindow;
             List<TreeNode> trees = new List<TreeNode>();
             if (UndoStack.Last().Item1[0] == "add")
             {
@@ -55,7 +55,7 @@ namespace TalkerMakerDeluxe
 
         public void Redo()
         {
-            MainWindow parentWindow = Application.Current.MainWindow as MainWindow;
+            EditorWindow parentWindow = Application.Current.MainWindow as EditorWindow;
             List<TreeNode> trees = new List<TreeNode>();
             if (RedoStack.Last().Item1[0] == "remove")
             {

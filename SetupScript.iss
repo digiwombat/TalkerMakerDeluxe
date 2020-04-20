@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TalkerMaker Deluxe"
-#define MyAppVersion "2.1.9"
+#define MyAppVersion "2.2.0"
 #define MyAppPublisher "Barky Seal Games"
 #define MyAppURL "http://randallfitzgerald.net"
 #define MyAppExeName "TalkerMakerDeluxe.exe"
@@ -41,17 +41,10 @@ Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDelux
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\FontAwesome.WPF.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\GraphLayout.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\layout.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\TalkerMakerDeluxe.exe"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\TalkerMakerDeluxe.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\TreeContainer.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.AvalonDock.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.AvalonDock.Themes.Aero.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.AvalonDock.Themes.Metro.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.AvalonDock.Themes.VS2010.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\Xceed.Wpf.Toolkit.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Users\randall\Desktop\Development\TalkerMakerDeluxe\TalkerMakerDeluxe\bin\x64\Release\recentfiles.config"; DestDir: "{app}"; Flags: ignoreversion
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
