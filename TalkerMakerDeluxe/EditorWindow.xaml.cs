@@ -284,9 +284,9 @@ namespace TalkerMakerDeluxe
 		{
 			if (needsSave)
 			{
-				string autosave1 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_1.xml");
-				string autosave2 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_2.xml");
-				string autosave3 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_3.xml");
+				string autosave1 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_1.json");
+				string autosave2 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_2.json");
+				string autosave3 = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "autosave_3.json");
 				if (File.Exists(autosave2))
 				{
 					if (File.Exists(autosave3))
