@@ -7,4 +7,4 @@ Fork it, fix it, come pretty up the advertising, do whatever. I'll gladly roll i
 
 There is [no Code of Conduct](https://github.com/domgetter/NCoC) for this project.
 
-![ScreenShot](http://i.imgur.com/1r34mVb.png)
+![ScreenShot](https://i.imgur.com/w2hfiEC.png)
