@@ -892,7 +892,7 @@ namespace TalkerMakerDeluxe
 		{
 			for (int i = 0; i < theDatabase.Conversations[loadedConversation].DialogEntries.Count; i++)
 			{
-				TreeNode nodeTree = tcMain.FindName("node_" + i) as TreeNode;
+				TreeNode nodeTree = tcMain.FindName("node_" + theDatabase.Conversations[loadedConversation].DialogEntries[i].ID) as TreeNode;
 				Point location = nodeTree.TransformToAncestor(gridTree).Transform(new Point(0, 0));
 				theDatabase.Conversations[loadedConversation].DialogEntries[i].x = location.X;
 				theDatabase.Conversations[loadedConversation].DialogEntries[i].y = location.Y;
