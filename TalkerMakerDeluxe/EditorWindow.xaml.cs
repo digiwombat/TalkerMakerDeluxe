@@ -94,7 +94,6 @@ namespace TalkerMakerDeluxe
 				EditorWin.WindowState = System.Windows.WindowState.Maximized;
 			}
 
-
 			EditorWin.Icon = ImageAwesome.CreateImageSource(FontAwesomeIcon.CommentsOutline, new SolidColorBrush(Color.FromRgb(59, 92, 145)));
 
 			EditorWin.Title = "TalkerMaker Deluxe - " + openedFile;
@@ -108,7 +107,7 @@ namespace TalkerMakerDeluxe
 			this.DataContext = theDatabase;
 
 			//tcMain.LayoutUpdated
-			tcMain.LayoutUpdated += HandleDrawConnections;
+			//tcMain.LayoutUpdated += HandleDrawConnections;
 
 			uiScaleSlider.MouseDoubleClick +=
 			new MouseButtonEventHandler(RestoreScalingFactor);
@@ -168,8 +167,9 @@ namespace TalkerMakerDeluxe
 			theDatabase.Locations.Add(new Location() { ID = 0, name = "New Location" });
 
 			currentNode = "";
-			editConditions.Text = "";
-			editScript.Text = "";
+			selectedEntry = null;
+			conditionsStack.DataContext = null;
+			gridScript.DataContext = null;
 
 			lstConversations.SelectionChanged -= lstConversations_SelectionChanged;
 
@@ -212,8 +212,6 @@ namespace TalkerMakerDeluxe
 			txtSettingAuthor.DataContext = theDatabase;
 			txtSettingProjectTitle.DataContext = theDatabase;
 			txtSettingVersion.DataContext = theDatabase;
-			editConditions.Text = "";
-			editScript.Text = "";
 
 			lstConversations.Items.Refresh();
 			lstConversations.SelectionChanged += lstConversations_SelectionChanged;
@@ -227,8 +225,9 @@ namespace TalkerMakerDeluxe
 			theDatabase = TalkerMakerDatabase.LoadDatabase(project);
 
 			currentNode = "";
-			editConditions.Text = "";
-			editScript.Text = "";
+			selectedEntry = null;
+			conditionsStack.DataContext = null;
+			gridScript.DataContext = null;
 
 			lstConversations.SelectionChanged -= lstConversations_SelectionChanged;
 
@@ -272,8 +271,6 @@ namespace TalkerMakerDeluxe
 			txtSettingAuthor.DataContext = theDatabase;
 			txtSettingProjectTitle.DataContext = theDatabase;
 			txtSettingVersion.DataContext = theDatabase;
-			editConditions.Text = "";
-			editScript.Text = "";
 
 			lstConversations.Items.Refresh();
 			lstConversations.SelectionChanged += lstConversations_SelectionChanged;
@@ -338,7 +335,7 @@ namespace TalkerMakerDeluxe
 				NodeControl ndctl = nodeTree.Content as NodeControl;
 
 				Link newDialogueLink = new Link();
-				NodeControl newDialogueNode = new NodeControl();
+				NodeControl newDialogueNode = new NodeControl(this);
 
 				int parentID = (int)ndctl.dialogueEntryID;
 				int newNodeID = theDatabase.Conversations[loadedConversation].DialogEntries.OrderByDescending(p => p.ID).First().ID + 1;
@@ -552,13 +549,17 @@ namespace TalkerMakerDeluxe
 				selectedEntry = null;
 				editConditions.IsEnabled = false;
 				editScript.IsEnabled = false;
+				conditionsStack.DataContext = null;
+				gridScript.DataContext = null;
 			}
 			else
 			{
 				selectedEntry = theDatabase.Conversations[loadedConversation].DialogEntries.FirstOrDefault(x => x.ID == node.dialogueEntryID);
+				node.DataContext = selectedEntry;
+				Console.WriteLine("UserScript: " + selectedEntry.UserScript + " | UserScript.Length: " + selectedEntry.UserScript.Length + " | IsNullOrEmpty: " + string.IsNullOrEmpty(selectedEntry.UserScript) + " | IsNullOrWhiteSpace: " + string.IsNullOrWhiteSpace(selectedEntry.UserScript));
 				gridDialogueEntry.DataContext = selectedEntry;
 				conditionsStack.DataContext = selectedEntry;
-				editScript.DataContext = selectedEntry;
+				gridScript.DataContext = selectedEntry;
 				lstLinks.ItemsSource = selectedEntry.OutgoingLinks;
 				cbConvo.ItemsSource = theDatabase.Conversations;
 				tabEntry.IsSelected = true;
@@ -576,7 +577,7 @@ namespace TalkerMakerDeluxe
 				handledNodes.Add(dh.ID);
 				int parentNode = -1;
 				DialogueEntry de = theDatabase.Conversations[loadedConversation].DialogEntries.First(d => d.ID == dh.ID);
-				NodeControl node = new NodeControl();
+				NodeControl node = new NodeControl(this);
 				BrushConverter bc = new BrushConverter();
 				switch (de.NodeColor)
 				{
@@ -603,24 +604,16 @@ namespace TalkerMakerDeluxe
 				node.dialogueEntryID = de.ID;
 				node.DataContext = theDatabase.Conversations[loadedConversation].DialogEntries.First(d => d.ID == dh.ID);
 
-				if (de.UserScript != "" || de.ConditionsString != "")
-				{
-					node.lblCode.Visibility = Visibility.Visible;
-				}
-				else
-				{
-					node.lblCode.Visibility = Visibility.Hidden;
-				}
 				Console.WriteLine("Setting Bindings...");
-				foreach (Link lanks in de.OutgoingLinks)
-				{
-					if (lanks.IsConnector == true)
-					{
-						//ndctl.lblLinkTo.Content = lanks.DestinationDialogID;
-						node.btnAdd.Visibility = Visibility.Hidden;
-						node.faLink.Visibility = Visibility.Visible;
-					}
-				}
+				//foreach (Link lanks in de.OutgoingLinks)
+				//{
+				//	if (lanks.IsConnector == true)
+				//	{
+				//		//ndctl.lblLinkTo.Content = lanks.DestinationDialogID;
+				//		node.btnAdd.Visibility = Visibility.Hidden;
+				//		node.faLink.Visibility = Visibility.Visible;
+				//	}
+				//}
 
 
 				foreach (DialogHolder dhParent in IDs)
@@ -659,6 +652,8 @@ namespace TalkerMakerDeluxe
 			loadedConversation = convotoload;
 			tcMain.Clear();
 			IDs.Clear();
+			gridScript.DataContext = null;
+			conditionsStack.DataContext = null;
 
 			//Draw 'em
 			foreach (DialogueEntry d in theDatabase.Conversations[convotoload].DialogEntries)
@@ -1289,6 +1284,7 @@ namespace TalkerMakerDeluxe
 
 			newConvo.DialogEntries.Add(convoStart);
 			theDatabase.Conversations.Add(newConvo);
+			lstConversations.SelectedIndex = lstConversations.Items.Count - 1;
 		}
 
 		private void btnAddVariable_Click(object sender, RoutedEventArgs e)

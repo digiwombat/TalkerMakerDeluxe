@@ -8,7 +8,7 @@
 		xmlns:fa="http://schemas.fontawesome.io/icons/" xmlns:TreeContainer="clr-namespace:TreeContainer;assembly=TreeContainer"
 		Title="TalkerMaker Deluxe" Height="800" MinHeight="575" MinWidth="600" Width="1200" AllowDrop="True" Drop="MetroWindow_Drop"
 	SizeToContent="Manual" ResizeMode="CanResizeWithGrip"
-	Closing="MetroWindow_Closing" FontFamily="Roboto" DataContext="{Binding theDatabase, ElementName=MainWin}" MouseUp="ScrollViewer_MouseUp">
+	Closing="MetroWindow_Closing" FontFamily="Roboto" DataContext="{Binding theDatabase, ElementName=EditorWin}" MouseUp="ScrollViewer_MouseUp">
 	<Window.Resources>
 		<local:UriToBitmapConverter x:Key="UriToBitmapConverter" />
 		<local:Actor x:Key="CharacterItems" />
@@ -242,7 +242,7 @@
 			</MenuItem>
 		</Menu>
 		<DockPanel Grid.Row="1" Margin="0,0,0,0">
-			<TabControl Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="14" FontWeight="Bold" Margin="0" Padding="0" ScrollViewer.CanContentScroll="True">
+			<TabControl x:Name="tabMain" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" BorderBrush="{x:Null}" HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch" FontSize="14" FontWeight="Bold" Margin="0" Padding="0" ScrollViewer.CanContentScroll="True">
 				<TabControl.Resources>
 					<Style TargetType="{x:Type TabPanel}">
 						<Setter Property="HorizontalAlignment" Value="Center" />
@@ -913,7 +913,7 @@
 						</Border-->
 					</Grid>
 				</TabItem>
-				<TabItem Header="Conversations" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12">
+				<TabItem x:Name="tabConversations" Header="Conversations" Background="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" BorderBrush="{DynamicResource ButtonNormalBorder}" BorderThickness="1,1,1,8" Margin="0" FontSize="12">
 					<Grid>
 						<Grid.ColumnDefinitions>
 							<ColumnDefinition Width="3*"/>
@@ -973,14 +973,14 @@
 								</ScrollViewer>
 							</Border>
 							<Border Grid.Column="0" Grid.Row="2" Margin="0,0,4,0" CornerRadius="4" Background="{DynamicResource GrayBrush3}" BorderBrush="{DynamicResource GrayBrush3}" BorderThickness="2" Padding="2">
-							<Grid>
+							<Grid x:Name="gridScript">
 								<Grid.RowDefinitions>
 									<RowDefinition Height="Auto" />
 									<RowDefinition />
 								</Grid.RowDefinitions>
 								<Label Grid.Row="0" DockPanel.Dock="Top" Height="27" VerticalAlignment="Center">Script</Label>
 								<local:BindableAvalonEditor Grid.Row="1" x:Name="editScript" FontFamily="Consolas" SyntaxHighlighting="Lua" Foreground="#ffcccccc"
-									Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True"  DataContext="{Binding ElementName=MainWin, Path=selectedEntry}" Text="{Binding Path=UserScript}" FontWeight="Normal">
+									Background="#ff2d2d2d" FontSize="10pt" WordWrap="True" ShowLineNumbers="True" Text="{Binding Path=UserScript}" FontWeight="Normal">
 									<local:BindableAvalonEditor.ContextMenu>
 										<ContextMenu FontFamily="Roboto" DataContext="{Binding ElementName=EditorWin}">
 											<MenuItem x:Name="menuScriptCharacters" Header="Characters" ItemsSource="{Binding theDatabase.Actors, ElementName=EditorWin}" Click="InsertVar_Click">
@@ -1261,7 +1261,7 @@
 												<Label Grid.Row="8" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Links:</Label>
 												<StackPanel Orientation="Vertical" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
 													<UniformGrid Margin="0,0,0,5" Columns="3">
-														<ComboBox x:Name="cbConvo" ItemsSource="{Binding ElementName=MainWin, Path=theDatabase.Conversations}" Margin="0,0,5,0" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SelectionChanged="cbConvo_SelectionChanged" ScrollViewer.CanContentScroll="True" HorizontalContentAlignment="Stretch">
+														<ComboBox x:Name="cbConvo" ItemsSource="{Binding ElementName=EditorWin, Path=theDatabase.Conversations}" Margin="0,0,5,0" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SelectionChanged="cbConvo_SelectionChanged" ScrollViewer.CanContentScroll="True" HorizontalContentAlignment="Stretch">
 															<ComboBox.ItemTemplate>
 																<DataTemplate>
 																	<StackPanel Orientation="Horizontal">
@@ -1273,7 +1273,7 @@
 																</DataTemplate>
 															</ComboBox.ItemTemplate>
 														</ComboBox>
-														<ComboBox x:Name="cbDialogueEntry" ItemsSource="{Binding ElementName=MainWin, Path=theDatabase.Conversations[cbConvo.Text].DialogEntries}" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Margin="0,0,5,0">
+														<ComboBox x:Name="cbDialogueEntry" ItemsSource="{Binding ElementName=EditorWin, Path=theDatabase.Conversations[cbConvo.Text].DialogEntries}" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" Margin="0,0,5,0">
 															<ComboBox.ItemTemplate>
 																<DataTemplate>
 																	<StackPanel Orientation="Horizontal">
@@ -1408,7 +1408,7 @@
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v2.2.0" />
+				<TextBlock Text="v2.2.1" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">

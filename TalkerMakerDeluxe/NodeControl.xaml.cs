@@ -8,16 +8,18 @@ namespace TalkerMakerDeluxe
     public partial class NodeControl : UserControl
     {
         public int dialogueEntryID { get; set; }
+        public EditorWindow parentWindow;
 
-        public NodeControl()
+        public NodeControl(EditorWindow editorWindow)
         {
             InitializeComponent();
+            parentWindow = editorWindow;
         }
 
         private void Grid_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             //This is the part where I break all your little rules. BWAHAHAHAHA! BWAAAAAHAHAHAHAHAHA!
-            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+            
             parentWindow.SelectNode(this.Name);
         }
 
@@ -35,13 +37,13 @@ namespace TalkerMakerDeluxe
 
         private void btnMin_Click(object sender, RoutedEventArgs e)
         {
-            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+            
             parentWindow.CollapseNode(this.Name);
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+            
             parentWindow.AddNode(this.Name);
         }
 
@@ -49,7 +51,7 @@ namespace TalkerMakerDeluxe
         {
             if (dialogueEntryID != 0)
             {
-                EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+                
                 parentWindow.InsertBefore(this.dialogueEntryID);
             }
         }
@@ -58,7 +60,7 @@ namespace TalkerMakerDeluxe
         {
             if (dialogueEntryID != 0)
             {
-                EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+                
                 parentWindow.DeleteNode(this.dialogueEntryID);
             }
         }
@@ -67,14 +69,14 @@ namespace TalkerMakerDeluxe
         {
             if (dialogueEntryID != 0)
             {
-                EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+                
                 parentWindow.CopyNode(this.dialogueEntryID);
             }
         }
 
         private void menuPasteAsChild_Click(object sender, RoutedEventArgs e)
         {
-            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+            
             parentWindow.PasteAsChild(this.dialogueEntryID);
         }
 
@@ -82,14 +84,14 @@ namespace TalkerMakerDeluxe
         {
             if (dialogueEntryID != 0)
             {
-                EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+                
                 parentWindow.DeleteSingleNode(this.dialogueEntryID);
             }
         }
 
         private void menuInsertAfter_Click(object sender, RoutedEventArgs e)
         {
-            EditorWindow parentWindow = Window.GetWindow(this) as EditorWindow;
+            
             parentWindow.InsertAfter(this.dialogueEntryID);
         }
     }

@@ -12,6 +12,11 @@ namespace TalkerMakerDeluxe
     {
         public object Convert(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
         {
+            if(value == null)
+            {
+                return null;
+            }
+
             BitmapImage bi = new BitmapImage();
             bi.BeginInit();
             bi.DecodePixelWidth = 64;

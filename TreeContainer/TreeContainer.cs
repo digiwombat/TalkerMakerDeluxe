@@ -10,6 +10,9 @@ namespace TreeContainer
 {
 	public class TreeContainer : Panel
 	{
+		public delegate void HandleOnRender();
+		public event HandleOnRender OnRenderHandle;
+
 		#region Private fields
 		LayeredTreeDraw _ltd;
 		int _iNextNameSuffix = 0;
@@ -340,6 +343,8 @@ namespace TreeContainer
 		protected override void OnRender(System.Windows.Media.DrawingContext dc)
 		{
 			base.OnRender(dc);
+			if(OnRenderHandle != null)
+				OnRenderHandle();
 		}
 		#endregion
 	}
