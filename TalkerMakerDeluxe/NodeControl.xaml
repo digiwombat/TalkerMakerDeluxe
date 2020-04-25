@@ -31,6 +31,9 @@
 								<DataTrigger Binding="{Binding Path=logicNode}" Value="true">
 									<Setter Property="Height" Value="0"/>
 								</DataTrigger>
+								<DataTrigger Binding="{Binding Path=isGroup}" Value="true">
+									<Setter Property="Height" Value="0"/>
+								</DataTrigger>
 							</Style.Triggers>
 						</Style>
 					</RowDefinition.Style>
@@ -41,6 +44,9 @@
 							<Setter Property="Height" Value="28" />
 							<Style.Triggers>
 								<DataTrigger Binding="{Binding Path=logicNode}" Value="true">
+									<Setter Property="Height" Value="0"/>
+								</DataTrigger>
+								<DataTrigger Binding="{Binding Path=isGroup}" Value="true">
 									<Setter Property="Height" Value="0"/>
 								</DataTrigger>
 							</Style.Triggers>

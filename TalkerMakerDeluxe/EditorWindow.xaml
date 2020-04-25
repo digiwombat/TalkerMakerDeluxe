@@ -1171,11 +1171,67 @@
 													<RowDefinition Height="Auto"/>
 													<RowDefinition Height="Auto"/>
 													<RowDefinition Height="Auto"/>
-													<RowDefinition Height="Auto"/>
-													<RowDefinition Height="Auto"/>
-													<RowDefinition Height="Auto"/>
-													<RowDefinition Height="Auto"/>
-													<RowDefinition Height="Auto"/>
+													<RowDefinition>
+														<RowDefinition.Style>
+															<Style>
+																<Setter Property="RowDefinition.Height" Value="Auto" />
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding Path=isGroup}" Value="true">
+																		<Setter Property="RowDefinition.Height" Value="0"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</RowDefinition.Style>
+													</RowDefinition>
+													<RowDefinition>
+														<RowDefinition.Style>
+															<Style>
+																<Setter Property="RowDefinition.Height" Value="Auto" />
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding Path=isGroup}" Value="true">
+																		<Setter Property="RowDefinition.Height" Value="0"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</RowDefinition.Style>
+													</RowDefinition>
+													<RowDefinition>
+														<RowDefinition.Style>
+															<Style>
+																<Setter Property="RowDefinition.Height" Value="Auto" />
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding Path=isGroup}" Value="true">
+																		<Setter Property="RowDefinition.Height" Value="0"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</RowDefinition.Style>
+													</RowDefinition>
+													<RowDefinition>
+														<RowDefinition.Style>
+															<Style>
+																<Setter Property="RowDefinition.Height" Value="Auto" />
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding Path=isGroup}" Value="true">
+																		<Setter Property="RowDefinition.Height" Value="0"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</RowDefinition.Style>
+													</RowDefinition>
+													<RowDefinition />
+													<RowDefinition>
+														<RowDefinition.Style>
+															<Style>
+																<Setter Property="RowDefinition.Height" Value="Auto" />
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding Path=isGroup}" Value="true">
+																		<Setter Property="RowDefinition.Height" Value="0"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</RowDefinition.Style>
+													</RowDefinition>
 												</Grid.RowDefinitions>
 												<Label Grid.Row="0" Grid.Column="0" FontSize="12" Margin="4,0,4,4" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">ID</Label>
 												<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="{Binding ID}" TextAlignment="Left" Name="txtDialogueID"/>
@@ -1226,29 +1282,9 @@
 													</ComboBox.ItemTemplate>
 												</ComboBox>
 
-												<Label Grid.Row="4" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Menu Text</Label>
-												<TextBox Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" Text="{Binding menuText}" Name="txtMenuText"/>
-
-												<Label Grid.Row="5" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Dialogue</Label>
-												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" AcceptsReturn="True"
-														 MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtDialogueWords" Text="{Binding dialogueText}" />
-
-												<Label Grid.Row="6" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Sequence</Label>
-												<TextBox Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True"
-														 MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtSequence" Text="{Binding sequence}"/>
-
-												<Label Grid.Row="7" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Node Color</Label>
-												<ComboBox Grid.Row="7" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" Text="{Binding NodeColor}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
-													<ComboBoxItem Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Normal</ComboBoxItem>
-													<ComboBoxItem Background="#FF631E29" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Red</ComboBoxItem>
-													<ComboBoxItem Background="#FF253831" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Green</ComboBoxItem>
-													<ComboBoxItem Background="#FF004358" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Blue</ComboBoxItem>
-													<ComboBoxItem Background="#FF35203B" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Purple</ComboBoxItem>
-												</ComboBox>
-
-												<Label Grid.Row="9" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Logic Node</Label>
-												<StackPanel Orientation="Horizontal" Grid.Row="9" Grid.Column="1" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Center">
-													<CheckBox Name="chkLogicNode" IsChecked="{Binding logicNode}" Background="#FF585858">
+												<Label Grid.Row="4" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Choice Hub</Label>
+												<StackPanel Orientation="Horizontal" Grid.Row="4" Grid.Column="1" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Center">
+													<CheckBox Name="chkGroup" IsChecked="{Binding isGroup}" Background="#FF585858">
 														<CheckBox.BorderBrush>
 															<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.95">
 																<GradientStop Color="Black" Offset="1"/>
@@ -1258,8 +1294,28 @@
 													</CheckBox>
 												</StackPanel>
 
-												<Label Grid.Row="8" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Links:</Label>
-												<StackPanel Orientation="Vertical" Grid.Row="8" Grid.Column="1" Margin="4,0,4,4">
+												<Label Grid.Row="5" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Menu Text</Label>
+												<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" Text="{Binding menuText}" Name="txtMenuText"/>
+
+												<Label Grid.Row="6" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Dialogue</Label>
+												<TextBox Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" AcceptsReturn="True"
+														 MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtDialogueWords" Text="{Binding dialogueText}" />
+
+												<Label Grid.Row="7" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Sequence</Label>
+												<TextBox Grid.Row="7" Grid.Column="1" Margin="4,0,4,4" TextWrapping="Wrap" AcceptsReturn="True"
+														 MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Name="txtSequence" Text="{Binding sequence}"/>
+
+												<Label Grid.Row="8" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Node Color</Label>
+												<ComboBox Grid.Row="8" Grid.Column="1" Margin="4,0,4,4" Style="{DynamicResource ComboBoxStyle}" Text="{Binding NodeColor}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+													<ComboBoxItem Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Normal</ComboBoxItem>
+													<ComboBoxItem Background="#FF631E29" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Red</ComboBoxItem>
+													<ComboBoxItem Background="#FF253831" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Green</ComboBoxItem>
+													<ComboBoxItem Background="#FF004358" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Blue</ComboBoxItem>
+													<ComboBoxItem Background="#FF35203B" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">Purple</ComboBoxItem>
+												</ComboBox>
+
+												<Label Grid.Row="9" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Links:</Label>
+												<StackPanel Orientation="Vertical" Grid.Row="9" Grid.Column="1" Margin="4,0,4,4">
 													<UniformGrid Margin="0,0,0,5" Columns="3">
 														<ComboBox x:Name="cbConvo" ItemsSource="{Binding ElementName=EditorWin, Path=theDatabase.Conversations}" Margin="0,0,5,0" Style="{DynamicResource ComboBoxStyle}" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" SelectionChanged="cbConvo_SelectionChanged" ScrollViewer.CanContentScroll="True" HorizontalContentAlignment="Stretch">
 															<ComboBox.ItemTemplate>
@@ -1342,6 +1398,18 @@
 															</DataTemplate>
 														</ListView.ItemTemplate>
 													</ListView>
+												</StackPanel>
+
+												<Label Grid.Row="10" Grid.Column="0" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Logic Node</Label>
+												<StackPanel Orientation="Horizontal" Grid.Row="10" Grid.Column="1" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Center">
+													<CheckBox Name="chkLogicNode" IsChecked="{Binding logicNode}" Background="#FF585858">
+														<CheckBox.BorderBrush>
+															<LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0.95">
+																<GradientStop Color="Black" Offset="1"/>
+																<GradientStop Color="#FF2A2A2A" Offset="0"/>
+															</LinearGradientBrush>
+														</CheckBox.BorderBrush>
+													</CheckBox>
 												</StackPanel>
 											</Grid>
 										</ScrollViewer>

@@ -201,6 +201,7 @@ namespace TalkerMakerDeluxe
 		public string ConditionPriority { get; set; }
 		public string FalseCondtionAction { get; set; }
 		public bool IsRoot { get; set; }
+		public bool isGroup { get; set; }
 		public string NodeColor { get; set; }
 		public string menuText { get; set; }
 		public string sequence { get; set; }
@@ -239,7 +240,7 @@ namespace TalkerMakerDeluxe
 
 		public string ToXML()
 		{
-			string xmlOutput = "<DialogEntry ID=\"" + ID + "\" IsRoot=\"" + IsRoot.ToString().ToLower() + "\" FalseConditionAction=\"" + FalseCondtionAction + "\"><Fields>";
+			string xmlOutput = "<DialogEntry ID=\"" + ID + "\" IsRoot=\"" + IsRoot.ToString().ToLower() + "\" IsGroup=\"" + isGroup.ToString().ToLower() + "\" FalseConditionAction=\"" + FalseCondtionAction + "\"><Fields>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Title</Title><Value>" + title?.Replace("<", "&lt;").Replace(">", "&gt;") + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Actor\"><Title>Actor</Title><Value>" + (actorID + 1)  + "</Value></Field>";
 			xmlOutput += "<Field Type=\"Actor\"><Title>Conversant</Title><Value>" + (conversantID + 1) + "</Value></Field>";
