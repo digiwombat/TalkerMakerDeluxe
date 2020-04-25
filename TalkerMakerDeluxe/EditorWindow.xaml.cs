@@ -727,7 +727,6 @@ namespace TalkerMakerDeluxe
 			//{
 
 			//}
-
 			LoadConversation(loadedConversation);
 			DrawExtraConnections();
 		}
@@ -782,6 +781,7 @@ namespace TalkerMakerDeluxe
 			tcMain.UnregisterName(node.Name);
 			theDatabase.Conversations[loadedConversation].DialogEntries.Remove(dialogueEntry);
 			LoadConversation(loadedConversation);
+			SelectNode("_" + parentNode.Name);
 			parentNode.BringIntoView();
 			DrawExtraConnections();
 		}
@@ -1506,7 +1506,14 @@ namespace TalkerMakerDeluxe
 
 		private void btnLink_Click(object sender, RoutedEventArgs e)
 		{
-			if (loadedConversation == cbConvo.SelectedIndex && selectedEntry.ID == cbDialogueEntry.SelectedIndex)
+			if(selectedEntry == null)
+			{
+				MessageBox.Show("No node selected");
+				return;
+			}
+			Conversation selectedConversation = cbConvo.SelectedItem as Conversation;
+			DialogueEntry selectedDialogueEntry = cbDialogueEntry.SelectedItem as DialogueEntry;
+			if (loadedConversation == cbConvo.SelectedIndex && selectedEntry.ID == selectedDialogueEntry.ID)
 			{
 				MessageBox.Show("Cannot link a node to itself");
 				cbConvo.SelectedItem = null;
@@ -1521,9 +1528,9 @@ namespace TalkerMakerDeluxe
 					ConversationID = loadedConversation,
 					OriginConvoID = loadedConversation,
 					OriginDialogID = selectedEntry.ID,
-					DestinationConvoID = cbConvo.SelectedIndex,
+					DestinationConvoID = selectedConversation.ID,
 					IsConnector = true,
-					DestinationDialogID = cbDialogueEntry.SelectedIndex
+					DestinationDialogID = selectedDialogueEntry.ID
 				});
 
 				cbConvo.SelectedItem = null;
@@ -1785,7 +1792,8 @@ namespace TalkerMakerDeluxe
 
 		private void lstConversations_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
-				LoadConversation(lstConversations.SelectedIndex);
+
+			LoadConversation(lstConversations.SelectedIndex);
 		}
 
 		private void ScaleTransform_Changed(object sender, EventArgs e)
