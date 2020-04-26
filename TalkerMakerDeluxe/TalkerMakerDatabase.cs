@@ -328,7 +328,8 @@ namespace TalkerMakerDeluxe
 		{
 			string xmlOutput = "<UserVariable><Fields>";
 			xmlOutput += "<Field Type=\"Text\"><Title>Name</Title><Value>" + name + "</Value></Field>";
-			xmlOutput += "<Field Type=\"" + type + "\"><Title>InitialValue</Title><Value>" + initialValue + "</Value></Field>";
+			xmlOutput += "<Field Type=\"" + type + "\"><Title>Initial Value</Title><Value>" + initialValue + "</Value></Field>";
+			xmlOutput += "<Field Type=\"Text\"><Title>Description</Title><Value>" + description + "</Value></Field>";
 			xmlOutput += "</Fields></UserVariable>";
 			return xmlOutput;
 		}
