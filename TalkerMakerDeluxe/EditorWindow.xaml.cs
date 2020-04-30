@@ -911,7 +911,7 @@ namespace TalkerMakerDeluxe
 		{
 			SaveFileDialog saver = new SaveFileDialog();
 			saver.Filter = "TalkerMakerDeluxe Database Files (*.json)|*.json|All Files (*.*)|*.*";
-			saver.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			saver.RestoreDirectory = true;
 			if (saver.ShowDialog() == true)
 			{
 				Console.WriteLine("Saving...");
@@ -966,7 +966,7 @@ namespace TalkerMakerDeluxe
 				popSettings.IsOpen = false;
 				OpenFileDialog openFileDialog = new OpenFileDialog();
 				openFileDialog.Filter = "TalkerMakerDeluxe Database Files (*.json)|*.json|All Files (*.*)|*.*";
-				openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+				openFileDialog.RestoreDirectory = true;
 				if (openFileDialog.ShowDialog() == true)
 				{
 					try
@@ -1066,7 +1066,7 @@ namespace TalkerMakerDeluxe
 			popSettings.IsOpen = false;
 			SaveFileDialog saver = new SaveFileDialog();
 			saver.Filter = "ChatMapper XML File (*.xml)|*.xml|All Files (*.*)|*.*";
-			saver.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+			saver.RestoreDirectory = true;
 			if (saver.ShowDialog() == true)
 			{
 				Console.WriteLine("Saving...");
@@ -1480,7 +1480,7 @@ namespace TalkerMakerDeluxe
 				Actor chara = lstCharacters.SelectedItem as Actor;
 				OpenFileDialog openFileDialog = new OpenFileDialog();
 				openFileDialog.Filter = "Image Files (*.png;*.jpeg;*.jpg)|*.png;*.jpeg;*.jpg";
-				openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
+				openFileDialog.RestoreDirectory = true;
 				if (openFileDialog.ShowDialog() == true)
 				{
 					chara.picture = openFileDialog.FileName;
