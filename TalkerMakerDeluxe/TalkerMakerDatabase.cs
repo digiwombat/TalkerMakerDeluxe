@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 
 namespace TalkerMakerDeluxe
 {
@@ -27,6 +28,24 @@ namespace TalkerMakerDeluxe
 
 		public static void SaveDatabase(string fileLocation, TalkerMakerDatabase theDatabase)
 		{
+			foreach(Conversation conv in theDatabase.Conversations)
+			{
+				foreach(DialogueEntry selectedEntry in conv.DialogEntries)
+				{
+					if (selectedEntry.fields == null)
+					{
+						selectedEntry.fields = new List<DialogueEntry.Field>();
+					}
+
+					foreach (DialogueEntry.Field field in conv.DialogEntries.Find(x => x.ID == 0).fields)
+					{
+						if (!selectedEntry.fields.Exists(y => y.name == field.name))
+						{
+							selectedEntry.fields.Add(new DialogueEntry.Field() { name = field.name, type = field.type, value = field.value });
+						}
+					}
+				}
+			}
 			using (StreamWriter sw = new StreamWriter(fileLocation))
 			{
 				string output = JsonConvert.SerializeObject(theDatabase);
@@ -209,6 +228,16 @@ namespace TalkerMakerDeluxe
 		public bool logicNode { get; set; }
 		public double x { get; set; }
 		public double y { get; set; }
+
+		public List<Field> fields;
+
+		[Serializable]
+		public class Field
+		{
+			public string name { get; set; }
+			public string type { get; set; }
+			public string value { get; set; }
+		}
 
 		public ObservableCollection<Link> OutgoingLinks = new ObservableCollection<Link>();
 

@@ -16,6 +16,7 @@ using System.Reflection;
 using System.Windows.Threading;
 using System.Xml;
 using System.Windows.Shapes;
+using System.Windows.Data;
 
 namespace TalkerMakerDeluxe
 {
@@ -161,7 +162,7 @@ namespace TalkerMakerDeluxe
 			theDatabase.Version = "1.0.0";
 			theDatabase.Actors.Add(new Actor() { ID = 0, name = "Player", isPlayer = true });
 			theDatabase.Conversations.Add(new Conversation() { ID = 0, title = "New Conversation", description = "A new conversation", actorID = 0, conversantID = 0, actor = theDatabase.Actors[0], conversant = theDatabase.Actors[0] });
-			theDatabase.Conversations[0].DialogEntries.Add(new DialogueEntry() { ID = 0, IsRoot = true, title = "START", actorID = 0, actor = theDatabase.Actors[0], conversantID = 0, conversant = theDatabase.Actors[0], NodeColor = "Normal" });
+			theDatabase.Conversations[0].DialogEntries.Add(new DialogueEntry() { ID = 0, IsRoot = true, title = "START", actorID = 0, actor = theDatabase.Actors[0], conversantID = 0, conversant = theDatabase.Actors[0], NodeColor = "Normal", fields = new List<DialogueEntry.Field>() });
 			theDatabase.Items.Add(new Item() { ID = 0, name = "New Item" });
 			theDatabase.Variables.Add(new UserVariable() { ID = 0, name = "New Variable", type = "Boolean", initialValue = "false" });
 			theDatabase.Locations.Add(new Location() { ID = 0, name = "New Location" });
@@ -170,6 +171,7 @@ namespace TalkerMakerDeluxe
 			selectedEntry = null;
 			conditionsStack.DataContext = null;
 			gridScript.DataContext = null;
+
 
 			lstConversations.SelectionChanged -= lstConversations_SelectionChanged;
 
@@ -217,7 +219,10 @@ namespace TalkerMakerDeluxe
 			lstConversations.SelectionChanged += lstConversations_SelectionChanged;
 			lstConversations.SelectedIndex = 0;
 			//LoadConversation(0);
-			Console.WriteLine("Finish making new project");
+
+			SelectNode("_node_0");
+
+			Console.WriteLine("Finished making new project");
 		}
 
 		void PrepareProject(string project)
@@ -275,6 +280,8 @@ namespace TalkerMakerDeluxe
 			lstConversations.Items.Refresh();
 			lstConversations.SelectionChanged += lstConversations_SelectionChanged;
 			lstConversations.SelectedIndex = 0;
+
+			SelectNode("_node_0");
 		}
 
 		private void DoAutoSave(object sender, EventArgs e)
@@ -358,11 +365,21 @@ namespace TalkerMakerDeluxe
 					newDialogueEntry.conversant = theDatabase.Actors.FirstOrDefault(x => x.ID == theDatabase.Conversations[loadedConversation].conversantID);
 					newDialogueEntry.menuText = "";
 					newDialogueEntry.dialogueText = "";
+					newDialogueEntry.fields = new List<DialogueEntry.Field>();
 				}
 				else
 				{
 					newDialogueEntry = new DialogueEntry(entryToAdd);
 					newDialogueEntry.ID = theDatabase.Conversations[loadedConversation].DialogEntries.OrderByDescending(p => p.ID).First().ID + 1;
+					newDialogueEntry.fields = new List<DialogueEntry.Field>();
+				}
+
+				foreach (DialogueEntry.Field field in theDatabase.Conversations[loadedConversation].DialogEntries.Find(x => x.ID == 0).fields)
+				{
+					if (!selectedEntry.fields.Exists(y => y.name == field.name))
+					{
+						selectedEntry.fields.Add(new DialogueEntry.Field() { name = field.name, type = field.type, value = field.value });
+					}
 				}
 
 				//Add to conversation
@@ -538,6 +555,7 @@ namespace TalkerMakerDeluxe
 			nodeTree = tcMain.FindName(newNode.Remove(0, 1)) as TreeNode;
 			node = nodeTree.Content as NodeControl;
 			currentNode = newNode;
+			
 
 			if (newNode == "_node_0")
 			{
@@ -551,10 +569,38 @@ namespace TalkerMakerDeluxe
 				editScript.IsEnabled = false;
 				conditionsStack.DataContext = null;
 				gridScript.DataContext = null;
+
+				selectedEntry = theDatabase.Conversations[loadedConversation].DialogEntries[0];
+				if (selectedEntry.fields == null)
+				{
+					selectedEntry.fields = new List<DialogueEntry.Field>();
+				}
+				//dgDefaultFields.DataContext = selectedEntry;
+				//dgDefaultFields.ItemsSource = selectedEntry.fields;
+				//dgDefaultFields.Items.Refresh();
 			}
 			else
 			{
-				selectedEntry = theDatabase.Conversations[loadedConversation].DialogEntries.FirstOrDefault(x => x.ID == node.dialogueEntryID);
+				selectedEntry = null;
+				selectedEntry = theDatabase.Conversations[loadedConversation].DialogEntries.Find(x => x.ID == node.dialogueEntryID);
+
+				if (selectedEntry.fields == null)
+				{
+					selectedEntry.fields = new List<DialogueEntry.Field>();
+				}
+
+				foreach(DialogueEntry.Field field in theDatabase.Conversations[loadedConversation].DialogEntries.Find(x => x.ID == 0).fields)
+				{
+					if(!selectedEntry.fields.Exists(y => y.name == field.name))
+					{
+						selectedEntry.fields.Add(new DialogueEntry.Field() { name = field.name, type = field.type, value = field.value});
+					}
+				}
+
+				//dgFields.DataContext = selectedEntry;
+				//dgFields.ItemsSource = selectedEntry.fields;
+				//dgFields.Items.Refresh();
+
 				node.DataContext = selectedEntry;
 				Console.WriteLine("UserScript: " + selectedEntry.UserScript + " | UserScript.Length: " + selectedEntry.UserScript.Length + " | IsNullOrEmpty: " + string.IsNullOrEmpty(selectedEntry.UserScript) + " | IsNullOrWhiteSpace: " + string.IsNullOrWhiteSpace(selectedEntry.UserScript));
 				gridDialogueEntry.DataContext = selectedEntry;
@@ -565,6 +611,17 @@ namespace TalkerMakerDeluxe
 				tabEntry.IsSelected = true;
 				editConditions.IsEnabled = true;
 				editScript.IsEnabled = true;
+			}
+
+			if (selectedEntry != null)
+			{
+				Console.WriteLine($"Changing Items | Selected ID: {selectedEntry.ID}");
+				dgDefaultFields.DataContext = selectedEntry;
+				dgDefaultFields.ItemsSource = selectedEntry.fields;
+				dgDefaultFields.Items.Refresh();
+				dgFields.DataContext = selectedEntry;
+				dgFields.ItemsSource = selectedEntry.fields;
+				dgFields.Items.Refresh();
 			}
 		}
 
@@ -681,6 +738,8 @@ namespace TalkerMakerDeluxe
 			//recOverview.GetBindingExpression(VisualBrush.VisualProperty).UpdateTarget();
 			DrawExtraConnections();
 			handledNodes.Clear();
+
+			SelectNode("_node_0");
 		}
 
 		private void Delete_Node(TreeNode mainNode)
@@ -1279,7 +1338,8 @@ namespace TalkerMakerDeluxe
 				actorID = 0,
 				actor = theDatabase.Actors[0],
 				conversantID = 0,
-				conversant = theDatabase.Actors[0]
+				conversant = theDatabase.Actors[0],
+				fields = new List<DialogueEntry.Field>()
 			};
 
 			newConvo.DialogEntries.Add(convoStart);
@@ -1804,6 +1864,47 @@ namespace TalkerMakerDeluxe
 				DrawExtraConnections();
 			}
 		}
+
+		private void btnAddField_Click(object sender, RoutedEventArgs e)
+		{
+			if (selectedEntry != null)
+			{
+				if(selectedEntry.fields == null)
+				{
+					selectedEntry.fields = new List<DialogueEntry.Field>();
+				}
+				selectedEntry.fields.Add(new DialogueEntry.Field());
+				dgFields.DataContext = selectedEntry;
+				dgFields.ItemsSource = selectedEntry.fields;
+				dgFields.Items.Refresh();
+			}
+		}
+
+		private void btnFieldDelete_Click(object sender, RoutedEventArgs e)
+		{
+			//Console.WriteLine($"Removing Field at Index: {dgFields.SelectedIndex} | {selectedEntry.fields?.Count}");
+			if (selectedEntry != null && selectedEntry.fields?.Count > dgFields.SelectedIndex)
+			{
+				selectedEntry.fields.RemoveAt(dgFields.SelectedIndex);
+				dgFields.DataContext = selectedEntry;
+				dgFields.ItemsSource = selectedEntry.fields;
+				dgFields.Items.Refresh();
+			}
+		}
+
+		private void btnAddDefaultField_Click(object sender, RoutedEventArgs e)
+		{
+			if(selectedEntry.ID == 0)
+			{
+				Console.Write("We're good");
+			}
+		}
+
+		private void btnDefaultFieldDelete_Click(object sender, RoutedEventArgs e)
+		{
+
+		}
+		
 	}
 
 	public static class SelectOnInternalClick

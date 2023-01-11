@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "TalkerMaker Deluxe"
-#define MyAppVersion "2.2.2"
+#define MyAppVersion "2.3.0"
 #define MyAppPublisher "Barky Seal Games"
 #define MyAppURL "http://randallfitzgerald.net"
 #define MyAppExeName "TalkerMakerDeluxe.exe"

@@ -1121,6 +1121,8 @@
 												<RowDefinition Height="Auto"/>
 												<RowDefinition Height="Auto"/>
 												<RowDefinition Height="Auto"/>
+												<RowDefinition Height="Auto"/>
+												<RowDefinition Height="Auto"/>
 											</Grid.RowDefinitions>
 											<Label Grid.Row="0" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">ID</Label>
 											<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" TextAlignment="Left" Text="{Binding SelectedItem.ID, ElementName=lstConversations}" Name="txtConvoID" VerticalAlignment="Top"/>
@@ -1155,11 +1157,57 @@
 
 											<Label Grid.Row="5" Grid.Column="0" Margin="4,0,4,4" HorizontalAlignment="Left" VerticalAlignment="Top" FontWeight="Bold">Description</Label>
 											<TextBox Grid.Row="5" Grid.Column="1" Margin="4,0,4,4" SpellCheck.IsEnabled="True" TextWrapping="Wrap" MinHeight="50" MaxHeight="200" VerticalScrollBarVisibility="Auto" Text="{Binding SelectedItem.description, ElementName=lstConversations}" Name="txtConvoDescription" />
+											<Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Default Fields
+											</Label>
+											<StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Hidden">
+												<Button Width="20" Height="20" x:Name="btnAddField" Click="btnAddField_Click" Background="#FF2A2A2A" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">+</Button>
+											</StackPanel>
+											<DataGrid x:Name="dgFields" AutoGenerateColumns="False" Grid.Row="7" Grid.ColumnSpan="2" Grid.Column="0" DataContext="{Binding ElementName=EditorWin}" ItemsSource="{Binding selectedEntry.fields}" HorizontalContentAlignment="Stretch" MinHeight="100" VerticalContentAlignment="Stretch" SelectionMode="Single" CanUserAddRows="True" CanUserDeleteRows="True" Background="#FF2A2A2A" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+												<DataGrid.Resources>
+													<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#333333"/>
+													<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#eeeeee"/>
+													<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#555555"/>
+												</DataGrid.Resources>
+												<DataGrid.ColumnHeaderStyle>
+													<Style TargetType="DataGridColumnHeader">
+														<Setter Property="Background" Value="#FF222222"/>
+														<Setter Property="Foreground" Value="White"/>
+													</Style>
+												</DataGrid.ColumnHeaderStyle>
+
+												<DataGrid.Columns>
+													<DataGridTextColumn Width="80" Header="Name" Binding="{Binding name}"/>
+													<DataGridTextColumn Width="40" Header="Type" Binding="{Binding type}" />
+													<DataGridTextColumn  Width="*" Header="Value" Binding="{Binding value}"/>
+													<DataGridTemplateColumn Header="Del" Width="30">
+														<DataGridTemplateColumn.CellTemplate>
+															<DataTemplate>
+																<ContentControl Button.Click="btnFieldDelete_Click">
+																	<ContentControl.Resources>
+																		<Button x:Key="btn" Content="Del" Click="btnFieldDelete_Click" Background="#FF2A2A2A" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+																	</ContentControl.Resources>
+																	<ContentControl.Style>
+																		<Style TargetType="ContentControl">
+																			<Setter Property="Content" Value="{StaticResource btn}" />
+																			<Style.Triggers>
+																				<DataTrigger Binding="{Binding DataContext, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Value="{x:Static CollectionView.NewItemPlaceholder}">
+																					<Setter Property="Visibility" Value="Hidden">
+																					</Setter>
+																				</DataTrigger>
+																			</Style.Triggers>
+																		</Style>
+																	</ContentControl.Style>
+																</ContentControl>
+															</DataTemplate>
+														</DataGridTemplateColumn.CellTemplate>
+													</DataGridTemplateColumn>
+												</DataGrid.Columns>
+											</DataGrid>
 										</Grid>
 									</TabItem>
 									<TabItem x:Name="tabEntry" Header="Entry" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
 										<ScrollViewer VerticalScrollBarVisibility="Auto">
-											<Grid x:Name="gridDialogueEntry">
+											<Grid x:Name="gridDialogueEntry" VerticalAlignment="Top">
 												<Grid.ColumnDefinitions>
 													<ColumnDefinition  Width="Auto"/>
 													<ColumnDefinition Width="*"/>
@@ -1232,6 +1280,8 @@
 															</Style>
 														</RowDefinition.Style>
 													</RowDefinition>
+													<RowDefinition Height="Auto"/>
+													<RowDefinition Height="Auto"/>
 												</Grid.RowDefinitions>
 												<Label Grid.Row="0" Grid.Column="0" FontSize="12" Margin="4,0,4,4" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">ID</Label>
 												<TextBlock Grid.Row="0" Grid.Column="1" Margin="4,0,4,4" Text="{Binding ID}" TextAlignment="Left" Name="txtDialogueID"/>
@@ -1411,9 +1461,55 @@
 														</CheckBox.BorderBrush>
 													</CheckBox>
 												</StackPanel>
+												<Label Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" FontSize="12" Margin="4,0,4,4" BorderBrush="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" VerticalAlignment="Top" FontWeight="Bold" HorizontalAlignment="Left">Fields</Label>
+												<StackPanel Orientation="Horizontal" Grid.Row="11" Grid.Column="1" Margin="4,0,4,4" HorizontalAlignment="Right" VerticalAlignment="Center" Visibility="Hidden">
+													<Button Width="20" Height="20" x:Name="btnAddDefaultField" Click="btnAddDefaultField_Click" Background="#FF2A2A2A" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">+</Button>
+												</StackPanel>
+												<DataGrid x:Name="dgDefaultFields" AutoGenerateColumns="False" Grid.Row="12" Grid.ColumnSpan="2" Grid.Column="0" DataContext="{Binding ElementName=EditorWin}" ItemsSource="{Binding selectedEntry.fields}" HorizontalContentAlignment="Stretch" MinHeight="100" VerticalContentAlignment="Stretch" SelectionMode="Single" CanUserAddRows="True" CanUserDeleteRows="True" Background="#FF2A2A2A" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}">
+													<DataGrid.Resources>
+														<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightBrushKey}" Color="#333333"/>
+														<SolidColorBrush x:Key="{x:Static SystemColors.InactiveSelectionHighlightTextBrushKey}" Color="#eeeeee"/>
+														<SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#555555"/>
+													</DataGrid.Resources>
+													<DataGrid.ColumnHeaderStyle>
+														<Style TargetType="DataGridColumnHeader">
+															<Setter Property="Background" Value="#FF222222"/>
+															<Setter Property="Foreground" Value="White"/>
+														</Style>
+													</DataGrid.ColumnHeaderStyle>
+
+													<DataGrid.Columns>
+														<DataGridTextColumn Width="80" Header="Name" Binding="{Binding name}"/>
+														<DataGridTextColumn Width="40" Header="Type" Binding="{Binding type}" />
+														<DataGridTextColumn  Width="*" Header="Value" Binding="{Binding value}"/>
+														<DataGridTemplateColumn Header="Del" Width="30">
+															<DataGridTemplateColumn.CellTemplate>
+																<DataTemplate>
+																	<ContentControl Button.Click="btnDefaultFieldDelete_Click">
+																		<ContentControl.Resources>
+																			<Button x:Key="btn" Content="Del" Click="btnDefaultFieldDelete_Click" Background="#FF2A2A2A" Foreground="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
+																		</ContentControl.Resources>
+																		<ContentControl.Style>
+																			<Style TargetType="ContentControl">
+																				<Setter Property="Content" Value="{StaticResource btn}" />
+																				<Style.Triggers>
+																					<DataTrigger Binding="{Binding DataContext, RelativeSource={RelativeSource AncestorType=DataGridRow}}" Value="{x:Static CollectionView.NewItemPlaceholder}">
+																						<Setter Property="Visibility" Value="Hidden">
+																						</Setter>
+																					</DataTrigger>
+																				</Style.Triggers>
+																			</Style>
+																		</ContentControl.Style>
+																	</ContentControl>
+																</DataTemplate>
+															</DataGridTemplateColumn.CellTemplate>
+														</DataGridTemplateColumn>
+													</DataGrid.Columns>
+												</DataGrid>
 											</Grid>
 										</ScrollViewer>
 									</TabItem>
+									
 								</TabControl>
 							</Grid>
 						</Border>
@@ -1476,7 +1572,7 @@
 				</Button>
 			</StatusBarItem>
 			<StatusBarItem HorizontalAlignment="Right" Margin="0,0,16,0">
-				<TextBlock Text="v2.2.2" />
+				<TextBlock Text="v2.3.0" />
 			</StatusBarItem>
 		</StatusBar>
 		<StackPanel Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="225">
