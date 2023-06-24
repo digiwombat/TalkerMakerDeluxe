@@ -1206,7 +1206,7 @@ namespace TalkerMakerDeluxe
 
 		private void Exit_Binding(object obSender, ExecutedRoutedEventArgs e)
 		{
-			//Application.Current.EditorWindow.Close();
+			Application.Current.MainWindow.Close();
 		}
 
 		private void MetroWindow_Drop(object sender, DragEventArgs e)
